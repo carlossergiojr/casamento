@@ -21,7 +21,7 @@ export function Cabecalho() {
 export function Capa() {
   return (
     <section id="inicio" className="flex flex-col">
-      <div className="relative h-[600px] overflow-hidden bg-line md:h-[680px]">
+      <div className="relative h-[540px] overflow-hidden bg-line md:h-[640px]">
         <Image
           src={casamento.fotoCapa}
           alt={`${casamento.primeiro} e ${casamento.segundo}`}
@@ -33,7 +33,7 @@ export function Capa() {
         <div className="pointer-events-none absolute inset-[14px] border border-background" />
       </div>
 
-      <Revelar aposConvite className="relative mx-[18px] -mt-24 flex flex-col items-center gap-5 bg-background px-[22px] pt-11 pb-9 text-center">
+      <Revelar aposConvite className="relative mx-[18px] -mt-40 flex flex-col items-center gap-5 bg-background px-[22px] pt-11 pb-9 text-center">
         <img
           src={publico("/estampa/spot-bird.png")}
           alt=""

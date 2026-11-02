@@ -7,26 +7,24 @@ import { CHAVE_CONVITE_ABERTO, EVENTO_CONVITE_ABERTO } from "@/lib/convite-abert
 
 type Fase = "fechado" | "abrindo" | "fora";
 
-const SUAVE = [0.22, 1, 0.36, 1] as const;
 const DOBRA = [0.65, 0, 0.35, 1] as const;
 
 /*
  * Geometria do envelope em tela cheia (em % da tela). A aba desce até a ponta (BICO) e o bolso
- * da frente sobe pelas laterais até OMBRO. O cartão começa abaixo do bico, escondido no bolso.
+ * da frente sobe pelas laterais até OMBRO.
  */
 const OMBRO = 30;
 const BICO = 54;
 const ABA = `polygon(0 0, 100% 0, 100% ${OMBRO}%, 50% ${BICO}%, 0 ${OMBRO}%)`;
 const BOLSO = `polygon(0 ${OMBRO + 0.6}%, 50% ${BICO + 0.8}%, 100% ${OMBRO + 0.6}%, 100% 100%, 0 100%)`;
-const TOPO_CARTAO = BICO + 5;
 const ORIGEM = `50% ${BICO}%`;
 
 
 /**
  * Abertura do convite (specs/001 US1). O envelope ocupa a tela inteira e é o botão. Sequência ao
- * tocar (~6,5 s): selo se parte → aba abre → a tela "entra" no envelope e as borboletas saem →
- * cartão sobe do bolso → envelope desce e o cartão pousa no centro → pausa → o cartão desliza até
- * o nome na capa e o site aparece em volta. Com `prefers-reduced-motion`, só um fade.
+ * tocar (~4 s): selo se parte → aba abre e as borboletas saem → a tela mergulha no envelope e o
+ * site aparece. Sem cartão dentro do envelope: o cartão é a própria capa. Com
+ * `prefers-reduced-motion`, só um fade.
  */
 export function Envelope() {
   const [fase, setFase] = useState<Fase>("fechado");
@@ -77,10 +75,6 @@ export function Envelope() {
       return;
     }
 
-    const cartao = cena.current.querySelector<HTMLElement>("[data-cartao]")!;
-    const altura = cartao.offsetHeight;
-    // Do topo inicial (escondido no bolso) até o centro da tela.
-    const subida = innerHeight * (0.5 - TOPO_CARTAO / 100) - altura / 2;
     animar("[data-dica]", { opacity: 0 }, { duration: 0.4 });
 
     // 1. O selo afunda com o toque e se parte em duas metades que caem.
@@ -89,33 +83,14 @@ export function Envelope() {
     animar("[data-selo-esq]", { x: -70, y: 160, rotate: -40, opacity: 0 }, { duration: 1.1, ease: "easeIn" });
     animar("[data-selo-dir]", { x: 70, y: 150, rotate: 36, opacity: 0 }, { duration: 1.1, ease: "easeIn" });
 
-    // 2. A aba abre para cima, devagar, e a tela "entra" um pouco no envelope.
-    animar("[data-aba]", { rotateX: 180 }, { delay: 0.1, duration: 1.5, ease: DOBRA });
-    animar("[data-corpo]", { scale: 1.06 }, { delay: 0.3, duration: 3, ease: "easeInOut" });
+    // 2. A aba abre para cima, devagar, mostrando o forro; a tela já vai se aproximando.
+    animar("[data-aba]", { rotateX: 180 }, { delay: 0.1, duration: 1.6, ease: DOBRA });
+    await animar("[data-corpo]", { scale: 1.1 }, { delay: 0.3, duration: 1.8, ease: "easeInOut" });
 
-    // 3. O cartão sai do bolso com calma.
-    await animar("[data-cartao]", { y: subida }, { delay: 1.2, duration: 1.6, ease: SUAVE });
-
-    // 4. O envelope desce e some; o cartão vem para a frente e pousa no centro, legível.
-    animar("[data-cartao]", { zIndex: 6 }, { duration: 0 });
-    animar("[data-corpo]", { y: "100%", opacity: 0 }, { duration: 1.2, ease: [0.55, 0, 0.75, 0.4] });
-    await animar("[data-cartao]", { scale: 1.06 }, { delay: 0.2, duration: 1.1, ease: SUAVE });
-
-    // 5. Uma pausa para ler o convite.
-    await new Promise((r) => setTimeout(r, 900));
-
-    // 6. O cartão vira o site: desliza até o nome na capa enquanto a capa entra por baixo dele e
-    //    o fundo do convite se desfaz.
+    // 3. A tela mergulha no envelope e o site aparece por trás.
     anunciarConvite();
-    animar(cena.current, { backgroundColor: "rgb(250 247 241 / 0)" }, { duration: 1.1, ease: "easeInOut" });
-    const destino = destinoNaCapa(cartao, 1.06);
-    await animar(
-      "[data-cartao]",
-      destino
-        ? { x: destino.x, y: subida + destino.y, scale: destino.escala, opacity: 0 }
-        : { y: subida - 40, opacity: 0 },
-      { duration: 1.1, ease: SUAVE, opacity: { duration: 0.7, delay: 0.15, ease: "easeIn" } },
-    );
+    animar(cena.current, { backgroundColor: "rgb(250 247 241 / 0)" }, { duration: 1, ease: "easeInOut" });
+    await animar("[data-corpo]", { scale: 1.9, opacity: 0 }, { duration: 1.1, ease: [0.55, 0, 0.75, 0.4] });
     setFase("fora");
   }
 
@@ -192,23 +167,6 @@ export function Envelope() {
           </div>
         </div>
 
-        {/* Cartão que sobe do bolso. */}
-        <div
-          data-cartao
-          className="absolute left-1/2 flex aspect-[1.45] w-[min(84vw,400px)] -translate-x-1/2 flex-col items-center justify-center gap-1.5 border-t border-gold-line bg-card px-4 text-center shadow-[0_2px_8px_rgb(43_49_64/0.18)]"
-          style={{ top: `${TOPO_CARTAO}%`, zIndex: 2 }}
-        >
-          <span className="sobretitulo text-[10px]">Vamos nos casar</span>
-          <span
-            data-nome
-            className="font-serif text-[clamp(24px,8.4vw,36px)] leading-none font-light whitespace-nowrap text-primary"
-          >
-            {casamento.primeiro} <span className="text-gold italic">&amp;</span>{" "}
-            {casamento.segundo.split(" ")[0]}
-          </span>
-          <span className="font-serif text-[18px] tracking-[0.1em]">{casamento.dataCapa}</span>
-        </div>
-
         {/* Selo de cera na ponta da aba, em duas metades para se partir. */}
         <div
           data-selo
@@ -242,27 +200,6 @@ function anunciarConvite() {
   if (html.dataset.convite === "aberto") return;
   html.dataset.convite = "aberto";
   window.dispatchEvent(new Event(EVENTO_CONVITE_ABERTO));
-}
-
-/**
- * Quanto o cartão precisa andar (e crescer) para o nome dele cair sobre o nome da capa. `null`
- * quando o nome da capa está fora da tela (tela baixa): aí o cartão só sobe e some.
- */
-function destinoNaCapa(cartao: HTMLElement, escalaAtual: number) {
-  const alvo = document.querySelector("#inicio h1")?.getBoundingClientRect();
-  const nome = cartao.querySelector("[data-nome]")?.getBoundingClientRect();
-  if (!alvo || !nome || alvo.top + alvo.height / 2 > innerHeight - 40) return null;
-  const caixa = cartao.getBoundingClientRect();
-  const escala = 1.2;
-  const r = escala / escalaAtual;
-  // Escala em torno do centro do cartão: o nome se afasta do centro na mesma proporção.
-  const centro = { x: caixa.left + caixa.width / 2, y: caixa.top + caixa.height / 2 };
-  const desvio = { x: nome.left + nome.width / 2 - centro.x, y: nome.top + nome.height / 2 - centro.y };
-  return {
-    x: alvo.left + alvo.width / 2 - desvio.x * r - centro.x,
-    y: alvo.top + alvo.height / 2 - desvio.y * r - centro.y,
-    escala,
-  };
 }
 
 /**
