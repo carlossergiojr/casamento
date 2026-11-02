@@ -6,6 +6,9 @@
 const foto = (semente: string, largura: number, altura: number) =>
   `https://picsum.photos/seed/cavi-${semente}/${largura}/${altura}`;
 
+/** Caminho de arquivo de /public sob o basePath (GitHub Pages serve em /casamento). */
+export const publico = (caminho: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${caminho}`;
+
 /** Início da cerimônia, como aparece nos textos. Mude junto com `casamento.inicio`. */
 const hora = "15h";
 
@@ -32,7 +35,8 @@ export const casamento = {
     cidadeCep: "Feira de Santana / BA · CEP 44059-370",
     referencia: "Rua Zeus, entre os condomínios Aquarela Ville e Amarilis",
   },
-  fotoCapa: foto("capa", 900, 1300),
+  /** Foto real (recortada: sem parte do céu, para o casal ficar acima do cartão). */
+  fotoCapa: publico("/fotos/capa.jpg"),
 };
 
 export const enderecoCompleto = `${casamento.local.nome} — ${casamento.local.endereco}, ${casamento.local.cidadeCep}`;
@@ -118,5 +122,3 @@ export const convitesExemplo: Convite[] = [
   },
 ];
 
-/** Caminho de arquivo de /public sob o basePath (GitHub Pages serve em /casamento). */
-export const publico = (caminho: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${caminho}`;
