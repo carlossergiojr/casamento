@@ -1,6 +1,6 @@
 # Cavi 2027 — site do casamento
 
-Site do casamento de **Victória & Carlos Sergio** — 23/01/2027, 15h, Campestre (Feira de
+Site do casamento de **Victória & Carlos** — 23/01/2027, 15h, Campestre (Feira de
 Santana/BA). Abre com um envelope animado; a página inicial tem capa com contagem regressiva,
 nossa história, pré-wedding, dress code, lista de presentes, confirmação de presença e como
 chegar.

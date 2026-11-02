@@ -18,7 +18,7 @@ const karla = Karla({
   weight: ["400", "500", "600"],
 });
 
-const titulo = "Victória & Carlos Sergio · 23.01.2027";
+const titulo = `${casamento.casalCurto} · ${casamento.dataCurta}`;
 const descricao = `Vamos nos casar! Sábado, 23 de janeiro de 2027, às ${casamento.hora}, no ${casamento.local.nome} — ${casamento.local.cidade}. ${casamento.hashtag}`;
 
 // Prévia do link no WhatsApp e redes (specs/002 FR-002, FR-003). As imagens são geradas no build
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     url: "/casamento/",
     title: titulo,
     description: descricao,
-    images: [{ url: "/casamento/marca/og.jpg", type: "image/jpeg", width: 1200, height: 630, alt: "Convite de casamento de Victória & Carlos Sergio" }],
+    images: [{ url: "/casamento/marca/og.jpg", type: "image/jpeg", width: 1200, height: 630, alt: `Convite de casamento de ${casamento.casalCurto}` }],
   },
   twitter: { card: "summary_large_image", title: titulo, description: descricao, images: ["/casamento/marca/og.jpg"] },
   icons: {

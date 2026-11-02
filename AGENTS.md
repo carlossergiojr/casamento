@@ -1,6 +1,6 @@
 # Cavi 2027 — orientação para agentes
 
-Site do casamento de Victória & Carlos Sergio (Next.js 16 + Tailwind 4 + shadcn/ui + Motion,
+Site do casamento de Victória & Carlos (Next.js 16 + Tailwind 4 + shadcn/ui + Motion,
 no GitHub Pages por enquanto; Vercel quando houver servidor). Antes de mudar qualquer coisa, leia a constituição: `.specify/memory/constitution.md`
 — ela prevalece sobre qualquer convenção. Features relevantes passam por Spec Kit
 (`/speckit-specify` → `/speckit-plan` → `/speckit-tasks` → `/speckit-implement`).

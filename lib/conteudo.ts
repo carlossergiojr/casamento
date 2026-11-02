@@ -12,7 +12,7 @@ const hora = "15h";
 export const casamento = {
   /** Ordem dos nomes em todo o site: Victória primeiro. */
   primeiro: "Victória",
-  segundo: "Carlos Sergio",
+  segundo: "Carlos",
   casalCurto: "Victória & Carlos",
   monograma: { a: "V", b: "C" },
   /** 23/01/2027 (sábado) 15h, horário de Brasília. Mude junto com `hora`. */
