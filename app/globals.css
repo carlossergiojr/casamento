@@ -80,7 +80,7 @@ html[data-convite="aberto"] [data-envelope] {
 }
 
 @utility toile {
-  background-image: url("/estampa/toile.jpg");
+  background-image: url("../public/estampa/toile.jpg");
   background-size: 300px;
   background-repeat: repeat;
   background-position: center;

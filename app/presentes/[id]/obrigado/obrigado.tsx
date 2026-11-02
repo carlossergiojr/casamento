@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { Revelar } from "@/components/site/revelar";
-import { casamento } from "@/lib/conteudo";
+import { casamento, publico } from "@/lib/conteudo";
 import { lerPresente, type DadosPresente } from "@/lib/presente-escolhido";
 
 export function Obrigado({ id, nome, valor }: { id: string; nome: string; valor: string }) {
@@ -17,7 +17,7 @@ export function Obrigado({ id, nome, valor }: { id: string; nome: string; valor:
       {/* Borboleta leve voando sobre a estampa (DESIGN.md: animações das telas de sucesso). */}
       {!reduzir && (
         <motion.img
-          src="/estampa/spot-butterfly-2.png"
+          src={publico("/estampa/spot-butterfly-2.png")}
           alt=""
           aria-hidden="true"
           className="pointer-events-none absolute top-[140px] left-[12%] w-16"

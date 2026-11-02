@@ -15,12 +15,12 @@ site novo.
 - **UI**: Tailwind CSS 4 + shadcn/ui (estilo base-nova), ícones lucide.
 - **Animação**: Motion (`motion/react`) — envelope, entradas por viewport, galeria.
 - **Fontes**: `next/font/google` — Cormorant Garamond (300/400/500 + itálico) e Karla (400/500/600).
-- **Imagens**: `next/image`; fotos de exemplo de `picsum.photos` (liberado em `remotePatterns`).
+- **Imagens**: `next/image` com `unoptimized` (export estático); fotos de exemplo de `picsum.photos`.
 - **Dados**: nenhum banco. `lib/conteudo.ts` concentra textos, datas, endereço, fotos, presentes
   e convites de exemplo.
 - **Testes**: nesta feature, verificação visual no navegador (390px) + `npm run build`. Testes
   automatizados entram com as regras de negócio (RSVP/pagamento).
-- **Hospedagem**: Vercel (região `gru1`). GitHub Pages (`carlossergiojr.github.io/casamento/`)
+- **Hospedagem**: por enquanto GitHub Pages (`carlossergiojr.github.io/casamento/`), export estático com `basePath: "/casamento"`, publicado por GitHub Actions. Na feature do RSVP com banco, Vercel (região `gru1`) e o Pages
   vira um redirecionamento que preserva caminho e query (QR Codes já impressos).
 
 ## Constitution Check

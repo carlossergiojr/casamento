@@ -1,13 +1,18 @@
 import type { NextConfig } from "next";
 
+/**
+ * Publicado no GitHub Pages em carlossergiojr.github.io/casamento/ — o mesmo endereço dos
+ * QR Codes. Por isso: exportação estática, tudo sob /casamento e imagens sem o otimizador
+ * (que precisa de servidor). Quando RSVP/pagamento precisarem de servidor, isto muda.
+ */
+const basePath = "/casamento";
+
 const nextConfig: NextConfig = {
-  images: {
-    // Fotos de exemplo enquanto as do casal não chegam (specs/001 FR-006).
-    remotePatterns: [
-      { protocol: "https", hostname: "picsum.photos" },
-      { protocol: "https", hostname: "fastly.picsum.photos" },
-    ],
-  },
+  output: "export",
+  basePath,
+  trailingSlash: true,
+  env: { NEXT_PUBLIC_BASE_PATH: basePath },
+  images: { unoptimized: true },
   turbopack: {
     rules: {
       "*.css": {

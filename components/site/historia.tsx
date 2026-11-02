@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { historia, historiaFecho } from "@/lib/conteudo";
+import { historia, historiaFecho, publico } from "@/lib/conteudo";
 import { Revelar } from "./revelar";
 
 /** "*oi*" no conteúdo vira itálico. */
@@ -21,7 +21,7 @@ export function Historia() {
   return (
     <section id="historia" className="relative flex flex-col gap-9 bg-surface px-7 pt-16 pb-[72px]">
       <Revelar className="flex flex-col items-center gap-2.5">
-        <img src="/estampa/spot-butterfly-1.png" alt="" aria-hidden="true" className="size-[54px]" />
+        <img src={publico("/estampa/spot-butterfly-1.png")} alt="" aria-hidden="true" className="size-[54px]" />
         <h2 className="font-serif text-[40px] text-primary italic">Nossa história</h2>
       </Revelar>
 
@@ -29,7 +29,7 @@ export function Historia() {
         trecho.borboleta ? (
           <Revelar key={i} className="flex items-center gap-4">
             <img
-              src="/estampa/spot-butterfly-2.png"
+              src={publico("/estampa/spot-butterfly-2.png")}
               alt=""
               aria-hidden="true"
               className="h-[45px] w-[84px] flex-none"

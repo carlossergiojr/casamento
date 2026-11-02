@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { casamento } from "@/lib/conteudo";
+import { casamento, publico } from "@/lib/conteudo";
 import { Contagem } from "./contagem";
 import { Revelar } from "./revelar";
 
@@ -34,7 +34,7 @@ export function Capa() {
 
       <Revelar className="relative mx-[18px] -mt-24 flex flex-col items-center gap-5 border-t border-gold-line bg-background px-[22px] pt-11 pb-9 text-center">
         <img
-          src="/estampa/spot-bird.png"
+          src={publico("/estampa/spot-bird.png")}
           alt=""
           aria-hidden="true"
           className="absolute -top-[62px] -right-1.5 h-[102px] w-[120px]"

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { casamento } from "@/lib/conteudo";
+import { casamento, publico } from "@/lib/conteudo";
 import { CHAVE_CONVITE_ABERTO } from "@/lib/convite-aberto";
 
 type Fase = "fechado" | "abrindo" | "saindo" | "fora";
@@ -226,13 +226,13 @@ function Cantos() {
   return (
     <>
       <img
-        src="/estampa/spot-butterfly-1.png"
+        src={publico("/estampa/spot-butterfly-1.png")}
         alt=""
         aria-hidden="true"
         className="pointer-events-none absolute top-[9%] left-[8%] w-12 -rotate-12 opacity-80"
       />
       <img
-        src="/estampa/spot-butterfly-2.png"
+        src={publico("/estampa/spot-butterfly-2.png")}
         alt=""
         aria-hidden="true"
         className="pointer-events-none absolute right-[7%] bottom-[10%] w-20 rotate-6 opacity-80"

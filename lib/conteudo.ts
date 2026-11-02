@@ -111,3 +111,6 @@ export const convitesExemplo: Convite[] = [
     pessoas: ["Ana Lima", "Pedro Lima", "Sofia Lima"],
   },
 ];
+
+/** Caminho de arquivo de /public sob o basePath (GitHub Pages serve em /casamento). */
+export const publico = (caminho: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${caminho}`;

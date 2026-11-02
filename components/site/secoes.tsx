@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { casamento, dressCode, formatarValor, presentes } from "@/lib/conteudo";
+import { casamento, dressCode, formatarValor, presentes, publico } from "@/lib/conteudo";
 import { Revelar } from "./revelar";
 
 const TITULO = "font-serif text-[40px] leading-[1.1] text-primary italic";
@@ -12,7 +12,7 @@ export function DressCode() {
       className="relative flex flex-col items-center gap-[22px] bg-surface px-7 py-16 text-center"
     >
       <img
-        src="/estampa/spot-butterfly-1.png"
+        src={publico("/estampa/spot-butterfly-1.png")}
         alt=""
         aria-hidden="true"
         className="absolute top-7 left-[22px] size-11 -rotate-[18deg]"
@@ -102,7 +102,7 @@ export function ChamadaRsvp() {
     >
       <Revelar className="flex w-full flex-col items-center gap-5">
         <img
-          src="/estampa/spot-bird.png"
+          src={publico("/estampa/spot-bird.png")}
           alt=""
           aria-hidden="true"
           className="h-[94px] w-[110px] -scale-x-100"
@@ -112,7 +112,7 @@ export function ChamadaRsvp() {
           Confirme até <strong className="text-foreground">{casamento.prazoRsvp}</strong>.
         </p>
         {/* GET simples: leva o nome para a busca do RSVP. */}
-        <form action="/confirmar" className="flex w-full flex-col gap-5">
+        <form action={publico("/confirmar/")} className="flex w-full flex-col gap-5">
           <div className="flex w-full flex-col gap-2 text-left">
             <label htmlFor="rsvp-nome" className="text-[13px] text-primary-deep">
               Seu nome ou código do convite

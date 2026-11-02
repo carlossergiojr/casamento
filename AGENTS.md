@@ -1,7 +1,7 @@
 # Cavi 2027 — orientação para agentes
 
 Site do casamento de Carlos Sérgio & Victória (Next.js 16 + Tailwind 4 + shadcn/ui + Motion,
-na Vercel). Antes de mudar qualquer coisa, leia a constituição: `.specify/memory/constitution.md`
+no GitHub Pages por enquanto; Vercel quando houver servidor). Antes de mudar qualquer coisa, leia a constituição: `.specify/memory/constitution.md`
 — ela prevalece sobre qualquer convenção. Features relevantes passam por Spec Kit
 (`/speckit-specify` → `/speckit-plan` → `/speckit-tasks` → `/speckit-implement`).
 
@@ -19,6 +19,9 @@ na Vercel). Antes de mudar qualquer coisa, leia a constituição: `.specify/memo
   (Não use `overline`: é classe do Tailwind para text-decoration.)
 - Primitivas de UI pelo `npx shadcn@latest add` (estilo base-nova, Base UI).
 - Nada é gravado nem enviado ainda: RSVP e pagamento são só visuais (specs/001 FR-009).
+- Publicação: export estático (`output: "export"`, `basePath: "/casamento"`) no GitHub Pages pelo
+  workflow `.github/workflows/pages.yml` a cada push na `main`. Arquivo de `/public` em `<img>`
+  ou `<form action>` passa por `publico()` (`lib/conteudo.ts`); `next/link` já põe o basePath.
 
 ## Verificar
 
