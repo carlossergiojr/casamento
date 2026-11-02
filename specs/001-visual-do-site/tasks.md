@@ -45,6 +45,6 @@ description: "Tarefas da 001 — Visual do site"
 ## Phase 6: Polish & publicação
 
 - [X] T019 Conferir cada tela em 375px contra `design/`
-- [ ] T022 Revisão com a skill `web-design-guidelines` (depois da publicação)
+- [X] T022 Revisão com a skill `web-design-guidelines` (achados viraram a spec 002)
 - [X] T020 `npm run build` verde; publicar no GitHub Pages (export estático em `/casamento`, Actions)
 - [ ] T021 Ao migrar para a Vercel (RSVP com banco): GitHub Pages vira redirecionamento preservando caminho e query

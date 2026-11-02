@@ -37,7 +37,7 @@ export function Capa() {
           src={publico("/estampa/spot-bird.png")}
           alt=""
           aria-hidden="true"
-          className="absolute -top-[62px] -right-1.5 h-[102px] w-[120px]"
+          className="absolute -top-[66px] -right-1 h-auto w-[104px]"
         />
         <p className="sobretitulo">Vamos nos casar</p>
         <h1 className="flex flex-col gap-0.5 font-serif text-[52px] leading-[1.02] font-light text-primary">

@@ -15,7 +15,7 @@ export function DressCode() {
         src={publico("/estampa/spot-butterfly-1.png")}
         alt=""
         aria-hidden="true"
-        className="absolute top-7 left-[22px] size-11 -rotate-[18deg]"
+        className="absolute top-7 left-[22px] h-auto w-14 -rotate-[18deg]"
       />
       <Revelar className="flex flex-col items-center gap-[22px]">
         <h2 className={TITULO}>Dress code</h2>
@@ -105,7 +105,7 @@ export function ChamadaRsvp() {
           src={publico("/estampa/spot-bird.png")}
           alt=""
           aria-hidden="true"
-          className="h-[94px] w-[110px] -scale-x-100"
+          className="h-auto w-[96px] -scale-x-100"
         />
         <h2 className={TITULO}>Você vem?</h2>
         <p className="text-[15px] text-primary-deep">
