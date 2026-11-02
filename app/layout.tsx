@@ -17,10 +17,30 @@ const karla = Karla({
   weight: ["400", "500", "600"],
 });
 
+const titulo = "Victória & Carlos Sergio · 23.01.2027";
+const descricao =
+  "Vamos nos casar! Sábado, 23 de janeiro de 2027, às 16h, no Campestre — Feira de Santana, BA. #Cavi2027";
+
+// Prévia do link no WhatsApp e redes (specs/002 FR-002, FR-003). As imagens são geradas no build
+// em app/marca/ (rotas .png, com o basePath escrito à mão: os arquivos de metadata do Next o perdem).
 export const metadata: Metadata = {
-  title: "Victória & Carlos Sergio · 23.01.2027",
-  description:
-    "Vamos nos casar! Sábado, 23 de janeiro de 2027, às 16h, no Campestre — Feira de Santana, BA. #Cavi2027",
+  metadataBase: new URL("https://carlossergiojr.github.io"),
+  title: titulo,
+  description: descricao,
+  openGraph: {
+    type: "website",
+    locale: "pt_BR",
+    siteName: "Victória & Carlos · #Cavi2027",
+    url: "/casamento/",
+    title: titulo,
+    description: descricao,
+    images: [{ url: "/casamento/marca/og.png", width: 1200, height: 630, alt: "Convite de casamento de Victória & Carlos Sergio" }],
+  },
+  twitter: { card: "summary_large_image", title: titulo, description: descricao, images: ["/casamento/marca/og.png"] },
+  icons: {
+    icon: { url: "/casamento/marca/icone.png", type: "image/png", sizes: "64x64" },
+    apple: "/casamento/marca/icone-apple.png",
+  },
 };
 
 export const viewport: Viewport = {
@@ -37,7 +57,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: scriptConviteAberto }} />
         <noscript>
-          <style>{"[data-envelope]{display:none!important}"}</style>
+          <style>
+            {"[data-envelope]{display:none!important}[data-revelar]{opacity:1!important;transform:none!important}"}
+          </style>
         </noscript>
       </head>
       <body className="min-h-dvh">

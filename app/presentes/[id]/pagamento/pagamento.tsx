@@ -14,9 +14,23 @@ type Metodo = "pix" | "cartao";
 export function Pagamento({ id, valor }: { id: string; valor: string }) {
   const [metodo, setMetodo] = useState<Metodo>("pix");
 
+  // Abas acessíveis: setas, Home e End trocam de aba (specs/002 FR-012).
+  function teclas(e: React.KeyboardEvent<HTMLDivElement>) {
+    const outro: Metodo = metodo === "pix" ? "cartao" : "pix";
+    const proximo: Metodo | null =
+      e.key === "ArrowRight" || e.key === "ArrowLeft" ? outro
+      : e.key === "Home" ? "pix"
+      : e.key === "End" ? "cartao"
+      : null;
+    if (!proximo) return;
+    e.preventDefault();
+    setMetodo(proximo);
+    document.getElementById(`aba-${proximo}`)?.focus();
+  }
+
   return (
     <>
-      <div role="tablist" aria-label="Forma de pagamento" className="grid grid-cols-2 rounded-[3px] border border-line p-1">
+      <div role="tablist" aria-label="Forma de pagamento" onKeyDown={teclas} className="grid grid-cols-2 rounded-[3px] border border-line p-1">
         {(
           [
             ["pix", "Pix"],
@@ -27,7 +41,10 @@ export function Pagamento({ id, valor }: { id: string; valor: string }) {
             key={m}
             type="button"
             role="tab"
+            id={`aba-${m}`}
+            aria-controls={`painel-${m}`}
             aria-selected={metodo === m}
+            tabIndex={metodo === m ? 0 : -1}
             onClick={() => setMetodo(m)}
             className={`h-11 rounded-[2px] text-sm font-semibold tracking-[0.12em] uppercase transition-colors ${
               metodo === m ? "bg-primary text-card" : "text-primary hover:bg-surface"
@@ -39,7 +56,7 @@ export function Pagamento({ id, valor }: { id: string; valor: string }) {
       </div>
 
       {metodo === "pix" ? (
-        <div role="tabpanel" className="flex flex-col items-center gap-4 text-center">
+        <div role="tabpanel" id="painel-pix" aria-labelledby="aba-pix" className="flex flex-col items-center gap-4 text-center">
           <div className="flex size-[200px] items-center justify-center border border-line bg-card text-[11px] tracking-[0.14em] text-primary-deep">
             [QR CODE PIX]
           </div>
@@ -59,7 +76,7 @@ export function Pagamento({ id, valor }: { id: string; valor: string }) {
           </p>
         </div>
       ) : (
-        <div role="tabpanel" className="flex flex-col gap-4">
+        <div role="tabpanel" id="painel-cartao" aria-labelledby="aba-cartao" className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <label htmlFor="c-num" className={rotuloCampo}>
               Número do cartão

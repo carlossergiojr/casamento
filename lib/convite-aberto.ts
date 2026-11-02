@@ -6,3 +6,6 @@ export const CHAVE_CONVITE_ABERTO = "cavi-convite-aberto";
  * envelope por CSS, sem piscar. Sem JS, o <noscript> do layout faz o mesmo.
  */
 export const scriptConviteAberto = `try{if(sessionStorage.getItem("${CHAVE_CONVITE_ABERTO}"))document.documentElement.dataset.convite="aberto"}catch(e){}`;
+
+/** Disparado na `window` quando o envelope sai da frente do site (specs/002 FR-004). */
+export const EVENTO_CONVITE_ABERTO = "cavi:convite-aberto";

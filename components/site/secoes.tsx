@@ -123,7 +123,7 @@ export function ChamadaRsvp() {
               type="text"
               autoComplete="name"
               placeholder="Ex.: Maria Souza"
-              className="h-[50px] w-full rounded-[3px] border border-line bg-card px-3.5 text-base text-foreground placeholder:text-primary-deep/70 focus:border-primary focus:outline-none"
+              className="h-[50px] w-full rounded-[3px] border border-line bg-card px-3.5 text-base text-foreground placeholder:text-primary-deep/70 focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
             />
           </div>
           <button type="submit" className="botao w-full bg-primary text-card hover:bg-primary-deep">

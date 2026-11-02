@@ -56,4 +56,4 @@ export const tituloInterno = "font-serif text-[38px] leading-[1.1] text-primary 
 export const passo = "text-xs tracking-[0.22em] text-primary-deep uppercase";
 export const rotuloCampo = "text-[13px] text-primary-deep";
 export const campo =
-  "h-[50px] w-full rounded-[3px] border border-line bg-card px-3.5 text-base text-foreground placeholder:text-primary-deep/70 focus:border-primary focus:outline-none";
+  "h-[50px] w-full rounded-[3px] border border-line bg-card px-3.5 text-base text-foreground placeholder:text-primary-deep/70 focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";

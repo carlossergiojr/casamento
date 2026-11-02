@@ -32,29 +32,33 @@ Nada novo a instalar.
 - **D1 404**: `app/not-found.tsx` usando `TelaInterna` (faixa toile + "Voltar · V & C"). O
   export gera `out/404.html`, que o GitHub Pages serve sozinho. `notFound()` do presente
   presenteado já cai nela; ela oferece "Ver a lista de presentes" além de "Voltar ao convite".
-- **D2 Compartilhamento**: `metadataBase: new URL("https://carlossergiojr.github.io/casamento/")`,
+- **D2 Compartilhamento**: `metadataBase: new URL("https://carlossergiojr.github.io")`,
   `openGraph` (type website, locale pt_BR, siteName) e `twitter: summary_large_image` em
-  `app/layout.tsx`. Imagem em `app/opengraph-image.tsx` com `ImageResponse` (estática):
-  creme, borda dourada, "Victória & Carlos Sergio", data e local. Se a fonte não carregar no
-  build, usar um PNG fixo em `public/og.png`.
-- **D3 Ícone**: `app/icon.svg` com "V&C" em serif sobre `--primary`, e `app/apple-icon.png`
-  180px. Remover `app/favicon.ico` do modelo.
+  `app/layout.tsx`. Imagem gerada no build por `app/marca/og.png/route.tsx` (`ImageResponse`,
+  `force-static`, fontes TTF em `assets/fonts/`): estampa, cartão creme com fio dourado, nomes,
+  data e local. Não usamos `app/opengraph-image.tsx`: no export com `basePath` o Next gera o
+  link sem `/casamento` e o arquivo sem extensão, que o Pages serviria errado.
+- **D3 Ícone**: `app/marca/icone.png` (64px, "V&C" sobre `--primary`) e `icone-apple.png`
+  (180px), pelo mesmo motivo do D2, declarados em `metadata.icons`. `app/favicon.ico` removido.
 - **D4 Capa ↔ envelope**: o envelope, ao terminar, marca `html[data-convite="aberto"]` e
   dispara `cavi:convite-aberto` na `window`. A capa só anima quando o atributo já existe no
-  mount ou quando o evento chega. Helper `useConviteAberto()` em `lib/convite-aberto.ts`.
-- **D5 Galeria**: imagem do diálogo com `max-h-[80dvh] w-auto object-contain`.
+  mount ou quando o evento chega. Hook `useConviteAberto()` (`useSyncExternalStore`) em `lib/use-convite-aberto.ts`; o
+  `Revelar` ganha a prop `aposConvite`.
+- **D5 Galeria**: polaroid do diálogo com `max-w-[calc((100dvh-9.5rem)*9/11)]`: a largura
+  segue a altura da tela, então a foto 9:11 inteira cabe.
 - **D6 Tipografia**: `text-balance` em `h1/h2/h3` (`@layer base` em `globals.css`),
   `text-pretty` nos parágrafos longos.
 - **D7 Envelope 320px**: nomes do cartão com tamanho em `clamp()` e `whitespace-nowrap`.
 - **D8 Foco**: tirar `autoFocus` da busca. Em `campo` (`components/interno.tsx`) e no input de
-  `secoes.tsx`: `focus-visible:ring-2 ring-primary/60 ring-offset-2 ring-offset-background`.
-  Conferir o mesmo nos botões (`botao`).
+  `secoes.tsx`: `focus-visible:outline-2 outline-offset-2 outline-primary`; o mesmo contorno no
+  `@utility botao`.
 - **D9 Envelope modal**: enquanto fechado, o conteúdo do site recebe `inert`; o envelope tem
-  `role="dialog" aria-modal="true" aria-label="Convite"` e o botão recebe foco ao montar (sem
-  scroll). Ao sair, remove o `inert`.
+  `role="dialog" aria-modal="true"`. Sem foco automático (o anel apareceria no celular): com o
+  site inerte, o primeiro Tab já cai no envelope. Ao sair, remove o `inert`.
 - **D10 Rótulos PT**: editar `components/ui/dialog.tsx` e `components/ui/carousel.tsx`:
   "Fechar", "Foto anterior", "Próxima foto".
-- **D11 Abas**: usar o `Tabs` do shadcn (Base UI já faz setas/Home/End) no pagamento.
+- **D11 Abas**: as abas próprias do pagamento ganham roving tabindex, setas, Home/End e
+  `aria-controls` (mantém o visual; o `Tabs` do shadcn mudaria o desenho).
 - **D12 Sem JS**: `<noscript>` com estilo que zera opacidade/transform de `[data-revelar]`.
 - **D13 Limpeza**: `-webkit-tap-highlight-color: transparent` e `touch-action: manipulation`
   no envelope; apagar `public/{file,globe,next,vercel,window}.svg`.

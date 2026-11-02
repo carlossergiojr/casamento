@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-01
 
-**Status**: Draft
+**Status**: Implemented
 
 **Input**: "Montar spec para resolução das coisas" — o pente fino da 001 (revisão com a skill
 `web-design-guidelines` + navegador em 320/375px e desktop) achou 14 problemas visuais e de

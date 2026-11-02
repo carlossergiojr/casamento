@@ -10,7 +10,7 @@ export default function Inicio() {
     <>
       <Envelope />
       {/* Mobile-first: 390px é a referência; no desktop vira uma coluna centralizada. */}
-      <div className="mx-auto max-w-[640px] bg-background md:border-x md:border-surface">
+      <div id="site" className="mx-auto max-w-[640px] bg-background md:border-x md:border-surface">
         <Cabecalho />
         <main>
           <Capa />

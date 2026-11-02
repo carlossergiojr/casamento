@@ -58,7 +58,6 @@ export function BuscaConvite() {
           id="busca"
           type="search"
           autoComplete="name"
-          autoFocus
           value={termo}
           onChange={(e) => {
             setTermo(e.target.value);

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, useAnimate, useReducedMotion } from "motion/react";
 import { casamento, publico } from "@/lib/conteudo";
-import { CHAVE_CONVITE_ABERTO } from "@/lib/convite-aberto";
+import { CHAVE_CONVITE_ABERTO, EVENTO_CONVITE_ABERTO } from "@/lib/convite-aberto";
 
 type Fase = "fechado" | "abrindo" | "fora";
 
@@ -20,21 +20,33 @@ export function Envelope() {
   const reduzir = useReducedMotion();
   const [cena, animar] = useAnimate<HTMLDivElement>();
 
-  // Trava a rolagem do site enquanto o envelope está na tela.
+  // Enquanto o envelope está na tela, ele é um diálogo modal: o site por trás não rola nem
+  // recebe foco (specs/002 FR-010).
   useEffect(() => {
-    if (document.documentElement.dataset.convite === "aberto") {
+    const html = document.documentElement;
+    if (html.dataset.convite === "aberto") {
       setFase("fora");
       return;
     }
-    const html = document.documentElement;
+    const site = document.getElementById("site");
     html.style.overflow = "hidden";
+    site?.setAttribute("inert", "");
     return () => {
       html.style.overflow = "";
+      site?.removeAttribute("inert");
     };
   }, []);
 
+  // Saiu da frente: libera o site e avisa a capa para entrar (specs/002 FR-004).
   useEffect(() => {
-    if (fase === "fora") document.documentElement.style.overflow = "";
+    if (fase !== "fora") return;
+    const html = document.documentElement;
+    html.style.overflow = "";
+    document.getElementById("site")?.removeAttribute("inert");
+    if (html.dataset.convite !== "aberto") {
+      html.dataset.convite = "aberto";
+      window.dispatchEvent(new Event(EVENTO_CONVITE_ABERTO));
+    }
   }, [fase]);
 
   function lembrar() {
@@ -104,7 +116,7 @@ export function Envelope() {
         onClick={abrir}
         disabled={!fechado}
         aria-label="Abrir o convite"
-        className="relative w-[min(340px,86vw)] cursor-pointer rounded-[3px] outline-none [perspective:1200px] focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-8 focus-visible:ring-offset-background disabled:cursor-default"
+        className="relative w-[min(340px,86vw)] cursor-pointer rounded-[3px] outline-none [perspective:1200px] [-webkit-tap-highlight-color:transparent] touch-manipulation focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-8 focus-visible:ring-offset-background disabled:cursor-default"
         initial={reduzir ? false : { y: 24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.9, ease: SUAVE }}
@@ -129,7 +141,7 @@ export function Envelope() {
             style={{ zIndex: 2 }}
           >
             <span className="sobretitulo text-[10px]">Vamos nos casar</span>
-            <span className="font-serif text-[30px] leading-none font-light text-primary">
+            <span className="font-serif text-[clamp(22px,8vw,30px)] leading-none font-light whitespace-nowrap text-primary">
               {casamento.primeiro} <span className="text-gold italic">&amp;</span>{" "}
               {casamento.segundo.split(" ")[0]}
             </span>

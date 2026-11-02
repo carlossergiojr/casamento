@@ -29,6 +29,7 @@ function Polaroid({
   const reduzir = useReducedMotion();
   return (
     <motion.div
+      data-revelar
       className={`bg-card ${SOMBRA} ${className}`}
       initial={reduzir ? { opacity: 0, rotate: angulo } : { opacity: 0, y: 40, rotate: angulo * 3 }}
       whileInView={{ opacity: 1, y: 0, rotate: angulo }}
@@ -91,7 +92,7 @@ export function Galeria() {
             <CarouselContent>
               {galeria.fotos.map((f, i) => (
                 <CarouselItem key={f.src}>
-                  <div className={`bg-card p-2.5 pb-8 ${SOMBRA}`}>
+                  <div className={`mx-auto max-w-[calc((100dvh-9.5rem)*9/11)] bg-card p-2.5 pb-8 ${SOMBRA}`}>
                     <div className="relative aspect-[9/11]">
                       <Foto i={i} sizes="(max-width: 640px) 90vw, 560px" />
                     </div>
