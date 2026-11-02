@@ -34,7 +34,8 @@ Presentes · Confirmar · Local" e toca em "Local": a página desliza até "Como
 2. **Given** o primeiro gesto de rolagem, **Then** a barra entra suave e fica visível até o fim
    da página, sem sumir ao rolar; volta a sair só se a pessoa voltar ao topo. (Antes entrava só
    na "Nossa história", mas no celular o "Eu vou!" da capa fica abaixo da dobra: a pessoa
-   rolava ~350px sem nenhuma ação à vista.)
+   rolava ~350px sem nenhuma ação à vista.) A capa ficou só com o "Eu vou!"; "Presentes" é da
+   barra.
 3. **Given** a barra, **When** toco num atalho, **Then** a página rola até a seção.
 4. **Given** uma seção dos atalhos no meio da tela, **Then** o atalho dela aparece ativo:
    ícone e rótulo em dourado, ícone um pouco erguido, fio dourado em cima que desliza de um

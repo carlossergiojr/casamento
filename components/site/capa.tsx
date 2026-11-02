@@ -58,17 +58,10 @@ export function Capa() {
 
         <Contagem />
 
-        <div className="flex w-full flex-col gap-3">
-          <Link href="/confirmar" className="botao bg-primary text-card hover:bg-primary-deep">
-            Eu vou!
-          </Link>
-          <a
-            href="#presentes"
-            className="botao border border-primary text-primary hover:bg-primary hover:text-card"
-          >
-            Lista de presentes
-          </a>
-        </div>
+        {/* Só a ação principal; presentes e o resto ficam na barra de atalhos (specs/004). */}
+        <Link href="/confirmar" className="botao w-full bg-primary text-card hover:bg-primary-deep">
+          Eu vou!
+        </Link>
       </Revelar>
     </section>
   );

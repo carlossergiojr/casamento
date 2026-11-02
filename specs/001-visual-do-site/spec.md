@@ -52,8 +52,8 @@ site.
 ### User Story 2 - Página inicial completa (Priority: P1)
 
 O convidado rola a página e vê, na ordem do DESIGN.md: header (monograma + data), capa com foto,
-cartão sobreposto com o pássaro, nomes, data, contagem regressiva viva e botões "Eu vou!" /
-"Lista de presentes"; Nossa história; Pré-wedding em polaroids com galeria ampliada; Dress code;
+cartão sobreposto com o pássaro, nomes, data, contagem regressiva viva e botão "Eu vou!"
+(o "Lista de presentes" saiu: a barra de atalhos da specs/004 já leva lá); Nossa história; Pré-wedding em polaroids com galeria ampliada; Dress code;
 Lista de presentes; Você vem?; Como chegar com mapa; rodapé com a estampa.
 
 **Why this priority**: é o site em si.
