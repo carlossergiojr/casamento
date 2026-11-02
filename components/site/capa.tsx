@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { casamento, publico } from "@/lib/conteudo";
 import { Contagem } from "./contagem";
-import { Fio, Tinta } from "./enfeites";
+import { Tinta } from "./enfeites";
 import { Revelar } from "./revelar";
 
 export function Cabecalho() {
@@ -21,34 +21,38 @@ export function Cabecalho() {
 export function Capa() {
   return (
     <section id="inicio" className="flex flex-col">
-      <div className="relative h-[540px] overflow-hidden bg-line md:h-[640px]">
+      {/* Nomes direto no céu da foto, sem cartão: o casal fica inteiro embaixo. */}
+      <div className="relative h-[640px] overflow-hidden bg-line md:h-[760px]">
         <Image
           src={casamento.fotoCapa}
           alt={`${casamento.primeiro} e ${casamento.segundo}`}
           fill
           priority
           sizes="(max-width: 640px) 100vw, 640px"
-          className="respirar object-cover"
+          className="respirar object-cover object-bottom"
         />
         <div className="pointer-events-none absolute inset-[14px] border border-background" />
-      </div>
 
-      <Revelar aposConvite className="relative mx-[14px] -mt-40 flex flex-col items-center gap-5 bg-background px-[22px] pt-11 pb-9 text-center">
+        {/* O pássaro da estampa voando no céu, ao lado dos nomes. */}
         <img
           src={publico("/estampa/spot-bird.png")}
           alt=""
           aria-hidden="true"
-          className="absolute -top-[66px] -right-1 h-auto w-[104px]"
+          className="absolute top-[300px] right-7 h-auto w-[84px] md:top-[200px] md:right-24"
         />
-        <Fio atraso={0.1} />
-        <p className="sobretitulo">Vamos nos casar</p>
-        <h1 className="flex flex-col gap-0.5 font-serif text-[52px] leading-[1.02] font-light text-primary">
-          <Tinta atraso={0.35}>{casamento.primeiro}</Tinta>
-          <Tinta atraso={1.25} duracao={0.9} className="text-[40px] text-gold italic">
-            &amp;
-          </Tinta>
-          <Tinta atraso={1.75}>{casamento.segundo}</Tinta>
-        </h1>
+        <Revelar aposConvite className="absolute inset-x-0 top-0 flex flex-col items-center gap-4 px-6 pt-14 text-center">
+          <p className="sobretitulo">Vamos nos casar</p>
+          <h1 className="flex flex-col gap-0.5 font-serif text-[52px] leading-[1.02] font-light text-primary-deep">
+            <Tinta atraso={0.35}>{casamento.primeiro}</Tinta>
+            <Tinta atraso={1.25} duracao={0.9} className="text-[40px] text-gold italic">
+              &amp;
+            </Tinta>
+            <Tinta atraso={1.75}>{casamento.segundo}</Tinta>
+          </h1>
+        </Revelar>
+      </div>
+
+      <Revelar aposConvite atraso={0.3} className="relative flex flex-col items-center gap-5 px-[36px] pt-10 pb-9 text-center">
         <p className="font-serif text-2xl tracking-[0.1em]">{casamento.dataCapa}</p>
         <p className="text-[15px] text-primary-deep">
           {casamento.diaHora}
