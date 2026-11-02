@@ -39,6 +39,11 @@ export function Envelope() {
       setFase("fora");
       return;
     }
+    // Primeira abertura começa sempre na capa: um "#secao" no endereço (link copiado depois de
+    // tocar num atalho) ou a rolagem lembrada pelo navegador levariam direto para o meio.
+    if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+    history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
     const site = document.getElementById("site");
     html.style.overflow = "hidden";
     site?.setAttribute("inert", "");

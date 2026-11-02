@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Gift, MailCheck, MapPin, type LucideProps } from "lucide-react";
 
@@ -98,10 +98,16 @@ export function BarraAtalhos() {
 
   const visivel = rolou && !digitando;
 
-  const tocar = (id: string) => {
+  // Rola até a seção sem pôr "#secao" no endereço: senão o link copiado ou reaberto cai
+  // direto nela, por trás do envelope (o href fica para quem está sem JS).
+  const tocar = (evento: MouseEvent<HTMLAnchorElement>, id: string) => {
+    const secao = document.getElementById(id);
+    if (!secao) return;
+    evento.preventDefault();
     tocado.current = id;
     setAtivo(id);
     soltarDepois();
+    secao.scrollIntoView({ behavior: reduzir ? "auto" : "smooth" });
   };
 
   return (
@@ -133,7 +139,7 @@ export function BarraAtalhos() {
                   )}
                   <a
                     href={`#${id}`}
-                    onClick={() => tocar(id)}
+                    onClick={(evento) => tocar(evento, id)}
                     aria-current={atual ? "location" : undefined}
                     className={`flex min-h-[60px] flex-col items-center justify-center gap-1 text-[11px] font-semibold tracking-[0.16em] uppercase transition-colors duration-300 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-primary ${
                       atual ? "text-gold-text-sm" : "text-primary hover:text-primary-deep"
