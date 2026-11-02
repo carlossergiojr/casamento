@@ -21,11 +21,16 @@ desenhado à mão).
 - **D1 Itens e ordem**: ordem da página — Traje, Presentes, Confirmar, Local. Ícones de traço
   1.25: cabide (próprio, o "Shirt" do lucide é camiseta), `Gift`, `MailCheck`, `MapPin`.
   "Confirmar" se destaca com o ícone num círculo azul cheio.
-- **D2 Quando aparece**: listener de rolagem passivo; visível quando o topo de `#historia`
-  passa de 85% da altura da tela. Uma vez visível, só volta a esconder se a pessoa subir até a
-  capa de novo. Sem esconder ao rolar para baixo (previsível para quem não usa apps).
+- **D2 Quando aparece**: listener de rolagem passivo; visível com `scrollY > 24` (o primeiro
+  gesto, sem disparar com o "quique" do iOS). Só volta a esconder no topo. Sem esconder ao
+  rolar para baixo (previsível para quem não usa apps).
 - **D3 Seção ativa**: `IntersectionObserver` com `rootMargin: "-45% 0px -50% 0px"` (uma faixa
-  no meio da tela) sobre as quatro seções.
+  no meio da tela) sobre as quatro seções. No toque, o atalho vira ativo na hora e o observador
+  fica em pausa até a rolagem parar (150ms sem `scroll`).
+- **D3b Destaque do ativo**: rótulo e ícone em `text-gold-text-sm` (inativos em `text-primary`;
+  antes o ativo era `text-primary` e o inativo `text-primary-deep/75`, quase a mesma cor). Fio
+  dourado de 3px com `layoutId` (desliza entre os atalhos, mola), ícone sobe 2px e cresce 8%,
+  "Confirmar" ganha `ring` dourado. Com reduced-motion: só troca de cor, sem deslizar.
 - **D4 Teclado**: `focusin`/`focusout` no documento; com `input`/`textarea`/`select` em foco a
   barra sai.
 - **D5 Posição**: `fixed inset-x-0 bottom-0 z-40 mx-auto max-w-[640px]`, `pb` com

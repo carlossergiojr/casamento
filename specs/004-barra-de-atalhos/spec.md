@@ -29,13 +29,18 @@ Presentes · Confirmar · Local" e toca em "Local": a página desliza até "Como
 
 **Acceptance Scenarios**:
 
-1. **Given** a capa na tela, **Then** a barra não aparece (a capa já tem "Eu vou!" e "Lista de
-   presentes").
-2. **Given** a rolagem chegou à "Nossa história", **Then** a barra entra suave e fica visível
-   até o fim da página, sem sumir ao rolar.
+1. **Given** a capa parada na tela (página no topo), **Then** a barra não aparece: a foto e os
+   nomes ficam livres logo depois do envelope.
+2. **Given** o primeiro gesto de rolagem, **Then** a barra entra suave e fica visível até o fim
+   da página, sem sumir ao rolar; volta a sair só se a pessoa voltar ao topo. (Antes entrava só
+   na "Nossa história", mas no celular o "Eu vou!" da capa fica abaixo da dobra: a pessoa
+   rolava ~350px sem nenhuma ação à vista.)
 3. **Given** a barra, **When** toco num atalho, **Then** a página rola até a seção.
-4. **Given** uma seção dos atalhos no meio da tela, **Then** o atalho dela aparece ativo (cor
-   cheia e fio dourado em cima); os outros, mais claros.
+4. **Given** uma seção dos atalhos no meio da tela, **Then** o atalho dela aparece ativo:
+   ícone e rótulo em dourado, ícone um pouco erguido, fio dourado em cima que desliza de um
+   atalho para o outro ("Confirmar" ganha um anel dourado). Os outros, em azul.
+6. **Given** um toque num atalho, **Then** ele fica ativo na hora e continua ativo enquanto a
+   página desliza, sem piscar nas seções do caminho.
 5. **Given** a barra, **Then** cada atalho tem ícone **e** palavra, e "Confirmar" se destaca.
 
 ### User Story 2 - A barra não atrapalha (Priority: P1)

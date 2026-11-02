@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Gift, MailCheck, MapPin, type LucideProps } from "lucide-react";
 
@@ -22,29 +22,28 @@ const ATALHOS = [
 ];
 
 const CAMPOS = "input, textarea, select";
+/** Rolagem mínima para a barra entrar: o primeiro gesto, sem disparar com o "quique" do iOS. */
+const PRIMEIRA_ROLAGEM = 24;
+const MOLA = { type: "spring", stiffness: 480, damping: 38 } as const;
 
 /**
- * Atalhos fixos no rodapé da tela (specs/004). Entram quando a "Nossa história" aparece, ficam
- * até o fim e marcam a seção que está no meio da tela. Somem com o teclado aberto.
+ * Atalhos fixos no rodapé da tela (specs/004). Entram na primeira rolagem, ficam até o fim e
+ * marcam a seção que está no meio da tela. Somem com o teclado aberto.
  */
 export function BarraAtalhos() {
   const reduzir = useReducedMotion();
-  const [passouCapa, setPassouCapa] = useState(false);
+  const [rolou, setRolou] = useState(false);
   const [digitando, setDigitando] = useState(false);
   const [ativo, setAtivo] = useState<string | null>(null);
+  // Atalho tocado: fica ativo enquanto a página desliza até ele, sem piscar nos do caminho.
+  const tocado = useRef<string | null>(null);
 
-  // Aparece depois da capa, que já tem "Eu vou!" e "Lista de presentes" (D2).
+  // Escondida só com a capa parada na tela; entra no primeiro gesto de rolagem (D2).
   useEffect(() => {
-    const historia = document.getElementById("historia");
-    if (!historia) return;
-    const conferir = () => setPassouCapa(historia.getBoundingClientRect().top < window.innerHeight * 0.85);
+    const conferir = () => setRolou(window.scrollY > PRIMEIRA_ROLAGEM);
     conferir();
     window.addEventListener("scroll", conferir, { passive: true });
-    window.addEventListener("resize", conferir);
-    return () => {
-      window.removeEventListener("scroll", conferir);
-      window.removeEventListener("resize", conferir);
-    };
+    return () => window.removeEventListener("scroll", conferir);
   }, []);
 
   // Seção ativa: a que cruza uma faixa no meio da tela (D3).
@@ -56,6 +55,7 @@ export function BarraAtalhos() {
           if (e.isIntersecting) visiveis.add(e.target.id);
           else visiveis.delete(e.target.id);
         }
+        if (tocado.current) return;
         setAtivo(ATALHOS.find((a) => visiveis.has(a.id))?.id ?? null);
       },
       { rootMargin: "-45% 0px -50% 0px" },
@@ -65,6 +65,23 @@ export function BarraAtalhos() {
       if (secao) observador.observe(secao);
     }
     return () => observador.disconnect();
+  }, []);
+
+  // Fim da rolagem do toque (150ms sem rolar): o observador volta a mandar (D3).
+  const espera = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const soltarDepois = () => {
+    clearTimeout(espera.current);
+    espera.current = setTimeout(() => {
+      tocado.current = null;
+    }, 150);
+  };
+  useEffect(() => {
+    const aoRolar = () => tocado.current && soltarDepois();
+    window.addEventListener("scroll", aoRolar, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", aoRolar);
+      clearTimeout(espera.current);
+    };
   }, []);
 
   // Teclado aberto no campo do RSVP: a barra sai da frente (D4).
@@ -79,7 +96,13 @@ export function BarraAtalhos() {
     };
   }, []);
 
-  const visivel = passouCapa && !digitando;
+  const visivel = rolou && !digitando;
+
+  const tocar = (id: string) => {
+    tocado.current = id;
+    setAtivo(id);
+    soltarDepois();
+  };
 
   return (
     <AnimatePresence>
@@ -97,28 +120,40 @@ export function BarraAtalhos() {
               const atual = ativo === id;
               return (
                 <li key={id} className="relative">
-                  {/* Fio dourado em cima do atalho ativo. */}
-                  <span
-                    aria-hidden="true"
-                    className={`absolute inset-x-5 -top-px h-0.5 bg-gold transition-opacity duration-300 ${atual ? "opacity-100" : "opacity-0"}`}
-                  />
+                  {/* Fio dourado do ativo: desliza de um atalho para o outro. */}
+                  {atual && (
+                    <motion.span
+                      aria-hidden="true"
+                      layoutId={reduzir ? undefined : "fio-ativo"}
+                      className="absolute inset-x-4 -top-px h-[3px] rounded-b-[3px] bg-gold"
+                      initial={reduzir ? { opacity: 0 } : false}
+                      animate={{ opacity: 1 }}
+                      transition={reduzir ? { duration: 0.2 } : MOLA}
+                    />
+                  )}
                   <a
                     href={`#${id}`}
+                    onClick={() => tocar(id)}
                     aria-current={atual ? "location" : undefined}
-                    className={`flex min-h-[60px] flex-col items-center justify-center gap-1 text-[11px] font-semibold tracking-[0.16em] uppercase transition-colors focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-primary ${
-                      atual ? "text-primary" : "text-primary-deep/75 hover:text-primary"
+                    className={`flex min-h-[60px] flex-col items-center justify-center gap-1 text-[11px] font-semibold tracking-[0.16em] uppercase transition-colors duration-300 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-primary ${
+                      atual ? "text-gold-text-sm" : "text-primary hover:text-primary-deep"
                     }`}
                   >
                     {/* Mesma caixa de 28px para todos: os rótulos ficam na mesma linha. */}
-                    <span
-                      className={`flex size-7 items-center justify-center rounded-full ${destaque ? "bg-primary text-card" : ""}`}
+                    <motion.span
+                      className={`relative flex size-7 items-center justify-center rounded-full transition-shadow duration-300 ${
+                        destaque ? "bg-primary text-card" : ""
+                      } ${destaque && atual ? "ring-2 ring-gold-line ring-offset-2 ring-offset-background" : ""}`}
+                      animate={reduzir ? undefined : { y: atual ? -2 : 0, scale: atual ? 1.08 : 1 }}
+                      whileTap={reduzir ? undefined : { scale: 0.9 }}
+                      transition={MOLA}
                     >
                       {destaque ? (
                         <Icone aria-hidden="true" className="size-4" strokeWidth={1.5} />
                       ) : (
-                        <Icone aria-hidden="true" className="size-[22px]" strokeWidth={1.25} />
+                        <Icone aria-hidden="true" className="size-[22px]" strokeWidth={atual ? 1.6 : 1.25} />
                       )}
-                    </span>
+                    </motion.span>
                     {rotulo}
                   </a>
                 </li>
