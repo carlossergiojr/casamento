@@ -116,7 +116,7 @@ Obrigado — navegáveis com dados de exemplo.
 
 ### Functional Requirements
 
-- **FR-001**: Abertura com envelope animado na primeira visita da sessão, com "Pular".
+- **FR-001**: Abertura com envelope animado na primeira visita da sessão; abre ao tocar no próprio envelope (sem botões).
 - **FR-002**: Página inicial com as 9 seções na ordem e nas medidas do DESIGN.md.
 - **FR-003**: Contagem regressiva viva até 2027-01-23T16:00-03:00.
 - **FR-004**: Animações de entrada suaves; tudo respeita `prefers-reduced-motion`.
