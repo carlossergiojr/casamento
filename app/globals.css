@@ -124,3 +124,19 @@ html[data-convite="aberto"] [data-envelope]:not([data-abrindo]) {
     outline-offset: 2px;
   }
 }
+
+/* Foto da capa "respirando": zoom lentíssimo, como em filme de casamento. */
+@keyframes respirar {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+@utility respirar {
+  animation: respirar 24s ease-in-out infinite alternate;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}

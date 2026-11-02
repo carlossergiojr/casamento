@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { casamento, dressCode, formatarValor, presentes, publico } from "@/lib/conteudo";
+import { Fio } from "./enfeites";
 import { Revelar } from "./revelar";
 
 const TITULO = "font-serif text-[40px] leading-[1.1] text-primary italic";
@@ -35,7 +36,8 @@ export function DressCode() {
           </div>
         </div>
       </Revelar>
-      <Revelar className="flex w-full flex-col gap-1.5 border-t border-gold-line pt-[18px]">
+      <Revelar className="relative flex w-full flex-col gap-1.5 pt-[18px]">
+        <Fio />
         <p className="text-xs tracking-[0.2em] text-primary-deep uppercase">Evite</p>
         <p className="text-[15px]">{dressCode.evite}</p>
       </Revelar>

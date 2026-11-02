@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { historia, historiaFecho, publico } from "@/lib/conteudo";
+import { FioHistoria } from "./fio-historia";
 import { Revelar } from "./revelar";
 
 /** "*oi*" no conteúdo vira itálico. */
@@ -9,17 +10,14 @@ function comItalico(texto: string) {
   );
 }
 
-// Alternância do DESIGN.md: esquerda, direita com fio, borboleta, esquerda com fio.
-const LADOS = [
-  "pr-12",
-  "pl-12 pr-4 text-right border-r border-gold-line",
-  "",
-  "pr-12 pl-4 border-l border-gold-line",
-];
+// Alternância do DESIGN.md: esquerda, direita, borboleta, esquerda. O "fio" dos trechos agora é
+// o <FioHistoria>, que desce pela margem acompanhando a rolagem.
+const LADOS = ["pr-12", "pl-12 text-right", "", "pr-12"];
 
 export function Historia() {
   return (
     <section id="historia" className="relative flex flex-col gap-9 bg-surface px-7 pt-16 pb-[72px]">
+      <FioHistoria />
       <Revelar className="flex flex-col items-center gap-2.5">
         <img src={publico("/estampa/spot-butterfly-1.png")} alt="" aria-hidden="true" className="h-auto w-[68px]" />
         <h2 className="font-serif text-[40px] text-primary italic">Nossa história</h2>

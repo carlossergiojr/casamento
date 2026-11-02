@@ -58,7 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <script dangerouslySetInnerHTML={{ __html: scriptConviteAberto }} />
         <noscript>
           <style>
-            {"[data-envelope]{display:none!important}[data-revelar]{opacity:1!important;transform:none!important}"}
+            {"[data-envelope]{display:none!important}[data-revelar]{opacity:1!important;transform:none!important;clip-path:none!important}"}
           </style>
         </noscript>
       </head>

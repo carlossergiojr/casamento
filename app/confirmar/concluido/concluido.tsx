@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Petalas } from "@/components/site/petalas";
 import { Revelar } from "@/components/site/revelar";
 import { casamento, convitesExemplo } from "@/lib/conteudo";
 
@@ -41,6 +42,7 @@ export function Concluido() {
 
   return (
     <>
+      {alguemVai && <Petalas />}
       <Revelar className="flex flex-col items-center gap-5">
         <h1 className="font-serif text-[40px] leading-[1.1] text-primary italic">
           {alguemVai || !convite ? "Que alegria!" : "Obrigado por avisar"}

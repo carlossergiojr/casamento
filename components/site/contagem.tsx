@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { casamento } from "@/lib/conteudo";
+import { Fio } from "./enfeites";
 
 const ALVO = new Date(casamento.inicio).getTime();
 
@@ -34,10 +35,12 @@ export function Contagem() {
 
   return (
     <div
-      className="grid w-full grid-cols-3 border-y border-gold-line py-4"
+      className="relative grid w-full grid-cols-3 py-4"
       role="timer"
       aria-label={`Faltam ${r.dias} dias, ${r.horas} horas e ${r.min} minutos`}
     >
+      <Fio atraso={0.9} />
+      <Fio lado="base" atraso={1.1} />
       {itens.map((item, i) => (
         <div
           key={item.rotulo}
