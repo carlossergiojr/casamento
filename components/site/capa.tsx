@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { casamento } from "@/lib/conteudo";
+import { casamento, publico } from "@/lib/conteudo";
 import { Contagem } from "./contagem";
 import { Tinta } from "./enfeites";
 import { Revelar } from "./revelar";
@@ -33,6 +33,13 @@ export function Capa() {
         />
         <div className="pointer-events-none absolute inset-[14px] border border-background" />
 
+        {/* O pássaro da estampa voando no céu, ao lado dos nomes. */}
+        <img
+          src={publico("/estampa/spot-bird.png")}
+          alt=""
+          aria-hidden="true"
+          className="absolute top-[300px] right-7 h-auto w-[84px] md:top-[200px] md:right-24"
+        />
         <Revelar aposConvite className="absolute inset-x-0 top-0 flex flex-col items-center gap-4 px-6 pt-14 text-center">
           <p className="sobretitulo">Vamos nos casar</p>
           <h1 className="flex flex-col gap-0.5 font-serif text-[52px] leading-[1.02] font-light text-primary-deep">
