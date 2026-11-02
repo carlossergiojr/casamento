@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Cavi 2027 — Página inicial (celular)</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&amp;family=Karla:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FAF7F1}
+a{color:#4E5769}a:hover{color:#2B3140}
+.toile{background-image:url(../assets/toile.jpg);background-size:300px;background-repeat:repeat;background-position:center}
+</style>
+</helmet>
+<div style="width: 390px; background: #FAF7F1; color: #2B3140; font-family: 'Karla', sans-serif; font-size: 16px; line-height: 1.6; display: flex; flex-direction: column">
+
+<header style="height: 52px; padding: 0 20px; display: flex; align-items: center; justify-content: space-between">
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 22px; color: #636E84">C <span style="color: #9C7A45">&amp;</span> V</span>
+<span style="font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase; color: #4E5769">22.01.2027</span>
+</header>
+
+<section id="inicio" style="display: flex; flex-direction: column">
+<div style="position: relative; height: 600px; background: #9AA3B4; display: flex; align-items: center; justify-content: center">
+<div style="position: absolute; top: 14px; right: 14px; bottom: 14px; left: 14px; border: 1px solid #FAF7F1"></div>
+<span style="font-size: 12px; letter-spacing: 0.16em; color: #FFFFFF; text-align: center; line-height: 1.8">[FOTO DO CASAL]<br>tela cheia, retrato</span>
+</div>
+
+<div style="position: relative; margin: -96px 18px 0; background: #FAF7F1; padding: 44px 22px 36px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; border-top: 1px solid #C2A170">
+<img src="../assets/spot-bird.png" alt="" aria-hidden="true" style="position: absolute; top: -62px; right: -6px; width: 120px; height: 102px">
+<p style="margin: 0; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: #4E5769">Vamos nos casar</p>
+<h1 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 52px; line-height: 1.02; color: #636E84; display: flex; flex-direction: column; gap: 2px">
+<span>Carlos Sérgio</span>
+<span style="font-style: italic; font-size: 40px; color: #9C7A45">&amp;</span>
+<span>Victória</span>
+</h1>
+<p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 24px; letter-spacing: 0.1em; color: #2B3140">22 · 01 · 2027</p>
+<p style="margin: 0; font-size: 15px; color: #4E5769">Sexta-feira, às 16h<br>Campestre · Feira de Santana, BA</p>
+
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; border-top: 1px solid #C2A170; border-bottom: 1px solid #C2A170; padding: 16px 0">
+<div style="display: flex; flex-direction: column; align-items: center">
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 44px; line-height: 1; color: #9C7A45">{{days}}</span>
+<span style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #4E5769; margin-top: 6px">dias</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; border-left: 1px solid #E9EBEF; border-right: 1px solid #E9EBEF">
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 44px; line-height: 1; color: #9C7A45">{{hours}}</span>
+<span style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #4E5769; margin-top: 6px">horas</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center">
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 44px; line-height: 1; color: #9C7A45">{{mins}}</span>
+<span style="font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #4E5769; margin-top: 6px">min</span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px; width: 100%">
+<a href="RSVP-Busca.dc.html" style="display: block; padding: 15px; background: #636E84; color: #FFFFFF; text-decoration: none; font-size: 14px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 3px">Eu vou!</a>
+<a href="#presentes" style="display: block; padding: 14px; border: 1px solid #636E84; color: #636E84; text-decoration: none; font-size: 14px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 3px">Lista de presentes</a>
+</div>
+</div>
+</section>
+
+<section id="historia" style="position: relative; padding: 64px 28px 72px; background: #E9EBEF; display: flex; flex-direction: column; gap: 36px">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px">
+<img src="../assets/spot-butterfly-1.png" alt="" aria-hidden="true" style="width: 54px; height: 54px">
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-style: italic; font-size: 40px; color: #636E84">Nossa história</h2>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px; padding-right: 48px">
+<p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 25px; line-height: 1.35">A gente se encontrou cedo demais para entender o que era.</p>
+<p style="margin: 0; font-size: 15px; color: #4E5769">Viramos amigos. Mas alguma coisa ficou.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px; padding-left: 48px; text-align: right; border-right: 1px solid #C2A170; padding-right: 16px">
+<p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 25px; line-height: 1.35">Quatro anos depois, uma conversa recomeçou exatamente onde tinha parado.</p>
+<p style="margin: 0; font-size: 15px; color: #4E5769">E dessa vez não deu para fingir que era só amizade.</p>
+</div>
+
+<div style="display: flex; align-items: center; gap: 16px">
+<img src="../assets/spot-butterfly-2.png" alt="" aria-hidden="true" style="width: 84px; height: 45px; flex: none">
+<p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 22px; line-height: 1.4; color: #4E5769">Teve um filme. Teve um cinema. Teve uma noite que nunca mais terminou.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px; padding-right: 48px; border-left: 1px solid #C2A170; padding-left: 16px">
+<p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 25px; line-height: 1.35">Dez anos depois daquele primeiro <em>oi</em>, ele perguntou.</p>
+<p style="margin: 0; font-size: 15px; color: #4E5769">Ela já sabia a resposta desde 2015.</p>
+</div>
+
+<p style="margin: 8px 0 0; text-align: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 34px; line-height: 1.2; color: #9C7A45">Agora só falta você.</p>
+</section>
+
+<section id="galeria" style="padding: 64px 20px 72px; display: flex; flex-direction: column; gap: 28px">
+<h2 style="margin: 0; text-align: center; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-style: italic; font-size: 40px; color: #636E84">Pré-wedding</h2>
+<div style="display: flex; flex-direction: column; align-items: center">
+<div style="width: 270px; background: #FFFFFF; padding: 12px 12px 40px; transform: rotate(-3deg); box-shadow: 0 1px 3px rgba(43,49,64,0.12); display: flex; flex-direction: column; gap: 10px">
+<div style="height: 300px; background: #E9EBEF; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 0.14em; color: #4E5769">[FOTO 1]</div>
+<span style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; text-align: center; color: #4E5769">[legenda curta]</span>
+</div>
+<div style="display: flex; gap: 0; margin-top: -24px">
+<div style="width: 170px; background: #FFFFFF; padding: 10px 10px 30px; transform: rotate(4deg) translateX(12px); box-shadow: 0 1px 3px rgba(43,49,64,0.12)">
+<div style="height: 170px; background: #E9EBEF; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 0.14em; color: #4E5769">[FOTO 2]</div>
+</div>
+<div style="width: 170px; background: #FFFFFF; padding: 10px 10px 30px; transform: rotate(-2deg) translate(-8px, 30px); box-shadow: 0 1px 3px rgba(43,49,64,0.12)">
+<div style="height: 170px; background: #E9EBEF; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 0.14em; color: #4E5769">[FOTO 3]</div>
+</div>
+</div>
+</div>
+<a href="#galeria" style="margin-top: 32px; align-self: center; display: flex; align-items: center; min-height: 44px; font-size: 14px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #636E84; text-decoration: none; border-bottom: 1px solid #C2A170">Ver todas as fotos</a>
+</section>
+
+<section id="dresscode" style="position: relative; padding: 64px 28px; background: #E9EBEF; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px">
+<img src="../assets/spot-butterfly-1.png" alt="" aria-hidden="true" style="position: absolute; top: 28px; left: 22px; width: 44px; height: 44px; transform: rotate(-18deg)">
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-style: italic; font-size: 40px; color: #636E84">Dress code</h2>
+<p style="margin: 0; font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: #4E5769">[TRAJE ESPERADO]</p>
+<p style="margin: 0; font-size: 15px">[Texto curto explicando o traje — ainda a definir.]</p>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 12px">
+<p style="margin: 0; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #4E5769">Cores sugeridas</p>
+<div style="display: flex; gap: 14px">
+<span style="width: 44px; height: 44px; border-radius: 50%; border: 1px dashed #4E5769; background: #FAF7F1"></span>
+<span style="width: 44px; height: 44px; border-radius: 50%; border: 1px dashed #4E5769; background: #FAF7F1"></span>
+<span style="width: 44px; height: 44px; border-radius: 50%; border: 1px dashed #4E5769; background: #FAF7F1"></span>
+<span style="width: 44px; height: 44px; border-radius: 50%; border: 1px dashed #4E5769; background: #FAF7F1"></span>
+</div>
+</div>
+<div style="width: 100%; border-top: 1px solid #C2A170; padding-top: 18px; display: flex; flex-direction: column; gap: 6px">
+<p style="margin: 0; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #4E5769">Evite</p>
+<p style="margin: 0; font-size: 15px">[O que evitar — a definir]</p>
+</div>
+</section>
+
+<section id="presentes" style="padding: 64px 20px; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; padding: 0 8px">
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-style: italic; font-size: 40px; color: #636E84">Lista de presentes</h2>
+<p style="margin: 0; font-size: 15px; color: #4E5769">Escolha um presente e pague aqui mesmo, por Pix ou cartão. Dá para deixar um recadinho junto.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{gifts}}" as="g" hint-placeholder-count="6">
+<div style="background: #FFFFFF; border: 1px solid #E9EBEF; border-radius: 3px; display: flex; flex-direction: column">
+<div style="height: 130px; background: #E9EBEF; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 0.14em; color: #4E5769">[FOTO]</div>
+<div style="padding: 12px; display: flex; flex-direction: column; gap: 4px; flex: 1">
+<span style="font-size: 14px; line-height: 1.35">{{g.name}}</span>
+<span style="font-family: 'Cormorant Garamond', serif; font-size: 24px; color: #9C7A45">{{g.price}}</span>
+<sc-if value="{{g.available}}" hint-placeholder-val="{{true}}">
+<a href="Presente-Detalhe.dc.html" style="margin-top: 6px; display: block; text-align: center; padding: 11px 6px; border: 1px solid #636E84; color: #636E84; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 3px">Presentear</a>
+</sc-if>
+<sc-if value="{{g.taken}}" hint-placeholder-val="{{false}}">
+<span style="margin-top: 6px; display: block; text-align: center; padding: 11px 6px; border: 1px solid #C2A170; color: #8E6E3C; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 3px">Presenteado ✓</span>
+</sc-if>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section id="rsvp" style="position: relative; padding: 64px 28px; background: #E9EBEF; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px">
+<img src="../assets/spot-bird.png" alt="" aria-hidden="true" style="width: 110px; height: 94px; transform: scaleX(-1)">
+<h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-style: italic; font-size: 40px; line-height: 1.1; color: #636E84">Você vem?</h2>
+<p style="margin: 0; font-size: 15px; color: #4E5769">Confirme até <strong style="color: #2B3140">22 de dezembro de 2026</strong>.</p>
+<div style="width: 100%; display: flex; flex-direction: column; gap: 8px; text-align: left">
+<label for="rsvp-nome" style="font-size: 13px; color: #4E5769">Seu nome ou código do convite</label>
+<input id="rsvp-nome" type="text" placeholder="Ex.: Maria Souza" style="box-sizing: border-box; width: 100%; height: 50px; padding: 0 14px; border: 1px solid #9AA3B4; background: #FFFFFF; font-family: 'Karla', sans-serif; font-size: 16px; color: #2B3140; border-radius: 3px">
+</div>
+<a href="RSVP-Busca.dc.html" style="display: block; width: 100%; box-sizing: border-box; padding: 15px; background: #636E84; color: #FFFFFF; text-decoration: none; font-size: 14px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; border-radius: 3px">Buscar meu convite</a>
+</section>
+
+<section id="local" style="padding: 64px 20px; display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; text-align: center; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-style: italic; font-size: 40px; color: #636E84">Como chegar</h2>
+<div style="height: 240px; background: #E9EBEF; border: 1px solid #C2A170; display: flex; align-items: center; justify-content: center; font-size: 12px; letter-spacing: 0.14em; color: #4E5769">[MAPA — GOOGLE MAPS]</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 0 4px">
+<p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 28px; color: #2B3140">Campestre</p>
+<p style="margin: 0; font-size: 15px">R. Rubens Francisco Dias, 2101 — Papagaio<br>Feira de Santana / BA · CEP 44059-370</p>
+<p style="margin: 0; font-size: 13px; color: #4E5769">Rua Zeus, entre os condomínios Aquarela Ville e Amarilis</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+<a href="https://maps.google.com" style="display: block; text-align: center; padding: 14px 6px; background: #636E84; color: #FFFFFF; text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 3px">Abrir rota</a>
+<button type="button" style="padding: 14px 6px; border: 1px solid #636E84; background: transparent; color: #636E84; font-family: 'Karla', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 3px">Copiar endereço</button>
+</div>
+</section>
+
+<footer style="display: flex; flex-direction: column">
+<div class="toile" style="height: 160px; border-top: 1px solid #C2A170"></div>
+<div style="padding: 36px 28px 44px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center">
+<p style="margin: 0; font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 40px; color: #636E84">C <span style="color: #9C7A45; font-style: italic">&amp;</span> V</p>
+<p style="margin: 0; font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase; color: #4E5769">22.01.2027 · #Cavi2027</p>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":5900}}'>
+class Component extends DCLogic {
+renderVals() {
+var target = new Date('2027-01-22T16:00:00-03:00').getTime();
+var diff = Math.max(0, target - Date.now());
+var days = Math.floor(diff / 86400000);
+var hours = Math.floor((diff % 86400000) / 3600000);
+var mins = Math.floor((diff % 3600000) / 60000);
+var gifts = [
+{ name: '[Nome do presente]', price: 'R$ [valor]', available: true, taken: false },
+{ name: '[Nome do presente]', price: 'R$ [valor]', available: true, taken: false },
+{ name: '[Nome do presente]', price: 'R$ [valor]', available: false, taken: true },
+{ name: '[Nome do presente]', price: 'R$ [valor]', available: true, taken: false }
+];
+return { days: days, hours: String(hours).padStart(2, '0'), mins: String(mins).padStart(2, '0'), gifts: gifts };
+}
+}
+</script>
+</body>
+</html>

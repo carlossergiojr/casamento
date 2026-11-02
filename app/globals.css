@@ -1,0 +1,113 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/* Tokens do DESIGN.md (specs/001-visual-do-site/DESIGN.md §1). Site só no claro: é um convite. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--card);
+  --color-popover-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--card);
+  --color-primary-deep: var(--primary-deep);
+  --color-secondary: var(--surface);
+  --color-secondary-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-muted: var(--surface);
+  --color-muted-foreground: var(--primary-deep);
+  --color-accent: var(--surface);
+  --color-accent-foreground: var(--foreground);
+  --color-destructive: #a5483f;
+  --color-border: var(--line);
+  --color-input: var(--line);
+  --color-ring: var(--primary);
+  --color-line: var(--line);
+  --color-gold: var(--gold);
+  --color-gold-line: var(--gold-line);
+  --color-gold-text-sm: var(--gold-text-sm);
+
+  --font-sans: var(--font-karla);
+  --font-serif: var(--font-cormorant);
+  --font-heading: var(--font-cormorant);
+
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius);
+  --radius-2xl: var(--radius);
+}
+
+:root {
+  --background: #faf7f1; /* creme */
+  --surface: #e9ebef; /* seções alternadas, placeholders */
+  --card: #ffffff;
+  --foreground: #2b3140;
+  --primary: #636e84; /* títulos, botões */
+  --primary-deep: #4e5769; /* textos secundários */
+  --line: #9aa3b4; /* bordas — nunca texto */
+  --gold: #9c7a45; /* só texto ≥ 24px */
+  --gold-line: #c2a170; /* fios — nunca texto */
+  --gold-text-sm: #8e6e3c; /* dourado para texto pequeno */
+  --radius: 3px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+/* Convite já aberto nesta sessão: o envelope nem aparece (components/envelope.tsx). */
+html[data-convite="aberto"] [data-envelope] {
+  display: none;
+}
+
+@utility toile {
+  background-image: url("/estampa/toile.jpg");
+  background-size: 300px;
+  background-repeat: repeat;
+  background-position: center;
+}
+
+/* Sobretítulo (overline): 11–12px, caixa alta, espaçada. */
+@utility sobretitulo {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--primary-deep);
+}
+
+/* Botão do DESIGN.md: 13–14px, 600, caixa alta, .14em. */
+@utility botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 16px;
+  border-radius: var(--radius);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
