@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Revelar } from "@/components/site/revelar";
 import { casamento, convitesExemplo } from "@/lib/conteudo";
 
-/** Data no formato do iCalendar (UTC): 20270122T190000Z. */
+/** Data no formato do iCalendar (UTC): 20270123T190000Z. */
 const ics = (iso: string) => new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
 
 function baixarAgenda() {
@@ -19,7 +19,7 @@ function baixarAgenda() {
     `DTSTAMP:${ics(new Date().toISOString())}`,
     `DTSTART:${ics(casamento.inicio)}`,
     `DTEND:${ics(casamento.fim)}`,
-    `SUMMARY:Casamento ${casamento.noivo} & ${casamento.noiva}`,
+    `SUMMARY:Casamento ${casamento.primeiro} & ${casamento.segundo}`,
     `LOCATION:${l.nome}\\, ${l.endereco.replace(",", "\\,")}\\, ${l.cidadeCep}`,
     `DESCRIPTION:${casamento.hashtag}`,
     "END:VEVENT",

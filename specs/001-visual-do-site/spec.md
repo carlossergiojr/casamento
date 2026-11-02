@@ -13,7 +13,7 @@ abre para entrar no site. Animações e beleza, não um site parado. Publicar ho
 
 ## Contexto
 
-O site é o convite digital do casamento (22/01/2027, 16h, Campestre, Feira de Santana/BA). Os
+O site é o convite digital do casamento (23/01/2027, 16h, Campestre, Feira de Santana/BA). Os
 convites impressos já têm QR Code. Esta feature entrega **só o visual**: todas as telas
 desenhadas, navegáveis, com dados de exemplo. Banco, confirmação gravada, pagamento e e-mail
 ficam para as próximas features.
@@ -63,7 +63,7 @@ Lista de presentes; Você vem?; Como chegar com mapa; rodapé com a estampa.
 **Acceptance Scenarios**:
 
 1. **Given** a capa, **When** o tempo passa, **Then** a contagem (dias/horas/min até
-   22/01/2027 16h, horário de Brasília) se atualiza sozinha.
+   23/01/2027 16h, horário de Brasília) se atualiza sozinha.
 2. **Given** qualquer seção, **When** ela entra na tela, **Then** aparece com fade/slide suave
    (sem movimento com `prefers-reduced-motion`).
 3. **Given** a galeria, **When** o convidado toca em "Ver todas as fotos", **Then** abre um
@@ -107,7 +107,7 @@ Obrigado — navegáveis com dados de exemplo.
 
 ### Edge Cases
 
-- Depois de 22/01/2027 16h a contagem mostra zeros (sem números negativos).
+- Depois de 23/01/2027 16h a contagem mostra zeros (sem números negativos).
 - Imagem de exemplo fora do ar: o espaço mantém a cor `surface` e o layout não quebra.
 - Telas largas (desktop): o conteúdo fica centralizado com largura máxima confortável, sem
   esticar a capa.
@@ -118,7 +118,7 @@ Obrigado — navegáveis com dados de exemplo.
 
 - **FR-001**: Abertura com envelope animado na primeira visita da sessão, com "Pular".
 - **FR-002**: Página inicial com as 9 seções na ordem e nas medidas do DESIGN.md.
-- **FR-003**: Contagem regressiva viva até 2027-01-22T16:00-03:00.
+- **FR-003**: Contagem regressiva viva até 2027-01-23T16:00-03:00.
 - **FR-004**: Animações de entrada suaves; tudo respeita `prefers-reduced-motion`.
 - **FR-005**: Telas do RSVP (4) e dos presentes (3) navegáveis com dados de exemplo.
 - **FR-006**: Imagens faltantes usam fotos aleatórias da internet (fáceis de trocar num lugar só).

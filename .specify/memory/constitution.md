@@ -1,13 +1,14 @@
 <!--
 SYNC IMPACT REPORT
-Versão: (template) → 1.0.0 — ratificação inicial, constituição curta de propósito.
+Versão: 1.0.0 → 1.0.1 — PATCH: glossário fixa a ordem dos nomes (Victória & Carlos, V & C).
+Histórico: (template) → 1.0.0 — ratificação inicial, constituição curta de propósito.
 Templates (.specify/templates/*): genéricos — sem ajuste.
 TODOs pendentes: nenhum
 -->
 
 # Constituição do site Cavi 2027
 
-Site do casamento de **Carlos Sérgio & Victória** — sexta-feira, 22/01/2027, 16h, Campestre
+Site do casamento de **Victória & Carlos Sergio** — sábado, 23/01/2027, 16h, Campestre
 (Feira de Santana/BA). Quem abre é convidado, quase sempre pelo celular, vindo do QR Code do
 convite. Idioma do produto e da documentação: **PT-BR**.
 
@@ -17,7 +18,7 @@ convite. Idioma do produto e da documentação: **PT-BR**.
 - **Convidado**: pessoa nomeada num Convite. Só existe se veio do convite impresso.
 - **Confirmação (RSVP)**: resposta Vou / Não vou de cada Convidado, até 22/12/2026.
 - **Presente**: item da lista, com foto, nome e valor; pode ser **Presenteado**.
-- **Noivos**: Carlos e Victória — os únicos que veem as respostas e os presentes recebidos.
+- **Noivos**: Victória e Carlos (nessa ordem em todo o site: "Victória & Carlos", "V & C") — os únicos que veem as respostas e os presentes recebidos.
 
 ## Princípios
 
@@ -68,4 +69,4 @@ Esta constituição prevalece sobre outras convenções. Mudança = editar este 
 justificativa e subir a versão (MAJOR remove/redefine princípio, MINOR acrescenta, PATCH
 esclarece).
 
-**Version**: 1.0.0 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01
+**Version**: 1.0.1 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-01

@@ -1,8 +1,8 @@
 # Briefing — Site do casamento (#Cavi2027)
 
 ## O essencial
-- **Noivos:** Carlos Sérgio Lima da Conceição Júnior & Victória Montenegro Mariani Alves
-- **Data:** Sexta-feira, 22 de janeiro de 2027 — **16h**
+- **Noivos:** Victória Montenegro Mariani Alves & Carlos Sergio Lima da Conceição Júnior (no site: "Victória & Carlos", monograma "V & C"; Sergio sem acento)
+- **Data:** Sábado, 23 de janeiro de 2027 — **16h**
 - **Local:** Campestre
 - **Endereço:** R. Rubens Francisco Dias, 2101 — Papagaio, Feira de Santana / BA — CEP 44059-370
   (Rua Zeus, entre os condomínios Aquarela Ville e Amarilis)

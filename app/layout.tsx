@@ -18,9 +18,9 @@ const karla = Karla({
 });
 
 export const metadata: Metadata = {
-  title: "Carlos Sérgio & Victória · 22.01.2027",
+  title: "Victória & Carlos Sergio · 23.01.2027",
   description:
-    "Vamos nos casar! Sexta-feira, 22 de janeiro de 2027, às 16h, no Campestre — Feira de Santana, BA. #Cavi2027",
+    "Vamos nos casar! Sábado, 23 de janeiro de 2027, às 16h, no Campestre — Feira de Santana, BA. #Cavi2027",
 };
 
 export const viewport: Viewport = {

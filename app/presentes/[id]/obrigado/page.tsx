@@ -3,7 +3,7 @@ import { TelaSucesso } from "@/components/interno";
 import { formatarValor, presentes } from "@/lib/conteudo";
 import { Obrigado } from "./obrigado";
 
-export const metadata = { title: "Muito obrigado! · C & V" };
+export const metadata = { title: "Muito obrigado! · V & C" };
 
 export function generateStaticParams() {
   return presentes.map((p) => ({ id: p.id }));

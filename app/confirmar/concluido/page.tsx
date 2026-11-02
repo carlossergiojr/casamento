@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { TelaSucesso } from "@/components/interno";
 import { Concluido } from "./concluido";
 
-export const metadata = { title: "Que alegria! · C & V" };
+export const metadata = { title: "Que alegria! · V & C" };
 
 export default function ConfirmacaoConcluida() {
   return (

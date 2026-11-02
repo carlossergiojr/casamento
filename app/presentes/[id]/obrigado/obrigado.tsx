@@ -49,7 +49,7 @@ export function Obrigado({ id, nome, valor }: { id: string; nome: string; valor:
       </Revelar>
 
       <p className="font-serif text-xl text-primary-deep italic">
-        Com carinho, {casamento.noivo.split(" ")[0]} &amp; {casamento.noiva}
+        Com carinho, {casamento.casalCurto}
       </p>
 
       <div className="mt-auto flex w-full flex-col gap-3">

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { casamento } from "@/lib/conteudo";
 import { Revelar } from "@/components/site/revelar";
 
-/** Moldura das telas internas: faixa toile de 56px + nav "Voltar · C & V" (DESIGN.md §1). */
+/** Moldura das telas internas: faixa toile de 56px + nav "Voltar · V & C" (DESIGN.md §1). */
 export function TelaInterna({
   voltar,
   rotuloVoltar = "Voltar",

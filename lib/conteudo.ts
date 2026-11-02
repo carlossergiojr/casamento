@@ -7,16 +7,18 @@ const foto = (semente: string, largura: number, altura: number) =>
   `https://picsum.photos/seed/cavi-${semente}/${largura}/${altura}`;
 
 export const casamento = {
-  noivo: "Carlos Sérgio",
-  noiva: "Victória",
-  monograma: { a: "C", b: "V" },
-  /** 22/01/2027 16h, horário de Brasília. */
-  inicio: "2027-01-22T16:00:00-03:00",
-  fim: "2027-01-23T02:00:00-03:00",
-  dataCurta: "22.01.2027",
-  dataCapa: "22 · 01 · 2027",
-  diaHora: "Sexta-feira, às 16h",
-  dataPorExtenso: "22 de janeiro",
+  /** Ordem dos nomes em todo o site: Victória primeiro. */
+  primeiro: "Victória",
+  segundo: "Carlos Sergio",
+  casalCurto: "Victória & Carlos",
+  monograma: { a: "V", b: "C" },
+  /** 23/01/2027 (sábado) 16h, horário de Brasília. */
+  inicio: "2027-01-23T16:00:00-03:00",
+  fim: "2027-01-24T02:00:00-03:00",
+  dataCurta: "23.01.2027",
+  dataCapa: "23 · 01 · 2027",
+  diaHora: "Sábado, às 16h",
+  dataPorExtenso: "23 de janeiro",
   hashtag: "#Cavi2027",
   prazoRsvp: "22 de dezembro de 2026",
   local: {

@@ -3,7 +3,7 @@ import { TelaInterna } from "@/components/interno";
 import { convitesExemplo } from "@/lib/conteudo";
 import { RespostaConvite } from "./resposta";
 
-export const metadata = { title: "Confirme sua presença · C & V" };
+export const metadata = { title: "Confirme sua presença · V & C" };
 
 export function generateStaticParams() {
   return convitesExemplo.map((c) => ({ codigo: c.codigo }));

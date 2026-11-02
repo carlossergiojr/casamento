@@ -23,7 +23,7 @@ export function Capa() {
       <div className="relative h-[600px] bg-line md:h-[680px]">
         <Image
           src={casamento.fotoCapa}
-          alt={`${casamento.noivo} e ${casamento.noiva}`}
+          alt={`${casamento.primeiro} e ${casamento.segundo}`}
           fill
           priority
           sizes="(max-width: 640px) 100vw, 640px"
@@ -41,9 +41,9 @@ export function Capa() {
         />
         <p className="sobretitulo">Vamos nos casar</p>
         <h1 className="flex flex-col gap-0.5 font-serif text-[52px] leading-[1.02] font-light text-primary">
-          <span>{casamento.noivo}</span>
+          <span>{casamento.primeiro}</span>
           <span className="text-[40px] text-gold italic">&amp;</span>
-          <span>{casamento.noiva}</span>
+          <span>{casamento.segundo}</span>
         </h1>
         <p className="font-serif text-2xl tracking-[0.1em]">{casamento.dataCapa}</p>
         <p className="text-[15px] text-primary-deep">

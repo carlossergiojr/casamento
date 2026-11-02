@@ -102,8 +102,8 @@ export function Envelope() {
               >
                 <span className="sobretitulo text-[10px]">Vamos nos casar</span>
                 <span className="font-serif text-[30px] leading-none font-light text-primary">
-                  {casamento.noivo.split(" ")[0]}{" "}
-                  <span className="text-gold italic">&amp;</span> {casamento.noiva}
+                  {casamento.primeiro}{" "}
+                  <span className="text-gold italic">&amp;</span> {casamento.segundo.split(" ")[0]}
                 </span>
                 <span className="font-serif text-[17px] tracking-[0.1em]">{casamento.dataCapa}</span>
               </motion.div>

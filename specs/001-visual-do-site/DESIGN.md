@@ -1,6 +1,6 @@
 # Site Cavi 2027 — Handoff de design
 
-Site do casamento de **Carlos Sérgio & Victória** — 22/01/2027, 16h, Campestre (Feira de Santana/BA).
+Site do casamento de **Victória & Carlos Sergio** — 23/01/2027, 16h, Campestre (Feira de Santana/BA).
 Mobile-first (a maioria abre pelo QR Code). Deploy: GitHub Pages em `carlossergiojr.github.io/casamento/`.
 
 `design/` tem as 8 telas desenhadas (HTML com estilos inline, 390px de largura) — use como **referência visual e de medidas**, não como código final. Elas usam um runtime do canvas (`<x-dc>`, `{{holes}}`, `<sc-for>`, `<sc-if>`), então não abrem perfeitas no navegador puro.
@@ -61,15 +61,15 @@ Capa, Nossa história, galeria em polaroid e rodapé: **Tailwind puro** (editori
 
 ## 3. Página inicial (ordem das seções)
 
-1. **Header** 52px: monograma "C & V" (& dourado) à esquerda, "22.01.2027" à direita.
-2. **Capa**: foto do casal em tela cheia (retrato, ~600px de altura no celular) com moldura fina creme inset 14px. Cartão creme sobreposto (−96px) com fio dourado no topo e o pássaro pousado no canto. Dentro: overline "Vamos nos casar", nomes (52px, light), "&" dourado itálico, data "22 · 01 · 2027", "Sexta-feira, às 16h / Campestre · Feira de Santana, BA", **contagem regressiva** (dias/horas/min, números dourados 44px, entre fios dourados), botões **"Eu vou!"** (→ RSVP) e **"Lista de presentes"** (→ #presentes).
+1. **Header** 52px: monograma "V & C" (& dourado) à esquerda, "23.01.2027" à direita.
+2. **Capa**: foto do casal em tela cheia (retrato, ~600px de altura no celular) com moldura fina creme inset 14px. Cartão creme sobreposto (−96px) com fio dourado no topo e o pássaro pousado no canto. Dentro: overline "Vamos nos casar", nomes (52px, light), "&" dourado itálico, data "23 · 01 · 2027", "Sábado, às 16h / Campestre · Feira de Santana, BA", **contagem regressiva** (dias/horas/min, números dourados 44px, entre fios dourados), botões **"Eu vou!"** (→ RSVP) e **"Lista de presentes"** (→ #presentes).
 3. **Nossa história** (fundo surface): borboleta + título; o texto em trechos alternando esquerda/direita com fios dourados; fecha com "Agora só falta você." em dourado itálico 34px. Texto final está no briefing.
 4. **Pré-wedding**: polaroids levemente rotacionadas (−3°, 4°, −2°), uma grande + duas sobrepostas; link "Ver todas as fotos" → Dialog com carrossel.
 5. **Dress code** (surface): traje, 4 círculos de cores sugeridas, "Evite". Texto ainda a definir.
 6. **Lista de presentes**: grade 2 colunas; card = foto, nome, preço (dourado), botão "Presentear" ou selo "Presenteado ✓" (já comprado).
 7. **Você vem?** (surface): pássaro espelhado, prazo 22/12/2026, input nome/código, botão "Buscar meu convite".
 8. **Como chegar**: mapa Google embutido (borda dourada), endereço por extenso, botões "Abrir rota" e "Copiar endereço".
-9. **Rodapé**: faixa toile 160px, "C & V", "22.01.2027 · #Cavi2027".
+9. **Rodapé**: faixa toile 160px, "V & C", "23.01.2027 · #Cavi2027".
 
 Animações (só no código): fade/slide suave ao entrar na viewport, contagem viva, borboleta leve nas telas de sucesso. Respeitar `prefers-reduced-motion`.
 
