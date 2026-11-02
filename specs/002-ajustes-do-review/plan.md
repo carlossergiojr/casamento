@@ -34,7 +34,7 @@ Nada novo a instalar.
   presenteado já cai nela; ela oferece "Ver a lista de presentes" além de "Voltar ao convite".
 - **D2 Compartilhamento**: `metadataBase: new URL("https://carlossergiojr.github.io")`,
   `openGraph` (type website, locale pt_BR, siteName) e `twitter: summary_large_image` em
-  `app/layout.tsx`. Imagem gerada no build por `app/marca/og.png/route.tsx` (`ImageResponse`,
+  `app/layout.tsx`. Imagem gerada no build por `app/marca/og.jpg/route.tsx` (`ImageResponse`,
   `force-static`, fontes TTF em `assets/fonts/`): estampa, cartão creme com fio dourado, nomes,
   data e local. Não usamos `app/opengraph-image.tsx`: no export com `basePath` o Next gera o
   link sem `/casamento` e o arquivo sem extensão, que o Pages serviria errado.

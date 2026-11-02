@@ -1,15 +1,19 @@
 import { ImageResponse } from "next/og";
+import sharp from "sharp";
 import { casamento } from "@/lib/conteudo";
 import { coresMarca as c, fontesMarca, toileDataUrl } from "@/lib/imagem-marca";
 
-/** Prévia do link no WhatsApp e redes (specs/002 FR-002): estampa + cartão do convite. */
+/**
+ * Prévia do link no WhatsApp e redes (specs/002 FR-002): estampa + cartão do convite. Sai em
+ * JPEG: o PNG com a estampa passa de 400 KB e o WhatsApp descarta imagens grandes.
+ */
 const size = { width: 1200, height: 630 };
 
 export const dynamic = "force-static";
 
 export async function GET() {
   const [fontes, toile] = await Promise.all([fontesMarca(), toileDataUrl()]);
-  return new ImageResponse(
+  const png = new ImageResponse(
     (
       <div
         style={{
@@ -67,4 +71,6 @@ export async function GET() {
     ),
     { ...size, fonts: fontes },
   );
+  const jpg = await sharp(Buffer.from(await png.arrayBuffer())).jpeg({ quality: 82, mozjpeg: true }).toBuffer();
+  return new Response(new Uint8Array(jpg), { headers: { "Content-Type": "image/jpeg" } });
 }

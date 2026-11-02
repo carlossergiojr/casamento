@@ -67,7 +67,7 @@ Capa, Nossa história, galeria em polaroid e rodapé: **Tailwind puro** (editori
 4. **Pré-wedding**: polaroids levemente rotacionadas (−3°, 4°, −2°), uma grande + duas sobrepostas; link "Ver todas as fotos" → Dialog com carrossel.
 5. **Dress code** (surface): traje, 4 círculos de cores sugeridas, "Evite". Texto ainda a definir.
 6. **Lista de presentes**: grade 2 colunas; card = foto, nome, preço (dourado), botão "Presentear" ou selo "Presenteado ✓" (já comprado).
-7. **Você vem?** (surface): pássaro espelhado, prazo 22/12/2026, input nome/código, botão "Buscar meu convite".
+7. **Você vem?** (surface): pássaro espelhado, prazo 03/01/2027, input nome/código, botão "Buscar meu convite".
 8. **Como chegar**: mapa Google embutido (borda dourada), endereço por extenso, botões "Abrir rota" e "Copiar endereço".
 9. **Rodapé**: faixa toile 160px, "V & C", "23.01.2027 · #Cavi2027".
 
@@ -80,10 +80,10 @@ Animações (só no código): fade/slide suave ao entrar na viewport, contagem v
 ### RSVP (lista fechada)
 1. **Buscar** — input nome ou código; resultados como cards clicáveis ("Maria Souza · Convite para 2 pessoas"); link "Não encontrei meu nome".
 2. **Responder** — "Olá, {nome}!"; um fieldset por pessoa do convite com Vou / Não vou; botão "Enviar resposta"; texto "nomes vêm do convite e não podem ser alterados".
-3. **Confirmado** — topo toile, ícone ✓ dourado, "Que alegria!", resumo por pessoa, "pode alterar até 22/12/2026", botões "Ver lista de presentes" / "Salvar na agenda" (.ics).
+3. **Confirmado** — topo toile, ícone ✓ dourado, "Que alegria!", resumo por pessoa, "pode alterar até 03/01/2027", botões "Ver lista de presentes" / "Salvar na agenda" (.ics).
 4. **Não encontrado** — aviso para falar com os noivos; **nunca** oferece campo para cadastrar nome novo.
 
-Regras: só nomes pré-cadastrados; acompanhantes só se vinculados ao convite; resposta sim/não; formulário fecha sozinho em 22/12/2026; respostas visíveis para os noivos (planilha/painel).
+Regras: só nomes pré-cadastrados; acompanhantes só se vinculados ao convite; resposta sim/não; formulário fecha sozinho em 03/01/2027; respostas visíveis para os noivos (planilha/painel).
 
 ### Presentes (pagamento no próprio site)
 1. **Detalhe** — foto, nome, preço; campos nome, e-mail, recadinho (opcional); "Ir para o pagamento".

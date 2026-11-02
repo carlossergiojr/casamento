@@ -7,7 +7,7 @@
 - **Endereço:** R. Rubens Francisco Dias, 2101 — Papagaio, Feira de Santana / BA — CEP 44059-370
   (Rua Zeus, entre os condomínios Aquarela Ville e Amarilis)
 - **Hashtag:** #Cavi2027
-- **Prazo do RSVP:** 22 de dezembro de 2026
+- **Prazo do RSVP:** 3 de janeiro de 2027
 
 ## Direção visual
 Minimalista e vintage, com o azul da papelaria (toile de jouy: traço botânico fino, azul acinzentado sobre branco, flores, pássaros, borboletas). Trazer a cor e o traço, não o padrão inteiro: fundo claro, muito espaço em branco, serifada leve nos títulos, estampa só em detalhes. Sem sombras fortes, sem cantos muito arredondados, sem gradientes.

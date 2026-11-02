@@ -20,7 +20,7 @@ export const casamento = {
   diaHora: "Sábado, às 16h",
   dataPorExtenso: "23 de janeiro",
   hashtag: "#Cavi2027",
-  prazoRsvp: "22 de dezembro de 2026",
+  prazoRsvp: "3 de janeiro de 2027",
   local: {
     nome: "Campestre",
     cidade: "Feira de Santana, BA",

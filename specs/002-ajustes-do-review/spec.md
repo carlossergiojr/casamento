@@ -122,5 +122,5 @@ visual do site, em português, com caminho de volta.
 - Legenda da polaroid ("[legenda curta]").
 - Dress code: traje, texto, "Evite" e as 4 cores (as atuais são provisórias).
 - Itens reais da lista de presentes e a lista de convidados/convites.
-- Confirmar o prazo do RSVP (22/12/2026).
+- ~~Confirmar o prazo do RSVP~~ — definido: 3 de janeiro de 2027.
 - Formato do link dos QR Codes.

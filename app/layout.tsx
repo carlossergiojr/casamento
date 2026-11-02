@@ -34,9 +34,9 @@ export const metadata: Metadata = {
     url: "/casamento/",
     title: titulo,
     description: descricao,
-    images: [{ url: "/casamento/marca/og.png", width: 1200, height: 630, alt: "Convite de casamento de Victória & Carlos Sergio" }],
+    images: [{ url: "/casamento/marca/og.jpg", type: "image/jpeg", width: 1200, height: 630, alt: "Convite de casamento de Victória & Carlos Sergio" }],
   },
-  twitter: { card: "summary_large_image", title: titulo, description: descricao, images: ["/casamento/marca/og.png"] },
+  twitter: { card: "summary_large_image", title: titulo, description: descricao, images: ["/casamento/marca/og.jpg"] },
   icons: {
     icon: { url: "/casamento/marca/icone.png", type: "image/png", sizes: "64x64" },
     apple: "/casamento/marca/icone-apple.png",

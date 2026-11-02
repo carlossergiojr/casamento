@@ -11,7 +11,7 @@ description: "Tarefas da 002 — Ajustes do review"
 - [X] T001 [US1] `app/not-found.tsx` em PT no visual do site, com "Voltar ao convite" e "Ver a
   lista de presentes" (D1)
 - [X] T002 [P] [US1] `metadataBase`, `openGraph` e `twitter` em `app/layout.tsx` (D2)
-- [X] T003 [P] [US1] `app/marca/og.png/route.tsx` 1200×630 estático (D2)
+- [X] T003 [P] [US1] `app/marca/og.jpg/route.tsx` 1200×630 estático (D2)
 - [X] T004 [P] [US1] `app/marca/icone.png` + `icone-apple.png`; remover `app/favicon.ico` (D3)
 
 ## Phase 2: US2 — Animações, figuras e textos (P1)
