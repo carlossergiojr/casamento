@@ -22,7 +22,7 @@ export default async function PaginaPagamento({ params }: PageProps<"/presentes/
             <span className="text-xs tracking-[0.2em] text-primary-deep uppercase">Seu presente</span>
             <span>{presente.nome}</span>
           </span>
-          <span className="font-serif text-[28px] whitespace-nowrap text-gold">{formatarValor(presente.valor)}</span>
+          <span className="font-serif text-[28px] whitespace-nowrap text-gold lining-nums">{formatarValor(presente.valor)}</span>
         </div>
         <Pagamento id={presente.id} valor={formatarValor(presente.valor)} />
       </main>

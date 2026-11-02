@@ -29,7 +29,7 @@ export function DressCode() {
               <span
                 key={cor}
                 title={cor}
-                className="size-11 rounded-full border border-primary-deep/40"
+                className="size-11 rounded-full border-[3px] border-card ring-1 ring-line"
                 style={{ background: cor }}
               />
             ))}
@@ -73,16 +73,16 @@ export function ListaPresentes() {
             </div>
             <div className="flex flex-1 flex-col gap-1 p-3">
               <span className="text-sm leading-[1.35]">{p.nome}</span>
-              <span className="font-serif text-2xl text-gold">{formatarValor(p.valor)}</span>
+              <span className="font-serif text-2xl text-gold lining-nums">{formatarValor(p.valor)}</span>
               <div className="mt-auto pt-1.5">
                 {p.presenteado ? (
-                  <span className="block rounded-[3px] border border-gold-line px-1.5 py-[11px] text-center text-xs font-semibold tracking-[0.12em] text-gold-text-sm uppercase">
+                  <span className="block rounded-[3px] border border-gold-line px-1.5 py-[13px] text-center text-xs font-semibold tracking-[0.12em] text-gold-text-sm uppercase">
                     Presenteado ✓
                   </span>
                 ) : (
                   <Link
                     href={`/presentes/${p.id}`}
-                    className="block rounded-[3px] border border-primary px-1.5 py-[11px] text-center text-xs font-semibold tracking-[0.12em] text-primary uppercase transition-colors hover:bg-primary hover:text-card"
+                    className="block rounded-[3px] border border-primary px-1.5 py-[13px] text-center text-xs font-semibold tracking-[0.12em] text-primary uppercase transition-colors hover:bg-primary hover:text-card"
                   >
                     Presentear
                   </Link>
@@ -141,7 +141,8 @@ export function Rodape() {
   return (
     <footer className="flex flex-col">
       <div className="toile h-40 border-t border-gold-line" />
-      <div className="flex flex-col items-center gap-2 px-7 pt-9 pb-11 text-center">
+      {/* Espaço extra embaixo para a barra de atalhos não cobrir o rodapé (specs/004 D6). */}
+      <div className="flex flex-col items-center gap-2 px-7 pt-9 pb-[calc(7rem+env(safe-area-inset-bottom))] text-center">
         <p className="font-serif text-[40px] font-light text-primary">
           {casamento.monograma.a} <span className="text-gold italic">&amp;</span>{" "}
           {casamento.monograma.b}

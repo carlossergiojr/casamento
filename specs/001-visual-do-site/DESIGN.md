@@ -1,6 +1,6 @@
 # Site Cavi 2027 — Handoff de design
 
-Site do casamento de **Victória & Carlos Sergio** — 23/01/2027, 16h, Campestre (Feira de Santana/BA).
+Site do casamento de **Victória & Carlos Sergio** — 23/01/2027, 15h, Campestre (Feira de Santana/BA).
 Mobile-first (a maioria abre pelo QR Code). Deploy: GitHub Pages em `carlossergiojr.github.io/casamento/`.
 
 `design/` tem as 8 telas desenhadas (HTML com estilos inline, 390px de largura) — use como **referência visual e de medidas**, não como código final. Elas usam um runtime do canvas (`<x-dc>`, `{{holes}}`, `<sc-for>`, `<sc-if>`), então não abrem perfeitas no navegador puro.

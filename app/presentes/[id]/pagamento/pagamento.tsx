@@ -71,7 +71,7 @@ export function Pagamento({ id, valor }: { id: string; valor: string }) {
             Copiar código Pix
           </button>
           <p className="flex items-center gap-2 text-[13px] text-primary-deep">
-            <span className="size-2 animate-pulse rounded-full bg-gold-line" />
+            <span className="size-2 rounded-full bg-gold-line motion-safe:animate-pulse" />
             Aguardando pagamento — esta tela atualiza sozinha
           </p>
         </div>

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { galeria } from "@/lib/conteudo";
+import { Revelar } from "./revelar";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {
   Carousel,
@@ -53,7 +54,9 @@ function Foto({ i, sizes }: { i: number; sizes: string }) {
 export function Galeria() {
   return (
     <section id="galeria" className="flex flex-col gap-7 px-5 pt-16 pb-[72px]">
-      <h2 className="text-center font-serif text-[40px] text-primary italic">Pré-wedding</h2>
+      <Revelar>
+        <h2 className="text-center font-serif text-[40px] text-primary italic">Pré-wedding</h2>
+      </Revelar>
 
       <div className="flex flex-col items-center">
         <Polaroid angulo={-3} atraso={0} className="flex w-[270px] flex-col gap-2.5 p-3 pb-10">

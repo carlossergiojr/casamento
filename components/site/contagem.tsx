@@ -15,7 +15,7 @@ function restante(agora: number) {
   };
 }
 
-/** Contagem viva até 23/01/2027 16h (specs/001 FR-003). Zeros depois da hora. */
+/** Contagem viva até 23/01/2027 15h (specs/001 FR-003). Zeros depois da hora. */
 export function Contagem() {
   // null no servidor: o número certo só existe no relógio de quem abre.
   const [agora, setAgora] = useState<number | null>(null);
@@ -46,7 +46,7 @@ export function Contagem() {
           key={item.rotulo}
           className={`flex flex-col items-center ${i === 1 ? "border-x border-surface" : ""}`}
         >
-          <span className="font-serif text-[44px] leading-none text-gold tabular-nums">
+          <span className="font-serif text-[44px] leading-none text-gold tabular-nums lining-nums">
             {item.valor}
           </span>
           <span className="mt-1.5 text-[11px] tracking-[0.2em] text-primary-deep uppercase">

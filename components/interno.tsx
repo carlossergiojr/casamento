@@ -27,7 +27,7 @@ export function TelaInterna({
           </svg>
           {rotuloVoltar}
         </Link>
-        <Link href="/" className="font-serif text-xl text-primary">
+        <Link href="/" className="flex min-h-11 items-center font-serif text-xl text-primary">
           {casamento.monograma.a} <span className="text-gold">&amp;</span> {casamento.monograma.b}
         </Link>
         <span />

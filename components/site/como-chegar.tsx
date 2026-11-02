@@ -16,7 +16,9 @@ export function ComoChegar() {
 
   return (
     <section id="local" className="flex flex-col gap-5 px-5 py-16">
-      <h2 className="text-center font-serif text-[40px] text-primary italic">Como chegar</h2>
+      <Revelar>
+        <h2 className="text-center font-serif text-[40px] text-primary italic">Como chegar</h2>
+      </Revelar>
       <Revelar className="h-60 overflow-hidden border border-gold-line bg-surface">
         <iframe
           title={`Mapa: ${casamento.local.nome}`}

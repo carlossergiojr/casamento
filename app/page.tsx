@@ -1,4 +1,5 @@
 import { Envelope } from "@/components/envelope";
+import { BarraAtalhos } from "@/components/site/barra-atalhos";
 import { Cabecalho, Capa } from "@/components/site/capa";
 import { ComoChegar } from "@/components/site/como-chegar";
 import { Galeria } from "@/components/site/galeria";
@@ -22,6 +23,8 @@ export default function Inicio() {
           <ComoChegar />
         </main>
         <Rodape />
+        {/* Dentro do #site: fica inerte enquanto o envelope está na frente (specs/004 D5). */}
+        <BarraAtalhos />
       </div>
     </>
   );

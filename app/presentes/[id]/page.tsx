@@ -27,7 +27,7 @@ export default async function DetalhePresente({ params }: PageProps<"/presentes/
       <main className="flex flex-1 flex-col gap-5 px-6 pt-7 pb-9">
         <div className="flex flex-col gap-1">
           <h1 className="font-serif text-[34px] leading-[1.15] text-primary italic">{presente.nome}</h1>
-          <span className="font-serif text-[30px] text-gold">{formatarValor(presente.valor)}</span>
+          <span className="font-serif text-[30px] text-gold lining-nums">{formatarValor(presente.valor)}</span>
         </div>
         <FormPresente id={presente.id} />
       </main>

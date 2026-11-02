@@ -33,7 +33,7 @@ export function Capa() {
         <div className="pointer-events-none absolute inset-[14px] border border-background" />
       </div>
 
-      <Revelar aposConvite className="relative mx-[18px] -mt-40 flex flex-col items-center gap-5 bg-background px-[22px] pt-11 pb-9 text-center">
+      <Revelar aposConvite className="relative mx-[14px] -mt-40 flex flex-col items-center gap-5 bg-background px-[22px] pt-11 pb-9 text-center">
         <img
           src={publico("/estampa/spot-bird.png")}
           alt=""

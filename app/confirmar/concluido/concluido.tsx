@@ -6,7 +6,7 @@ import { Petalas } from "@/components/site/petalas";
 import { Revelar } from "@/components/site/revelar";
 import { casamento, convitesExemplo } from "@/lib/conteudo";
 
-/** Data no formato do iCalendar (UTC): 20270123T190000Z. */
+/** Data no formato do iCalendar (UTC): 20270123T180000Z. */
 const ics = (iso: string) => new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
 
 function baixarAgenda() {
@@ -31,7 +31,8 @@ function baixarAgenda() {
   a.href = url;
   a.download = "casamento-cavi2027.ics";
   a.click();
-  URL.revokeObjectURL(url);
+  // Safari e Firefox só começam o download depois do clique: apagar o link na hora o cancela.
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 export function Concluido() {
@@ -49,7 +50,7 @@ export function Concluido() {
         </h1>
         <p className="text-[15px] text-primary-deep">
           {alguemVai || !convite
-            ? `Recebemos sua resposta. Nos vemos dia ${casamento.dataPorExtenso}, às 16h, no ${casamento.local.nome}.`
+            ? `Recebemos sua resposta. Nos vemos dia ${casamento.dataPorExtenso}, às ${casamento.hora}, no ${casamento.local.nome}.`
             : "Recebemos sua resposta. Vamos sentir sua falta!"}
         </p>
       </Revelar>
