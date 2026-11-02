@@ -11,9 +11,10 @@ const SUAVE = [0.22, 1, 0.36, 1] as const;
 const DOBRA = [0.65, 0, 0.35, 1] as const;
 
 /**
- * Abertura do convite (specs/001 US1). O envelope inteiro é o botão. Sequência ao tocar:
- * selo se parte → aba abre → borboletas saem voando → cartão sobe → envelope desce e o
- * cartão cresce até virar o site. Com `prefers-reduced-motion`, só um fade.
+ * Abertura do convite (specs/001 US1). O envelope inteiro é o botão. Sequência ao tocar (~6 s):
+ * selo se parte → aba abre → borboletas saem voando → cartão sai → envelope desce e o cartão
+ * pousa no centro → pausa → o cartão desliza até o nome na capa e o site aparece em volta.
+ * Com `prefers-reduced-motion`, só um fade.
  */
 export function Envelope() {
   const [fase, setFase] = useState<Fase>("fechado");
@@ -43,10 +44,7 @@ export function Envelope() {
     const html = document.documentElement;
     html.style.overflow = "";
     document.getElementById("site")?.removeAttribute("inert");
-    if (html.dataset.convite !== "aberto") {
-      html.dataset.convite = "aberto";
-      window.dispatchEvent(new Event(EVENTO_CONVITE_ABERTO));
-    }
+    anunciarConvite();
   }, [fase]);
 
   function lembrar() {
@@ -68,28 +66,43 @@ export function Envelope() {
       return;
     }
 
-    animar("[data-dica]", { opacity: 0 }, { duration: 0.3 });
+    const cartao = cena.current.querySelector<HTMLElement>("[data-cartao]")!;
+    const altura = cartao.offsetHeight;
+    animar("[data-dica]", { opacity: 0 }, { duration: 0.4 });
 
     // 1. O selo afunda com o toque e se parte em duas metades que caem.
-    await animar("[data-selo]", { scale: [1, 0.9, 1.06] }, { duration: 0.28 });
+    await animar("[data-selo]", { scale: [1, 0.9, 1.05] }, { duration: 0.4, ease: "easeOut" });
     animar("[data-selo-inteiro]", { opacity: 0 }, { duration: 0 });
-    animar("[data-selo-esq]", { x: -46, y: 70, rotate: -38, opacity: 0 }, { duration: 0.7, ease: "easeIn" });
-    animar("[data-selo-dir]", { x: 46, y: 64, rotate: 34, opacity: 0 }, { duration: 0.7, ease: "easeIn" });
+    animar("[data-selo-esq]", { x: -46, y: 80, rotate: -38, opacity: 0 }, { duration: 1, ease: "easeIn" });
+    animar("[data-selo-dir]", { x: 46, y: 74, rotate: 34, opacity: 0 }, { duration: 1, ease: "easeIn" });
 
-    // 2. A aba gira para cima; passa para trás do cartão na metade do giro.
-    animar("[data-aba]", { rotateX: 180 }, { duration: 0.8, ease: DOBRA });
-    animar("[data-aba]", { zIndex: 1 }, { delay: 0.4, duration: 0 });
+    // 2. A aba gira para cima, devagar; passa para trás do cartão na metade do giro.
+    animar("[data-aba]", { rotateX: 180 }, { delay: 0.15, duration: 1.3, ease: DOBRA });
+    animar("[data-aba]", { zIndex: 1 }, { delay: 0.8, duration: 0 });
 
-    // 3. O cartão sobe de dentro do envelope.
-    await animar("[data-cartao]", { y: "-58%" }, { delay: 0.55, duration: 0.95, ease: SUAVE });
+    // 3. O cartão sai de dentro do envelope com calma.
+    await animar("[data-cartao]", { y: -0.6 * altura }, { delay: 1, duration: 1.4, ease: SUAVE });
 
-    // 4. O envelope desce e some; o cartão vem para a frente e cresce.
-    animar("[data-corpo], [data-aba]", { y: 160, opacity: 0 }, { duration: 0.75, ease: "easeIn" });
-    animar("[data-cantos]", { opacity: 0 }, { duration: 0.6 });
-    await animar("[data-cartao]", { y: "-10%", scale: 1.22 }, { duration: 0.85, ease: SUAVE });
+    // 4. O envelope desce e some enquanto o cartão pousa no centro, legível.
+    animar("[data-corpo], [data-aba]", { y: 180, opacity: 0 }, { duration: 1.1, ease: [0.55, 0, 0.75, 0.4] });
+    animar("[data-cantos]", { opacity: 0 }, { duration: 0.9 });
+    await animar("[data-cartao]", { y: -0.12 * altura, scale: 1.12 }, { delay: 0.15, duration: 1.2, ease: SUAVE });
 
-    // 5. A tela do convite se desfaz no site.
-    await animar(cena.current, { opacity: 0 }, { duration: 0.6, ease: "easeOut" });
+    // 5. Uma pausa para ler o convite.
+    await new Promise((r) => setTimeout(r, 900));
+
+    // 6. O cartão vira o site: desliza até o nome na capa enquanto a capa entra por baixo
+    //    dele e o fundo do convite se desfaz.
+    anunciarConvite();
+    animar(cena.current, { backgroundColor: "rgb(250 247 241 / 0)" }, { duration: 1.1, ease: "easeInOut" });
+    const destino = destinoNaCapa(cartao);
+    await animar(
+      "[data-cartao]",
+      destino
+        ? { x: destino.x, y: -0.12 * altura + destino.y, scale: destino.escala, opacity: 0 }
+        : { y: -0.12 * altura - 40, opacity: 0 },
+      { duration: 1.1, ease: SUAVE, opacity: { duration: 0.7, delay: 0.15, ease: "easeIn" } },
+    );
     setFase("fora");
   }
 
@@ -100,6 +113,7 @@ export function Envelope() {
     <div
       ref={cena}
       data-envelope
+      data-abrindo={fechado ? undefined : ""}
       role="dialog"
       aria-modal="true"
       aria-label="Convite de casamento"
@@ -141,7 +155,7 @@ export function Envelope() {
             style={{ zIndex: 2 }}
           >
             <span className="sobretitulo text-[10px]">Vamos nos casar</span>
-            <span className="font-serif text-[clamp(22px,8vw,30px)] leading-none font-light whitespace-nowrap text-primary">
+            <span data-nome className="font-serif text-[clamp(22px,8vw,30px)] leading-none font-light whitespace-nowrap text-primary">
               {casamento.primeiro} <span className="text-gold italic">&amp;</span>{" "}
               {casamento.segundo.split(" ")[0]}
             </span>
@@ -211,6 +225,36 @@ export function Envelope() {
   );
 }
 
+/** Marca o convite como aberto e avisa a capa para entrar (specs/002 FR-004). Uma vez só. */
+function anunciarConvite() {
+  const html = document.documentElement;
+  if (html.dataset.convite === "aberto") return;
+  html.dataset.convite = "aberto";
+  window.dispatchEvent(new Event(EVENTO_CONVITE_ABERTO));
+}
+
+/**
+ * Quanto o cartão precisa andar (e crescer) para o nome dele cair sobre o nome da capa. `null`
+ * quando o nome da capa está fora da tela (tela baixa): aí o cartão só sobe e some.
+ */
+function destinoNaCapa(cartao: HTMLElement) {
+  const alvo = document.querySelector("#inicio h1")?.getBoundingClientRect();
+  const nome = cartao.querySelector("[data-nome]")?.getBoundingClientRect();
+  if (!alvo || !nome || alvo.top + alvo.height / 2 > innerHeight - 40) return null;
+  const caixa = cartao.getBoundingClientRect();
+  const escalaAtual = 1.12;
+  const escala = 1.3;
+  const r = escala / escalaAtual;
+  // Escala em torno do centro do cartão: o nome se afasta do centro na mesma proporção.
+  const centro = { x: caixa.left + caixa.width / 2, y: caixa.top + caixa.height / 2 };
+  const desvio = { x: nome.left + nome.width / 2 - centro.x, y: nome.top + nome.height / 2 - centro.y };
+  return {
+    x: alvo.left + alvo.width / 2 - desvio.x * r - centro.x,
+    y: alvo.top + alvo.height / 2 - desvio.y * r - centro.y,
+    escala,
+  };
+}
+
 // Sem gradiente (DESIGN.md): cor chapada com um aro mais claro.
 const estiloSelo = { background: "var(--gold)", boxShadow: "inset 0 0 0 4px #b08e58" };
 
@@ -234,9 +278,9 @@ function MeioSelo({ lado }: { lado: "esq" | "dir" }) {
 
 /** Borboletas da estampa que escapam do envelope aberto, batendo as asas. */
 const VOOS = [
-  { img: "spot-butterfly-1.png", tam: 46, atraso: 0.75, x: [0, -40, -120, -190], y: [0, -110, -230, -420], giro: [-8, -18, -4, -22] },
-  { img: "spot-butterfly-2.png", tam: 70, atraso: 0.9, x: [0, 50, 110, 210], y: [0, -90, -260, -400], giro: [6, 14, 2, 18] },
-  { img: "spot-butterfly-1.png", tam: 34, atraso: 1.1, x: [0, 10, -30, 40], y: [0, -130, -280, -460], giro: [10, -6, 12, -4] },
+  { img: "spot-butterfly-1.png", tam: 46, atraso: 1.1, x: [0, -40, -120, -190], y: [0, -110, -230, -420], giro: [-8, -18, -4, -22] },
+  { img: "spot-butterfly-2.png", tam: 70, atraso: 1.3, x: [0, 50, 110, 210], y: [0, -90, -260, -400], giro: [6, 14, 2, 18] },
+  { img: "spot-butterfly-1.png", tam: 34, atraso: 1.55, x: [0, 10, -30, 40], y: [0, -130, -280, -460], giro: [10, -6, 12, -4] },
 ];
 
 function Borboletas() {
@@ -250,7 +294,7 @@ function Borboletas() {
           style={{ zIndex: 6, width: v.tam, marginLeft: -v.tam / 2 }}
           initial={{ opacity: 0, x: 0, y: 0, scale: 0.6 }}
           animate={{ opacity: [0, 1, 1, 0], x: v.x, y: v.y, rotate: v.giro, scale: [0.6, 1, 1, 0.9] }}
-          transition={{ duration: 2.2, delay: v.atraso, ease: "easeOut", times: [0, 0.2, 0.75, 1] }}
+          transition={{ duration: 2.8, delay: v.atraso, ease: "easeOut", times: [0, 0.2, 0.75, 1] }}
         >
           <motion.img
             src={publico(`/estampa/${v.img}`)}

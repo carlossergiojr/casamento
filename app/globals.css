@@ -84,7 +84,7 @@
 }
 
 /* Convite já aberto nesta sessão: o envelope nem aparece (components/envelope.tsx). */
-html[data-convite="aberto"] [data-envelope] {
+html[data-convite="aberto"] [data-envelope]:not([data-abrindo]) {
   display: none;
 }
 
