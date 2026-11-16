@@ -84,7 +84,7 @@ Animações (só no código): fade/slide suave ao entrar na viewport, contagem v
 ### RSVP (lista fechada)
 1. **Buscar** — input nome ou código; resultados como cards clicáveis ("Maria Souza · Convite para 2 pessoas"); link "Não encontrei meu nome".
 2. **Responder** — "Olá, {nome}!"; um fieldset por pessoa do convite com Vou / Não vou; botão "Enviar resposta"; texto "nomes vêm do convite e não podem ser alterados".
-3. **Confirmado** — topo toile, ícone ✓ dourado, "Que alegria!", resumo por pessoa, "pode alterar até 03/01/2027", botões "Ver lista de presentes" / "Salvar na agenda" (.ics).
+3. **Confirmado** — topo toile, ícone ✓ dourado, "Que alegria!", resumo por pessoa, "pode alterar até 03/01/2027", botão "Ver lista de presentes" (o "Salvar na agenda" saiu na specs/007).
 4. **Não encontrado** — aviso para falar com os noivos; **nunca** oferece campo para cadastrar nome novo.
 
 Regras: só nomes pré-cadastrados; acompanhantes só se vinculados ao convite; resposta sim/não; formulário fecha sozinho em 03/01/2027; respostas visíveis para os noivos (planilha/painel).

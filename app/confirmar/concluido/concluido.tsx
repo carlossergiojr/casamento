@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Petalas } from "@/components/site/petalas";
 import { Revelar } from "@/components/site/revelar";
-import { baixarAgenda } from "@/lib/agenda";
 import { casamento } from "@/lib/conteudo";
 import type { ConvitePublico } from "@/lib/convites-servidor";
 
@@ -47,13 +46,6 @@ export function Concluido({ convite }: { convite: ConvitePublico | null }) {
         <Link href="/presentes/" className="botao bg-primary text-card hover:bg-primary-deep">
           Ver lista de presentes
         </Link>
-        <button
-          type="button"
-          onClick={baixarAgenda}
-          className="botao border border-primary text-primary hover:bg-primary hover:text-card"
-        >
-          Salvar na agenda
-        </button>
         <Link
           href="/"
           className="flex min-h-11 items-center justify-center text-sm text-primary-deep underline decoration-gold-line underline-offset-4"

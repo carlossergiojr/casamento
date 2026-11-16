@@ -52,7 +52,7 @@ a primeira tela só mostrava a foto, e com "Reduzir movimento" ligado a capa fic
   cartão, o local simples: **croqui desenhado** (`components/site/croqui.tsx`, sem escala),
   endereço e um botão **"Como chegar"** que abre uma gaveta com Google Maps, Waze, Uber e copiar
   endereço. Saem o mapa do Google embutido, os três botões de rota, a linha do traje e o "Salvar
-  na agenda" (continua na tela de confirmação do RSVP).
+  na agenda". A pedido dos noivos, ele também sai da tela de confirmação do RSVP.
 
 ## Mantido (de propósito)
 
