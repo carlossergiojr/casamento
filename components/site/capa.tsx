@@ -58,7 +58,7 @@ export function Capa() {
 
         <Contagem />
 
-        {/* Só a ação principal; presentes e o resto ficam na barra de atalhos (specs/004). */}
+        {/* Só a ação principal; o resto fica no sumário logo abaixo. */}
         <Link href="/confirmar" className="botao w-full bg-primary text-card hover:bg-primary-deep">
           Eu vou!
         </Link>

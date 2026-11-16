@@ -1,11 +1,11 @@
 import { Envelope } from "@/components/envelope";
 import { ENVELOPE_LIGADO } from "@/lib/convite-aberto";
-import { BarraAtalhos } from "@/components/site/barra-atalhos";
 import { Cabecalho, Capa } from "@/components/site/capa";
 import { ComoChegar } from "@/components/site/como-chegar";
 import { Galeria } from "@/components/site/galeria";
 import { Historia } from "@/components/site/historia";
 import { ChamadaRsvp, DressCode, ListaPresentes, Rodape } from "@/components/site/secoes";
+import { Sumario } from "@/components/site/sumario";
 
 export default function Inicio() {
   return (
@@ -17,6 +17,7 @@ export default function Inicio() {
         <Cabecalho />
         <main>
           <Capa />
+          <Sumario />
           <Historia />
           <Galeria />
           <DressCode />
@@ -25,8 +26,6 @@ export default function Inicio() {
           <ComoChegar />
         </main>
         <Rodape />
-        {/* Dentro do #site: fica inerte enquanto o envelope está na frente (specs/004 D5). */}
-        <BarraAtalhos />
       </div>
     </>
   );

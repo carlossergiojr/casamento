@@ -108,8 +108,7 @@ export function Rodape() {
   return (
     <footer className="flex flex-col">
       <div className="toile h-40 border-t border-gold-line" />
-      {/* Espaço extra embaixo para a barra de atalhos não cobrir o rodapé (specs/004 D6). */}
-      <div className="flex flex-col items-center gap-2 px-7 pt-9 pb-[calc(7rem+env(safe-area-inset-bottom))] text-center">
+      <div className="flex flex-col items-center gap-2 px-7 pt-9 pb-12 text-center">
         <p className="font-serif text-[40px] font-light text-primary">
           {casamento.monograma.a} <span className="text-gold italic">&amp;</span>{" "}
           {casamento.monograma.b}

@@ -54,6 +54,8 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## Feito
 
+- 16/11/2026 — Barra de atalhos do rodapé removida (cara de aplicativo); no lugar, o sumário
+  "Neste convite" logo abaixo da capa: Nossa história, Dress code, Presentes, Como chegar.
 - 16/11/2026 — Lista de presentes enxuta: a home mostra só 6 destaques e o botão "Ver lista
   completa"; a lista inteira foi para `/presentes`, em linhas compactas, com filtro por categoria,
   ordem por preço e os já presenteados no fim.

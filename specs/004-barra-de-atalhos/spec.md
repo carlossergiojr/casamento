@@ -4,7 +4,8 @@
 
 **Created**: 2026-11-02
 
-**Status**: Implemented
+**Status**: Removida em 16/11/2026 — a barra fixa deixava o site com cara de aplicativo. No
+lugar, um sumário em texto logo abaixo da capa (`components/site/sumario.tsx`).
 
 **Input**: "Uma coisa que minha noiva falou é deixar as coisas mais fáceis, como local,
 presente etc." — a página inicial tem ~6.000px no celular; quem volta ao site quase sempre

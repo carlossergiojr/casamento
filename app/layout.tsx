@@ -49,8 +49,6 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#faf7f1",
-  // Deixa o env(safe-area-inset-bottom) valer no iPhone, para a barra de atalhos (specs/004).
-  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -71,8 +69,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="min-h-dvh">
         {children}
-        {/* Acima da barra de atalhos (specs/004 D6). */}
-        <Toaster position="bottom-center" theme="light" offset={{ bottom: 88 }} mobileOffset={{ bottom: 88 }} />
+        <Toaster position="bottom-center" theme="light" />
       </body>
     </html>
   );
