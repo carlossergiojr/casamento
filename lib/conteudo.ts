@@ -97,14 +97,30 @@ export type Presente = {
   presenteado: boolean;
 };
 
+/**
+ * Presentes "virtuais": o convidado escolhe o item e paga por Pix ou cartão; o valor cai para os
+ * noivos, que compram o que quiserem. Mistura do que mais aparece nas listas (casa, cozinha,
+ * eletros) com cotas de lua de mel e alguns divertidos, em faixas de R$ 90 a R$ 1.500 para caber
+ * em todo bolso. Valores em centavos; ajuste à vontade. Ordem = ordem na página.
+ */
 export const presentes: Presente[] = [
-  { id: "jantar", nome: "Jantar romântico na lua de mel", valor: 35000, presenteado: false },
-  { id: "jogo-de-cama", nome: "Jogo de cama", valor: 28000, presenteado: false },
-  { id: "passeio", nome: "Passeio de barco", valor: 42000, presenteado: true },
-  { id: "cafeteira", nome: "Cafeteira", valor: 39000, presenteado: false },
-  { id: "tacas", nome: "Jogo de taças", valor: 18000, presenteado: false },
-  { id: "vinho", nome: "Vinho para brindar", valor: 15000, presenteado: false },
-].map((p) => ({ ...p, foto: foto(`presente-${p.id}`, 600, 600) }));
+  { id: "cafe-da-manha", nome: "Café da manhã na cama do primeiro dia de casados", valor: 12000 },
+  { id: "air-fryer", nome: "Air fryer", valor: 45000 },
+  { id: "jantar-lua-de-mel", nome: "Jantar romântico na lua de mel", valor: 35000 },
+  { id: "jogo-de-cama", nome: "Jogo de cama casal", valor: 28000 },
+  { id: "pizza-domingo", nome: "Pizza de domingo (porque ninguém vai querer cozinhar)", valor: 9000 },
+  { id: "cafeteira", nome: "Cafeteira de cápsulas", valor: 50000 },
+  { id: "passeio-de-barco", nome: "Passeio de barco na lua de mel", valor: 42000 },
+  { id: "jogo-de-panelas", nome: "Jogo de panelas antiaderente", valor: 60000 },
+  { id: "tacas", nome: "Jogo de taças para brindar", valor: 18000 },
+  { id: "aparelho-de-jantar", nome: "Aparelho de jantar", valor: 40000 },
+  { id: "jogo-de-toalhas", nome: "Jogo de toalhas de banho", valor: 20000 },
+  { id: "batedeira", nome: "Batedeira", valor: 38000 },
+  { id: "aspirador-robo", nome: "Aspirador robô (o melhor amigo do casal)", valor: 120000 },
+  { id: "diaria-lua-de-mel", nome: "Uma diária de hotel na lua de mel", valor: 80000 },
+  { id: "passagem-lua-de-mel", nome: "Ajuda nas passagens da lua de mel", valor: 150000 },
+  { id: "vinho", nome: "Vinho para o primeiro aniversário de casados", valor: 15000 },
+].map((p) => ({ ...p, presenteado: false, foto: foto(`presente-${p.id}`, 600, 600) }));
 
 export const formatarValor = (centavos: number) =>
   (centavos / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
