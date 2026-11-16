@@ -1,4 +1,5 @@
 import { Envelope } from "@/components/envelope";
+import { ENVELOPE_LIGADO } from "@/lib/convite-aberto";
 import { BarraAtalhos } from "@/components/site/barra-atalhos";
 import { Cabecalho, Capa } from "@/components/site/capa";
 import { ComoChegar } from "@/components/site/como-chegar";
@@ -9,7 +10,8 @@ import { ChamadaRsvp, DressCode, ListaPresentes, Rodape } from "@/components/sit
 export default function Inicio() {
   return (
     <>
-      <Envelope />
+      {/* Desligado por enquanto: entra direto na capa (lib/convite-aberto.ts). */}
+      {ENVELOPE_LIGADO && <Envelope />}
       {/* Mobile-first: 390px é a referência; no desktop vira uma coluna centralizada. */}
       <div id="site" className="mx-auto max-w-[640px] bg-background md:border-x md:border-surface">
         <Cabecalho />
