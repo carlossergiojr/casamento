@@ -35,7 +35,9 @@
 
 - **Decision**: schema em `lib/db/schema.ts`; `drizzle-kit generate` cria SQL em `drizzle/`
   (versionado); `scripts/migrar.mjs` usa o migrator do drizzle-orm e roda antes do `next build`
-  quando existe `DATABASE_URL` (Vercel). Sem `DATABASE_URL` (ex.: build local sem banco), pula.
+  quando existe `DATABASE_URL` (Vercel). Migra pela conexão direta `DATABASE_URL_UNPOOLED`
+  quando existir (o pooler do Neon não é indicado para migrations); o site usa a `DATABASE_URL`
+  com pooling. Sem `DATABASE_URL` (ex.: build local sem banco), pula.
 - **Rationale**: princípio V (nada manual em produção); migração junto com a publicação.
 - **Cuidado**: prévias da Vercel usam o mesmo `DATABASE_URL` de produção, a menos que a
   integração Neon crie branch por prévia. Migrations desta feature são só aditivas (tabelas

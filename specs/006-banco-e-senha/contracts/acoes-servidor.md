@@ -52,6 +52,7 @@ Depois de gravar: `revalidatePath("/noivos")`.
 
 | Nome | Onde | Uso |
 |---|---|---|
-| `DATABASE_URL` | Vercel (integração Neon) / `.env.local` | conexão |
+| `DATABASE_URL` | Vercel (integração Neon) / `.env.local` | conexão do site, com pooling (host `-pooler`) |
+| `DATABASE_URL_UNPOOLED` | Vercel | conexão direta, só para as migrations no build |
 | `NOIVOS_SENHA` | Vercel | senha única |
 | `SESSAO_SEGREDO` | Vercel | assina o cookie (≥ 32 caracteres) |
