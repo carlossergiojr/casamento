@@ -17,9 +17,14 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
 - [ ] **E-mail no formulário do presente**: o campo diz "para receber a confirmação", mas não vai
       ter e-mail automático. Decidir junto com o pagamento (o Mercado Pago pode pedir e-mail).
 - [ ] **Lista de convidados**: os convites de verdade (titular + pessoas de cada convite), no lugar
-      dos 3 de exemplo (CAVI01–03).
+      dos 3 de exemplo (CAVI01–03). Já dá para ir digitando na área dos noivos (`/noivos`); quando o
+      banco entrar, ela é importada de lá (pela "Salvar cópia").
 
 ## 2. Banco + confirmação de presença (RSVP) de verdade
+
+Primeiro passo é dos noivos: criar conta grátis (entrando com o GitHub) na **Vercel** (vercel.com,
+importando o repositório `casamento`) e no **Neon** (neon.tech, criando um projeto). Só depois
+disso o agente consegue ligar o banco.
 
 - [ ] Sair do GitHub Pages para a **Vercel** (specs/001 T021: o Pages vira redirecionamento).
 - [ ] Banco **Neon (Postgres) + Drizzle**, com migrations (constituição, princípio V).
