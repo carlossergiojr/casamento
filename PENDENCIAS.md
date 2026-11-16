@@ -26,11 +26,12 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
 
 O código está pronto na branch e testado com banco local. Falta publicar, nesta ordem:
 
-- [ ] **Noivos**: projeto na **Vercel** importando o repositório, com as variáveis
+- [x] **Noivos**: projeto na **Vercel** importando o repositório, com as variáveis
       `DATABASE_URL` (Neon, com pooling), `DATABASE_URL_UNPOOLED` (sem pooling), `NOIVOS_SENHA` e
       `SESSAO_SEGREDO` (`openssl rand -base64 32`), em Production e Preview.
 - [ ] Testar a **prévia da branch** na Vercel: senha, importar a cópia, RSVP de um convite de teste.
-- [ ] Trocar `https://preencher.vercel.app` pelo endereço real em `redirecionamento/*.html`.
+- [x] Trocar `https://preencher.vercel.app` pelo endereço real em `redirecionamento/*.html`
+      (`https://casamento-cavi.vercel.app`).
 - [ ] **Merge na `main`**: Vercel em produção e GitHub Pages redirecionando no mesmo push; rodar
       `node scripts/checar-redirecionamento.mjs https://carlossergiojr.github.io/casamento <vercel> <códigos>`.
 
