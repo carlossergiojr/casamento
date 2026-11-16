@@ -27,10 +27,8 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
 Site em https://casamento-cavi.vercel.app (Vercel + Neon). O endereço dos QR
 (`carlossergiojr.github.io/casamento/…`) redireciona para o mesmo caminho lá.
 
-- [ ] **Noivos, pelo celular**: entrar em `/noivos` com a senha, "Abrir cópia" com o arquivo do
-      checklist, criar um convite de teste, responder pelo link dele e ver a resposta na lista.
-- [ ] Depois do teste, apagar o convite de teste e cadastrar os convites reais (com o código
-      do QR, se o QR tiver código).
+- [x] **Noivos, pelo celular**: senha, importação, convite de teste respondido pelo link (16/11).
+- [ ] Cadastrar os convites reais em `/noivos` (com o código do QR, se o QR tiver código).
 
 ## 3. Pagamento dos presentes
 
