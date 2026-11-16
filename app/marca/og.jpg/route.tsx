@@ -48,14 +48,14 @@ export async function GET() {
               display: "flex",
               alignItems: "baseline",
               marginTop: 22,
-              fontFamily: "Cormorant",
-              fontWeight: 300,
-              fontSize: 76,
+              fontFamily: "Great Vibes",
+              fontWeight: 400,
+              fontSize: 96,
               color: c.primaria,
             }}
           >
             {casamento.primeiro}
-            <span style={{ margin: "0 22px", fontStyle: "italic", fontWeight: 400, fontSize: 64, color: c.ouro }}>
+            <span style={{ margin: "0 22px", fontFamily: "Cormorant", fontStyle: "italic", fontWeight: 400, fontSize: 64, color: c.ouro }}>
               &amp;
             </span>
             {casamento.segundo}

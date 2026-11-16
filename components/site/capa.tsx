@@ -5,19 +5,6 @@ import { Contagem } from "./contagem";
 import { Tinta } from "./enfeites";
 import { Revelar } from "./revelar";
 
-export function Cabecalho() {
-  return (
-    <header className="flex h-[52px] items-center justify-between px-5">
-      <span className="font-serif text-[22px] text-primary">
-        {casamento.monograma.a} <span className="text-gold">&amp;</span> {casamento.monograma.b}
-      </span>
-      <span className="text-[11px] tracking-[0.28em] text-primary-deep uppercase">
-        {casamento.dataCurta}
-      </span>
-    </header>
-  );
-}
-
 export function Capa() {
   return (
     <section id="inicio" className="flex flex-col">
@@ -37,10 +24,10 @@ export function Capa() {
 
         <Revelar aposConvite className="absolute inset-x-0 top-0 flex flex-col items-center gap-4 px-6 pt-9 text-center">
           <p className="sobretitulo">Vamos nos casar</p>
-          <h1 className="flex flex-col gap-0.5 font-serif text-[46px] leading-[1.02] font-light text-primary-deep">
-            {/* Os dois nomes se escrevem juntos; o "&" entra no meio do traço. */}
+          <h1 className="flex flex-col font-nomes text-[52px] leading-[1.1] font-normal text-primary-deep">
+            {/* Os dois nomes se escrevem juntos, em caligrafia; o "&" entra no meio do traço. */}
             <Tinta atraso={0.35}>{casamento.primeiro}</Tinta>
-            <Tinta atraso={0.85} duracao={0.9} className="text-[34px] text-gold italic">
+            <Tinta atraso={0.85} duracao={0.9} className="font-serif text-[34px] text-gold italic">
               &amp;
             </Tinta>
             <Tinta atraso={0.35}>{casamento.segundo}</Tinta>
@@ -55,7 +42,7 @@ export function Capa() {
           Sábado · {casamento.local.nome}, {casamento.local.cidade.replace(", BA", "")}
         </p>
 
-        {/* Confirmar e a rota, que é o que mais se procura; o resto fica na barra de atalhos. */}
+        {/* Confirmar e a rota, que é o que mais se procura; o resto fica no menu do topo. */}
         <AcoesCapa />
 
         <div className="w-full pt-3">

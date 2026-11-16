@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Karla, Pinyon_Script } from "next/font/google";
+import { Cormorant_Garamond, Great_Vibes, Karla, Pinyon_Script } from "next/font/google";
 import { casamento } from "@/lib/conteudo";
 import { ENVELOPE_LIGADO, scriptConviteAberto } from "@/lib/convite-aberto";
 import { Movimento } from "@/components/movimento";
@@ -13,9 +13,16 @@ const cormorant = Cormorant_Garamond({
   style: ["normal", "italic"],
 });
 
-// Letra cursiva do convite impresso: só no título do cartão "Programação" (specs/007).
+// Letra cursiva do convite impresso: só nos títulos dos cartões "Programação" e "Traje" (specs/007).
 const pinyon = Pinyon_Script({
   variable: "--font-pinyon",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+// Caligrafia dos nomes da capa.
+const greatVibes = Great_Vibes({
+  variable: "--font-great-vibes",
   subsets: ["latin"],
   weight: "400",
 });
@@ -57,7 +64,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: "#faf7f1",
-  // Deixa o env(safe-area-inset-bottom) valer no iPhone, para a barra de atalhos (specs/004).
+  // Deixa o env(safe-area-inset-bottom) valer no iPhone, para a gaveta "Como chegar".
   viewportFit: "cover",
 };
 
@@ -68,7 +75,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       // Envelope desligado: o convite já nasce "aberto" no HTML, sem script nenhum.
       data-convite={ENVELOPE_LIGADO ? undefined : "aberto"}
-      className={`${cormorant.variable} ${karla.variable} ${pinyon.variable} antialiased`}
+      className={`${cormorant.variable} ${karla.variable} ${pinyon.variable} ${greatVibes.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>
@@ -81,8 +88,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="min-h-dvh">
         <Movimento>{children}</Movimento>
-        {/* Acima da barra de atalhos (specs/004 D6). */}
-        <Toaster position="bottom-center" theme="light" offset={{ bottom: 88 }} mobileOffset={{ bottom: 88 }} />
+        <Toaster position="bottom-center" theme="light" />
       </body>
     </html>
   );

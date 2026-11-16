@@ -50,7 +50,7 @@ export function Programacao() {
 
 /**
  * Onde é, logo depois do Traje (a rota também abre pelo botão da capa): título, croqui desenhado, endereço e um botão que abre a
- * gaveta com Google Maps, Waze, Uber e copiar endereço. `id="local"`: destino do atalho "Local".
+ * gaveta com Google Maps, Waze, Uber e copiar endereço. `id="local"`: destino de "Como chegar" no menu do topo.
  */
 export function Local() {
   const [rota, setRota] = useState(false);

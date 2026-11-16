@@ -1,7 +1,7 @@
 import { Envelope } from "@/components/envelope";
 import { ENVELOPE_LIGADO } from "@/lib/convite-aberto";
-import { BarraAtalhos } from "@/components/site/barra-atalhos";
-import { Cabecalho, Capa } from "@/components/site/capa";
+import { Cabecalho } from "@/components/site/cabecalho";
+import { Capa } from "@/components/site/capa";
 import { Duvidas } from "@/components/site/duvidas";
 import { Galeria } from "@/components/site/galeria";
 import { Guia } from "@/components/site/guia";
@@ -33,8 +33,6 @@ export default function Inicio() {
           <Duvidas />
         </main>
         <Rodape />
-        {/* Dentro do #site: fica inerte enquanto o envelope está na frente (specs/004 D5). */}
-        <BarraAtalhos />
       </div>
     </>
   );
