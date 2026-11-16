@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { casamento, dressCode, presentes, publico } from "@/lib/conteudo";
-import { Fio } from "./enfeites";
+import { DesenhoTraje, IconeDica } from "./desenhos-traje";
+import { Moldura } from "./moldura";
 import { CotaLivre, DestaquesPresentes } from "./presentes";
 import { Revelar } from "./revelar";
 
@@ -8,40 +9,65 @@ const TITULO = "font-serif text-[40px] leading-[1.1] text-primary italic";
 
 export function DressCode() {
   return (
-    <section
-      id="dresscode"
-      className="relative flex flex-col items-center gap-[22px] px-7 py-16 text-center"
-    >
-      <img
-        src={publico("/estampa/spot-butterfly-1.png")}
-        alt=""
-        aria-hidden="true"
-        className="absolute top-7 left-[22px] h-auto w-14 -rotate-[18deg]"
-      />
-      <Revelar className="flex flex-col items-center gap-[22px]">
-        <h2 className={TITULO}>Traje</h2>
-        <p className="font-serif text-[30px] leading-tight text-foreground">{dressCode.traje}</p>
-        <p className="text-[15px]">{dressCode.texto}</p>
-        <div className="flex flex-col items-center gap-3">
-          <p className="text-[13px] text-primary-deep">Cores para evitar</p>
-          {/* Com o nome ao lado: no celular não tem "passar o mouse" para ver. */}
-          <ul className="grid grid-cols-2 gap-x-8 gap-y-3 text-left">
-            {dressCode.evitar.map(({ nome, cor }) => (
-              <li key={nome} className="flex items-center gap-2.5">
-                <span
-                  aria-hidden="true"
-                  className="size-8 flex-none rounded-full border-2 border-card ring-1 ring-line"
-                  style={{ background: cor }}
-                />
-                <span className="text-[15px] text-foreground">{nome}</span>
+    // Irmão do cartão "Programação" (versão B, specs/007): mesma moldura, título cursivo,
+    // roupas desenhadas no cabide, cores a evitar por motivo e dicas de verão com ícones.
+    <section id="dresscode" aria-label="Traje" className="px-3.5 pt-14 pb-12">
+      <Revelar>
+        <Moldura className="flex flex-col items-center gap-[18px] px-5 pt-9 pb-8 text-center">
+          <div className="flex flex-col items-center gap-1.5">
+            <h2 className="-mb-1 font-script text-[50px] leading-none font-normal text-marinho">Traje</h2>
+            <p className="pl-[0.34em] font-serif text-[15px] tracking-[0.34em] text-marinho uppercase">
+              {dressCode.traje}
+            </p>
+          </div>
+
+          <div className="flex justify-center gap-[30px]">
+            {dressCode.trajes.map(({ desenho, legenda }) => (
+              <figure key={desenho} className="flex flex-col items-center gap-1.5">
+                <DesenhoTraje nome={desenho} className="h-[158px] w-[84px] text-marinho" />
+                <figcaption className="font-serif text-base leading-tight text-primary-deep italic">{legenda}</figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <p className="-mb-1 font-serif text-lg font-medium text-marinho">{dressCode.pedido}</p>
+          <div className="flex flex-wrap justify-center gap-x-[26px] gap-y-[18px]">
+            {dressCode.evitar.map(({ grupo, cores }) => (
+              <div key={grupo} className="flex flex-col items-center gap-2">
+                <p className="text-xs font-semibold tracking-[0.14em] text-primary-deep uppercase">{grupo}</p>
+                {/* Nome embaixo de cada bolinha: no celular não tem "passar o mouse". */}
+                <ul className="flex gap-1.5">
+                  {cores.map(({ nome, cor }) => (
+                    <li key={nome} className="flex w-12 flex-col items-center gap-1">
+                      <span
+                        aria-hidden="true"
+                        className="relative size-[34px] rounded-full border-2 border-card ring-1 ring-line"
+                        style={{ background: cor }}
+                      >
+                        {/* Risco de "evite". */}
+                        <svg viewBox="0 0 34 34" className="absolute -inset-0.5 size-[34px]">
+                          <path d="M7 27 L27 7" className="stroke-marinho" strokeWidth={1.3} strokeLinecap="round" />
+                        </svg>
+                      </span>
+                      <span className="text-center text-[11.5px] leading-tight text-foreground">{nome}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <span aria-hidden="true" className="my-1 h-px w-[70%] bg-line" />
+          <p className="-mb-1 font-serif text-lg font-medium text-marinho">{dressCode.dicasTitulo}</p>
+          <ul className="grid w-full grid-cols-3 gap-2">
+            {dressCode.dicas.map(({ icone, texto }) => (
+              <li key={icone} className="flex flex-col items-center gap-1.5 text-[13px] leading-tight text-foreground">
+                <IconeDica nome={icone} className="size-[34px] text-marinho" />
+                {texto}
               </li>
             ))}
           </ul>
-        </div>
-      </Revelar>
-      <Revelar className="relative flex w-full flex-col gap-1.5 pt-[18px]">
-        <Fio />
-        <p className="font-serif text-[19px] leading-snug text-primary-deep italic">{dressCode.dica}</p>
+        </Moldura>
       </Revelar>
     </section>
   );

@@ -156,20 +156,44 @@ export const galeria = {
 };
 
 /** Igual ao cartão "Traje" impresso. */
+export type DesenhoTraje = "vestido" | "terno";
+export type IconeDica = "tecido" | "salto" | "sol";
+
+/** Cartão "Traje" (versão B, specs/007): desenhos no cabide, cores a evitar por motivo e dicas. */
 export const dressCode = {
   traje: "Social",
-  texto:
-    "Pedimos, com carinho, que evitem branco, off-white, creme e nude, reservados à noiva, e os tons de azul, cor das nossas madrinhas.",
-  /** Cores a EVITAR, com o nome embaixo de cada bolinha (no celular não tem "passar o mouse"). */
-  evitar: [
-    { nome: "branco", cor: "#FFFFFF" },
-    { nome: "off-white", cor: "#F6F2E9" },
-    { nome: "creme", cor: "#EFE4C8" },
-    { nome: "nude", cor: "#E3C8B3" },
-    { nome: "azul", cor: "#2E6A9E" },
-    { nome: "azul claro", cor: "#A8C1D7" },
+  /** Legenda de cada desenho (roupa no cabide, sem pessoas). */
+  trajes: [
+    { desenho: "vestido" as DesenhoTraje, legenda: "vestido" },
+    { desenho: "terno" as DesenhoTraje, legenda: "terno opcional" },
   ],
-  dica: "Janeiro é verão: tecidos leves e saltos grossos ou tipo bloco deixam o dia mais confortável.",
+  pedido: "Com carinho, pedimos que evitem:",
+  /** Cores a EVITAR, agrupadas pelo motivo, com o nome embaixo de cada bolinha (no celular não
+   *  tem "passar o mouse"). */
+  evitar: [
+    {
+      grupo: "Da noiva",
+      cores: [
+        { nome: "branco", cor: "#FFFFFF" },
+        { nome: "off-white", cor: "#F6F2E9" },
+        { nome: "creme", cor: "#EFE4C8" },
+        { nome: "nude", cor: "#E3C8B3" },
+      ],
+    },
+    {
+      grupo: "Das madrinhas",
+      cores: [
+        { nome: "azul", cor: "#2E6A9E" },
+        { nome: "azul claro", cor: "#A8C1D7" },
+      ],
+    },
+  ],
+  dicasTitulo: "Para o calor de janeiro",
+  dicas: [
+    { icone: "tecido" as IconeDica, texto: "Tecido leve" },
+    { icone: "salto" as IconeDica, texto: "Salto grosso ou bloco" },
+    { icone: "sol" as IconeDica, texto: "Fim de tarde de verão" },
+  ],
 };
 
 /** Ordem das categorias = ordem dos filtros na lista de presentes. */

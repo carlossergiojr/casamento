@@ -60,6 +60,10 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## Feito
 
+- 16/11/2026 — "Traje" virou cartão irmão da Programação (versão B): moldura recortada, vestido e
+  terno desenhados no cabide ("terno opcional"), cores a evitar separadas em "Da noiva" e "Das
+  madrinhas" com risco, e as dicas de verão em ícones. Legendas em `dressCode` (`lib/conteudo.ts`).
+
 - 16/11/2026 — "O dia" na versão D: cartão "Programação" igual ao impresso (moldura recortada,
   título cursivo, ícones) e o local com croqui desenhado e a gaveta "Como chegar" (Google Maps,
   Waze, Uber, copiar endereço). Saiu o "Salvar na agenda" desse bloco.
