@@ -5,19 +5,6 @@ import { Contagem } from "./contagem";
 import { Tinta } from "./enfeites";
 import { Revelar } from "./revelar";
 
-export function Cabecalho() {
-  return (
-    <header className="flex h-[52px] items-center justify-between px-5">
-      <span className="font-serif text-[22px] text-primary">
-        {casamento.monograma.a} <span className="text-gold">&amp;</span> {casamento.monograma.b}
-      </span>
-      <span className="text-[11px] tracking-[0.28em] text-primary-deep uppercase">
-        {casamento.dataCurta}
-      </span>
-    </header>
-  );
-}
-
 export function Capa() {
   return (
     <section id="inicio" className="flex flex-col">
@@ -58,7 +45,7 @@ export function Capa() {
 
         <Contagem />
 
-        {/* Só a ação principal; o resto fica no sumário logo abaixo. */}
+        {/* Só a ação principal; o resto fica no menu do topo. */}
         <Link href="/confirmar" className="botao w-full bg-primary text-card hover:bg-primary-deep">
           Eu vou!
         </Link>
