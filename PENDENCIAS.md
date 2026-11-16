@@ -22,18 +22,15 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
 - [ ] **Formato do QR impresso**: abrir um QR e ver se é `…/casamento/confirmar/` ou
       `…/confirmar/CÓDIGO/`. Os dois funcionam; com código, cadastrar o mesmo código no convite.
 
-## 2. Colocar no ar o banco, a senha e o RSVP (specs/006)
+## 2. Banco, senha e RSVP no ar (specs/006)
 
-O código está pronto na branch e testado com banco local. Falta publicar, nesta ordem:
+Site em https://casamento-cavi.vercel.app (Vercel + Neon). O endereço dos QR
+(`carlossergiojr.github.io/casamento/…`) redireciona para o mesmo caminho lá.
 
-- [x] **Noivos**: projeto na **Vercel** importando o repositório, com as variáveis
-      `DATABASE_URL` (Neon, com pooling), `DATABASE_URL_UNPOOLED` (sem pooling), `NOIVOS_SENHA` e
-      `SESSAO_SEGREDO` (`openssl rand -base64 32`), em Production e Preview.
-- [ ] Testar a **prévia da branch** na Vercel: senha, importar a cópia, RSVP de um convite de teste.
-- [x] Trocar `https://preencher.vercel.app` pelo endereço real em `redirecionamento/*.html`
-      (`https://casamento-cavi.vercel.app`).
-- [ ] **Merge na `main`**: Vercel em produção e GitHub Pages redirecionando no mesmo push; rodar
-      `node scripts/checar-redirecionamento.mjs https://carlossergiojr.github.io/casamento <vercel> <códigos>`.
+- [ ] **Noivos, pelo celular**: entrar em `/noivos` com a senha, "Abrir cópia" com o arquivo do
+      checklist, criar um convite de teste, responder pelo link dele e ver a resposta na lista.
+- [ ] Depois do teste, apagar o convite de teste e cadastrar os convites reais (com o código
+      do QR, se o QR tiver código).
 
 ## 3. Pagamento dos presentes
 
@@ -58,6 +55,8 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## Feito
 
+- 16/11/2026 — No ar: site na Vercel (https://casamento-cavi.vercel.app) com o banco Neon; GitHub
+  Pages só redireciona os QR (conferido com `scripts/checar-redirecionamento.mjs`); Next.js 16.4.6.
 - 16/11/2026 — specs/006 no código: site preparado para a Vercel, banco Neon + Drizzle com
   migrations, RSVP gravando (por pessoa, restrição alimentar, prazo 03/01), `/noivos` com senha
   única e dados no banco (importa a cópia antiga), GitHub Pages pronto para só redirecionar.
