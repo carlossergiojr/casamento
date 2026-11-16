@@ -24,7 +24,8 @@ vez). Ao concluir algo, marque o item e mova para "Feito" com a data, no mesmo c
 - Cabeçalhos utilitários do tema em `app/globals.css`: `sobretitulo`, `botao`, `toile`.
   (Não use `overline`: é classe do Tailwind para text-decoration.)
 - Primitivas de UI pelo `npx shadcn@latest add` (estilo base-nova, Base UI).
-- Nada é gravado nem enviado ainda: RSVP e pagamento são só visuais (specs/001 FR-009).
+- Nada é gravado nem enviado ainda: RSVP e pagamento são só visuais (specs/001 FR-009). A área dos
+  noivos (`/noivos`) guarda só no navegador (`lib/noivos.ts`); nada dos noivos vai para o repositório.
 - Publicação: export estático (`output: "export"`, `basePath: "/casamento"`) no GitHub Pages pelo
   workflow `.github/workflows/pages.yml` a cada push na `main`. Arquivo de `/public` em `<img>`
   ou `<form action>` passa por `publico()` (`lib/conteudo.ts`); `next/link` já põe o basePath.

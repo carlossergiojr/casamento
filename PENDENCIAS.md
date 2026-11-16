@@ -37,15 +37,14 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## 4. Área dos noivos
 
-Só pode existir depois da lista 2 (Vercel + Neon): no GitHub Pages tudo é público, então
-convidados e valores não podem ficar no repositório nem no site estático.
+As telas já existem em `/noivos` (sem link no site, fora dos buscadores), com os dados guardados só
+no aparelho de quem usa (`lib/noivos.ts`, localStorage) e cópia em arquivo para passar de um celular
+para o outro. Falta a parte de segurança e o banco, que dependem da lista 2.
 
 - [ ] Entrada protegida por senha única dos noivos (sem conta, sem cadastro).
-- [ ] **Convidados**: cadastrar e editar convites (titular, pessoas, telefone, lado — dela/dele),
-      ver quem confirmou, quem não vai e quem ainda não respondeu, com totais e link do WhatsApp.
-- [ ] **Orçamento**: cada gasto do casamento (buffet, fotógrafo, vestido, decoração…) com valor
-      previsto, valor pago, parcelas e vencimento; totais de previsto × pago × falta pagar.
-- [ ] **Presentes recebidos**: quem deu, valor e recadinho; total arrecadado.
+- [ ] Guardar convidados e orçamento no **Neon** (os dois veem a mesma coisa, sem passar cópia),
+      e as respostas do RSVP caindo direto na lista de convidados.
+- [ ] **Presentes recebidos**: quem deu, valor e recadinho; total arrecadado (depende da lista 3).
 
 ## Fora do escopo (decidido)
 
@@ -58,3 +57,5 @@ convidados e valores não podem ficar no repositório nem no site estático.
   `lib/convite-aberto.ts`); "Victória" e "Carlos" se escrevem juntos na capa.
 - 16/11/2026 — Lista de presentes com 62 objetos em 6 categorias (R$ 100 a R$ 2.800), filtro por
   categoria e borboleta no lugar das fotos aleatórias.
+- 16/11/2026 — Área dos noivos em `/noivos`: resumo, convidados (titular, pessoas, WhatsApp, lado,
+  resposta) e orçamento (previsto, pago, vencimento, lista sugerida), salvos no aparelho.
