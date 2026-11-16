@@ -11,7 +11,7 @@ export function DressCode() {
   return (
     // Irmão do cartão "Programação" (versão B, specs/007): mesma moldura, título cursivo,
     // roupas desenhadas no cabide, cores a evitar por motivo e dicas de verão com ícones.
-    <section id="dresscode" aria-label="Traje" className="px-3.5 pt-14 pb-12">
+    <section id="dresscode" aria-label="Traje" className="bg-surface px-3.5 pt-4 pb-14">
       <Revelar>
         <Moldura className="flex flex-col items-center gap-[18px] px-5 pt-9 pb-8 text-center">
           <div className="flex flex-col items-center gap-1.5">

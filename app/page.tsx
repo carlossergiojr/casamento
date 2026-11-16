@@ -18,12 +18,13 @@ export default function Inicio() {
       <div id="site" className="mx-auto max-w-[640px] bg-background md:border-x md:border-surface">
         <Cabecalho />
         <main>
-          {/* Primeiro o prático (quando, onde, o que vestir, confirmar, presentear); depois a
-              história e as fotos, para quem quer ficar (specs/007). */}
+          {/* Primeiro o prático (quando, o que vestir, onde, confirmar, presentear); depois a
+              história e as fotos, para quem quer ficar (specs/007). Programação e Traje são o
+              par de cartões do convite impresso, juntos no mesmo fundo; a rota também está na capa. */}
           <Capa />
           <Programacao />
-          <Local />
           <DressCode />
+          <Local />
           <ChamadaRsvp />
           <ListaPresentes />
           <Historia />

@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import { casamento } from "@/lib/conteudo";
+import { AcoesCapa } from "./acoes-capa";
 import { Contagem } from "./contagem";
 import { Tinta } from "./enfeites";
 import { Revelar } from "./revelar";
@@ -55,10 +55,8 @@ export function Capa() {
           Sábado · {casamento.local.nome}, {casamento.local.cidade.replace(", BA", "")}
         </p>
 
-        {/* Só a ação principal; presentes e o resto ficam na barra de atalhos (specs/004). */}
-        <Link href="/confirmar" className="botao w-full bg-primary text-card hover:bg-primary-deep">
-          Eu vou!
-        </Link>
+        {/* Confirmar e a rota, que é o que mais se procura; o resto fica na barra de atalhos. */}
+        <AcoesCapa />
 
         <div className="w-full pt-3">
           <Contagem />

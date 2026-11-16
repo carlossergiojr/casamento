@@ -49,14 +49,14 @@ export function Programacao() {
 }
 
 /**
- * Onde é, logo depois da Programação: título, croqui desenhado, endereço e um botão que abre a
+ * Onde é, logo depois do Traje (a rota também abre pelo botão da capa): título, croqui desenhado, endereço e um botão que abre a
  * gaveta com Google Maps, Waze, Uber e copiar endereço. `id="local"`: destino do atalho "Local".
  */
 export function Local() {
   const [rota, setRota] = useState(false);
 
   return (
-    <section id="local" className="flex flex-col gap-5 bg-surface px-5 pt-10 pb-14">
+    <section id="local" className="flex flex-col gap-5 px-5 pt-14 pb-14">
       <Revelar>
         <h2 className="text-center font-serif text-[40px] leading-[1.1] text-primary italic">Como chegar</h2>
       </Revelar>

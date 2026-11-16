@@ -60,6 +60,10 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## Feito
 
+- 16/11/2026 — Capa com "Eu vou!" e "Como chegar" lado a lado (abre a gaveta da rota). Depois do
+  prazo do RSVP (03/01) o site troca sozinho o destaque: "Como chegar" vira o botão cheio e o outro
+  vira "Minha resposta". Nova ordem: Programação e Traje juntos (mesmo fundo), depois Como chegar.
+
 - 16/11/2026 — "Traje" virou cartão irmão da Programação (versão B): moldura recortada, vestido e
   terno desenhados no cabide ("terno opcional"), cores a evitar separadas em "Da noiva" e "Das
   madrinhas" com risco, e as dicas de verão em ícones. Legendas em `dressCode` (`lib/conteudo.ts`).
