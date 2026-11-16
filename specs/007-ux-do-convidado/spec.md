@@ -54,6 +54,11 @@ a primeira tela só mostrava a foto, e com "Reduzir movimento" ligado a capa fic
   endereço. Saem o mapa do Google embutido, os três botões de rota, a linha do traje e o "Salvar
   na agenda". A pedido dos noivos, ele também sai da tela de confirmação do RSVP.
 
+- **FR-015**: capa só com a data, "Sábado · Campestre, Feira de Santana", o "Eu vou!" e a
+  contagem (os horários e a rota já estão logo abaixo). O cartão "Programação" fica compacto
+  (hora na mesma linha do nome; ~490px, cabe num iPhone SE) e o local vira a seção própria
+  **"Como chegar"** (`id="local"`, destino do atalho "Local"), com o botão "Abrir rota".
+
 ## Mantido (de propósito)
 
 Paleta azul + dourado, toile só nas faixas, Cormorant + Karla, nomes "se escrevendo" na capa,

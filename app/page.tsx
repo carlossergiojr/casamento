@@ -6,7 +6,7 @@ import { Duvidas } from "@/components/site/duvidas";
 import { Galeria } from "@/components/site/galeria";
 import { Guia } from "@/components/site/guia";
 import { Historia } from "@/components/site/historia";
-import { ODia } from "@/components/site/o-dia";
+import { Local, Programacao } from "@/components/site/o-dia";
 import { ChamadaRsvp, DressCode, ListaPresentes, Rodape } from "@/components/site/secoes";
 
 export default function Inicio() {
@@ -21,7 +21,8 @@ export default function Inicio() {
           {/* Primeiro o prático (quando, onde, o que vestir, confirmar, presentear); depois a
               história e as fotos, para quem quer ficar (specs/007). */}
           <Capa />
-          <ODia />
+          <Programacao />
+          <Local />
           <DressCode />
           <ChamadaRsvp />
           <ListaPresentes />

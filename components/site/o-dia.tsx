@@ -10,48 +10,61 @@ import { Revelar } from "./revelar";
 
 /**
  * Logo depois da capa (specs/007): o cartão "Programação" igual ao impresso (moldura recortada,
- * título cursivo, ícones) e, fora dele, o local simples de ler: croqui desenhado, endereço e um
- * botão "Como chegar" que abre a gaveta com Google Maps, Waze, Uber e copiar endereço.
- * `id="local"`: é o destino do atalho "Local" da barra.
+ * título cursivo, ícones).
  */
-export function ODia() {
-  const [rota, setRota] = useState(false);
-
+export function Programacao() {
   return (
-    <section id="local" className="flex flex-col gap-8 bg-surface px-3.5 py-14">
+    <section id="programacao" aria-label="Programação" className="bg-surface px-3.5 pt-14 pb-6">
       <Revelar>
-        <Moldura className="flex flex-col items-center gap-7 px-7 pt-12 pb-10">
-          <div className="flex flex-col items-center gap-2.5 text-center">
-            <h2 className="-mb-1 font-script text-[54px] leading-none font-normal text-marinho">Programação</h2>
+        {/* Compacto de propósito: o cartão inteiro cabe numa tela de celular pequeno (iPhone SE). */}
+        <Moldura className="flex flex-col items-center gap-5 px-5 pt-9 pb-8">
+          <div className="flex flex-col items-center gap-2 text-center">
+            <h2 className="-mb-1 font-script text-[46px] leading-none font-normal text-marinho">Programação</h2>
             <p className="font-serif text-sm tracking-[0.3em] text-marinho">
               SÁBADO · {casamento.dataCurta.replaceAll(".", " . ")}
             </p>
           </div>
 
-          {/* Linha do tempo: ícone, ponto no fio, e o momento. */}
-          <ol className="relative flex w-full flex-col gap-[22px]">
-            <span aria-hidden="true" className="absolute top-3.5 bottom-8 left-[49px] w-px bg-line" />
+          {/* Linha do tempo: ícone, ponto no fio e o momento, com a hora na mesma linha do nome. */}
+          <ol className="relative flex w-full flex-col gap-3.5">
+            <span aria-hidden="true" className="absolute top-3 bottom-7 left-[39px] w-px bg-line" />
             {programa.map((m) => (
-              <li key={m.titulo} className="grid grid-cols-[34px_30px_minmax(0,1fr)] items-start">
-                <IconePrograma nome={m.icone} className="mt-1 size-7 text-marinho" />
-                <span aria-hidden="true" className="mt-[13px] ml-[11px] size-[9px] rounded-full bg-marinho ring-4 ring-card" />
+              <li key={m.titulo} className="grid grid-cols-[28px_24px_minmax(0,1fr)] items-start">
+                <IconePrograma nome={m.icone} className="mt-0.5 size-6 text-marinho" />
+                <span aria-hidden="true" className="mt-[10px] ml-[7px] size-[9px] rounded-full bg-marinho ring-4 ring-card" />
                 <span className="flex flex-col">
-                  <span className="font-serif text-[15px] tracking-[0.06em] text-primary-deep lining-nums">{m.hora}</span>
-                  <span className="font-serif text-2xl leading-tight font-medium text-marinho">{m.titulo}</span>
-                  <span className="mt-0.5 font-serif text-[17px] leading-snug text-primary-deep italic">{m.detalhe}</span>
+                  <span className="flex items-baseline justify-between gap-2">
+                    <span className="font-serif text-[21px] leading-tight font-medium text-marinho">{m.titulo}</span>
+                    <span className="font-serif text-[15px] whitespace-nowrap text-primary-deep lining-nums">{m.hora}</span>
+                  </span>
+                  <span className="font-serif text-[15px] leading-snug text-primary-deep italic">{m.detalhe}</span>
                 </span>
               </li>
             ))}
           </ol>
         </Moldura>
       </Revelar>
+    </section>
+  );
+}
 
-      {/* Onde é: fora do cartão, simples de ler. */}
-      <Revelar className="flex flex-col gap-4 px-1.5">
+/**
+ * Onde é, logo depois da Programação: título, croqui desenhado, endereço e um botão que abre a
+ * gaveta com Google Maps, Waze, Uber e copiar endereço. `id="local"`: destino do atalho "Local".
+ */
+export function Local() {
+  const [rota, setRota] = useState(false);
+
+  return (
+    <section id="local" className="flex flex-col gap-5 bg-surface px-5 pt-10 pb-14">
+      <Revelar>
+        <h2 className="text-center font-serif text-[40px] leading-[1.1] text-primary italic">Como chegar</h2>
+      </Revelar>
+      <Revelar className="flex flex-col gap-4">
         <button
           type="button"
           onClick={() => setRota(true)}
-          aria-label="Croqui do caminho até o Campestre. Toque para escolher como chegar."
+          aria-label="Croqui do caminho até o Campestre. Toque para abrir a rota."
           className="relative overflow-hidden rounded-[3px] border border-gold-line focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           <Croqui />
@@ -70,7 +83,7 @@ export function ODia() {
           <p className="text-[13px] text-primary-deep">{casamento.local.referencia}</p>
         </div>
         <button type="button" onClick={() => setRota(true)} className="botao w-full bg-primary text-card hover:bg-primary-deep">
-          Como chegar
+          Abrir rota
         </button>
       </Revelar>
 

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin } from "lucide-react";
 import { casamento } from "@/lib/conteudo";
 import { Contagem } from "./contagem";
 import { Tinta } from "./enfeites";
@@ -51,14 +50,9 @@ export function Capa() {
 
       <Revelar aposConvite atraso={0.3} className="relative flex flex-col items-center gap-3 px-6 pt-6 pb-9 text-center">
         <p className="font-serif text-2xl tracking-[0.1em]">{casamento.dataCapa}</p>
-        <p className="text-[14px] text-primary-deep">
-          {casamento.diaHora} · cerimônia {casamento.cerimonia}
-          <br />
-          {/* Leva ao bloco "O dia", com mapa e rota. */}
-          <a href="#local" className="-my-2.5 inline-flex min-h-11 items-center gap-1.5 text-[15px] text-primary underline decoration-gold-line underline-offset-4">
-            <MapPin aria-hidden="true" className="size-4" strokeWidth={1.5} />
-            {casamento.local.nome} · {casamento.local.cidade}
-          </a>
+        {/* Só o dia e o lugar: os horários e a rota estão no cartão "Programação" logo abaixo. */}
+        <p className="text-[15px] text-primary-deep">
+          Sábado · {casamento.local.nome}, {casamento.local.cidade.replace(", BA", "")}
         </p>
 
         {/* Só a ação principal; presentes e o resto ficam na barra de atalhos (specs/004). */}

@@ -27,7 +27,6 @@ export const casamento = {
   dataCapa: "23 · 01 · 2027",
   hora,
   cerimonia,
-  diaHora: `Sábado · boas-vindas ${hora}`,
   dataPorExtenso: "23 de janeiro",
   hashtag: "#Cavi2027",
   prazoRsvp: "3 de janeiro de 2027",
