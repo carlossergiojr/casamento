@@ -60,6 +60,8 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## Feito
 
+- 16/11/2026 — Contagem da capa com segundos (dias · horas · min · seg); o número desce de leve
+  ao trocar (sem animação com "Reduzir movimento").
 - 16/11/2026 — Barra de atalhos do rodapé removida (cara de aplicativo). No lugar, a data no
   cabeçalho do topo com dois tracinhos ao lado: tocando, abre a lista de seções e leva até a
   escolhida (o cabeçalho some ao descer e volta ao subir). Nomes da capa e da prévia do link em
