@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Karla } from "next/font/google";
+import { Cormorant_Garamond, Karla, Pinyon_Script } from "next/font/google";
 import { casamento } from "@/lib/conteudo";
 import { ENVELOPE_LIGADO, scriptConviteAberto } from "@/lib/convite-aberto";
 import { Movimento } from "@/components/movimento";
@@ -11,6 +11,13 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500"],
   style: ["normal", "italic"],
+});
+
+// Letra cursiva do convite impresso: só no título do cartão "Programação" (specs/007).
+const pinyon = Pinyon_Script({
+  variable: "--font-pinyon",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 const karla = Karla({
@@ -61,7 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       // Envelope desligado: o convite já nasce "aberto" no HTML, sem script nenhum.
       data-convite={ENVELOPE_LIGADO ? undefined : "aberto"}
-      className={`${cormorant.variable} ${karla.variable} antialiased`}
+      className={`${cormorant.variable} ${karla.variable} ${pinyon.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>

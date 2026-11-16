@@ -28,10 +28,12 @@
   --color-gold: var(--gold);
   --color-gold-line: var(--gold-line);
   --color-gold-text-sm: var(--gold-text-sm);
+  --color-marinho: var(--marinho);
 
   --font-sans: var(--font-karla);
   --font-serif: var(--font-cormorant);
   --font-heading: var(--font-cormorant);
+  --font-script: var(--font-pinyon);
 
   --radius-sm: var(--radius);
   --radius-md: var(--radius);
@@ -51,6 +53,7 @@
   --gold: #9c7a45; /* só texto ≥ 24px */
   --gold-line: #c2a170; /* fios — nunca texto */
   --gold-text-sm: #8e6e3c; /* dourado para texto pequeno */
+  --marinho: #1f2d4a; /* o azul do convite impresso: só no cartão "Programação" */
   --radius: 3px;
 }
 

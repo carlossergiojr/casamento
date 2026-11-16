@@ -46,6 +46,14 @@ a primeira tela só mostrava a foto, e com "Reduzir movimento" ligado a capa fic
   azul e azul claro; dica de verão) e a seção **"Guia do convidado"** (`guiaConvidado`), antes de
   "Dúvidas".
 
+- **FR-014**: o bloco "O dia" vira a versão D escolhida pelos noivos: o cartão **"Programação"**
+  igual ao impresso (moldura com cantos recortados em `components/site/moldura.tsx`, título em
+  Pinyon Script, ícones de traço, os 5 momentos em linha do tempo, token `marinho`) e, fora do
+  cartão, o local simples: **croqui desenhado** (`components/site/croqui.tsx`, sem escala),
+  endereço e um botão **"Como chegar"** que abre uma gaveta com Google Maps, Waze, Uber e copiar
+  endereço. Saem o mapa do Google embutido, os três botões de rota, a linha do traje e o "Salvar
+  na agenda" (continua na tela de confirmação do RSVP).
+
 ## Mantido (de propósito)
 
 Paleta azul + dourado, toile só nas faixas, Cormorant + Karla, nomes "se escrevendo" na capa,

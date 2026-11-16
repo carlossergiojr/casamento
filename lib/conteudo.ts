@@ -48,17 +48,18 @@ export const enderecoCompleto = `${casamento.local.nome} — ${casamento.local.e
 const buscaMapa = encodeURIComponent(
   "R. Rubens Francisco Dias, 2101, Papagaio, Feira de Santana - BA, 44059-370",
 );
-export const mapaEmbed = `https://maps.google.com/maps?q=${buscaMapa}&z=15&output=embed`;
 export const mapaRota = `https://www.google.com/maps/dir/?api=1&destination=${buscaMapa}`;
 export const mapaWaze = `https://waze.com/ul?q=${buscaMapa}&navigate=yes`;
+export const mapaUber = `https://m.uber.com/ul/?action=setPickup&pickup=my_location&dropoff[formatted_address]=${buscaMapa}`;
 
 /** Programação do dia, igual ao cartão "Programação" impresso (bloco "O dia", após a capa). */
-export const programa: { hora: string; titulo: string; detalhe: string }[] = [
-  { hora, titulo: "Boas-vindas", detalhe: "Chegue com calma e aproveite um drink fresquinho" },
-  { hora: cerimonia, titulo: "Cerimônia", detalhe: "O momento do sim" },
-  { hora: "Em seguida", titulo: "Serviço volante", detalhe: "Petiscos e banda ao vivo, entre brindes e abraços" },
-  { hora: "Depois", titulo: "Jantar", detalhe: "Um buffet para saborearmos juntos" },
-  { hora: "Para fechar", titulo: "Sobremesas", detalhe: "Uma mesa doce para adoçar a noite" },
+export type IconePrograma = "tacas" | "aliancas" | "cloche" | "talheres" | "bolo";
+export const programa: { hora: string; titulo: string; detalhe: string; icone: IconePrograma }[] = [
+  { hora, titulo: "Boas-vindas", detalhe: "Chegue com calma e aproveite um drink fresquinho", icone: "tacas" },
+  { hora: cerimonia, titulo: "Cerimônia", detalhe: "O momento do sim", icone: "aliancas" },
+  { hora: "Em seguida", titulo: "Serviço volante", detalhe: "Petiscos e banda ao vivo, entre brindes e abraços", icone: "cloche" },
+  { hora: "Depois", titulo: "Jantar", detalhe: "Um buffet para saborearmos juntos", icone: "talheres" },
+  { hora: "Para fechar", titulo: "Sobremesas", detalhe: "Uma mesa doce para adoçar a noite", icone: "bolo" },
 ];
 
 /**
@@ -170,8 +171,6 @@ export const dressCode = {
     { nome: "azul claro", cor: "#A8C1D7" },
   ],
   dica: "Janeiro é verão: tecidos leves e saltos grossos ou tipo bloco deixam o dia mais confortável.",
-  /** Uma linha, para o bloco "O dia". */
-  resumo: "Social",
 };
 
 /** Ordem das categorias = ordem dos filtros na lista de presentes. */

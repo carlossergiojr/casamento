@@ -22,11 +22,13 @@ Mobile-first (a maioria abre pelo QR Code). Deploy: GitHub Pages em `carlossergi
 | `gold` | `#9C7A45` | Acento: "&", contagem, preços, ícones de sucesso — só texto ≥ 24px (3.7:1) |
 | `gold-line` | `#C2A170` | Fios e bordas douradas — **nunca para texto** |
 | `gold-text-sm` | `#8E6E3C` | Dourado para texto pequeno (4.4:1), ex. "Presenteado ✓" |
+| `marinho` | `#1F2D4A` | O azul do convite impresso — **só** no cartão "Programação" (specs/007) |
 
 Regra: azul domina; dourado ≤ 5% da página.
 
 ### Tipografia (Google Fonts)
 - **Cormorant Garamond** 300/400/500 + itálico — nomes, títulos de seção (40px itálico), números, citações.
+- **Pinyon Script** 400 — letra cursiva do convite impresso, **só** no título "Programação" (specs/007).
 - **Karla** 400/500/600 — corpo (15–16px), labels (13px), botões (13–14px, 600, uppercase, letter-spacing .12–.14em), overlines (11–12px, uppercase, letter-spacing .2–.3em).
 
 ### Forma

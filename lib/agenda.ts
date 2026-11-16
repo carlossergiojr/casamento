@@ -33,14 +33,3 @@ export function baixarAgenda() {
   // Safari e Firefox só começam o download depois do clique: apagar o link na hora o cancela.
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
-
-/** Mesmo evento direto no Google Agenda (abre o app no Android). */
-export const linkGoogleAgenda =
-  "https://calendar.google.com/calendar/render?" +
-  new URLSearchParams({
-    action: "TEMPLATE",
-    text: titulo,
-    dates: `${ics(casamento.inicio)}/${ics(casamento.fim)}`,
-    location: local,
-    details: descricao,
-  }).toString();

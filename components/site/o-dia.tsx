@@ -1,70 +1,66 @@
 "use client";
 
-import { toast } from "sonner";
-import { baixarAgenda, linkGoogleAgenda } from "@/lib/agenda";
-import { casamento, dressCode, enderecoCompleto, mapaEmbed, mapaRota, mapaWaze, programa } from "@/lib/conteudo";
+import { useState } from "react";
+import { casamento, programa } from "@/lib/conteudo";
+import { ComoChegar } from "./como-chegar";
+import { Croqui } from "./croqui";
+import { IconePrograma } from "./icones-programa";
+import { Moldura } from "./moldura";
 import { Revelar } from "./revelar";
 
-const SECUNDARIO = "botao border border-primary px-2 text-[13px] tracking-[0.08em] whitespace-nowrap text-primary hover:bg-primary hover:text-card";
-
 /**
- * Tudo o que o convidado precisa saber do dia, logo depois da capa (specs/007): horários, onde é
- * (mapa, rota no Google ou Waze, copiar endereço), o traje numa linha e salvar na agenda.
+ * Logo depois da capa (specs/007): o cartão "Programação" igual ao impresso (moldura recortada,
+ * título cursivo, ícones) e, fora dele, o local simples de ler: croqui desenhado, endereço e um
+ * botão "Como chegar" que abre a gaveta com Google Maps, Waze, Uber e copiar endereço.
  * `id="local"`: é o destino do atalho "Local" da barra.
  */
 export function ODia() {
-  async function copiar() {
-    try {
-      await navigator.clipboard.writeText(enderecoCompleto);
-      toast("Endereço copiado");
-    } catch {
-      toast("Não deu para copiar — segure o endereço para copiar à mão");
-    }
-  }
+  const [rota, setRota] = useState(false);
 
   return (
-    <section id="local" className="flex flex-col gap-8 bg-surface px-5 py-16">
-      <Revelar className="flex flex-col items-center gap-1.5 text-center">
-        <h2 className="font-serif text-[40px] leading-[1.1] text-primary italic">O dia</h2>
-        <p className="text-[15px] text-primary-deep">Sábado, {casamento.dataPorExtenso} de 2027</p>
-      </Revelar>
-
-      {/* Programação: hora à esquerda, um fio dourado ligando os momentos. */}
+    <section id="local" className="flex flex-col gap-8 bg-surface px-3.5 py-14">
       <Revelar>
-        <ol className="relative flex flex-col gap-5 px-2">
-          <span aria-hidden="true" className="absolute top-3 bottom-3 left-[112px] w-px bg-gold-line" />
-          {programa.map((m) => (
-            <li key={m.titulo} className="grid grid-cols-[96px_1fr] items-baseline gap-8">
-              {/* "15h30" grande; "Em seguida", "Para fechar" menores, em itálico. */}
-              <span
-                className={`text-right font-serif leading-none lining-nums ${
-                  /\d/.test(m.hora) ? "text-[26px] text-gold" : "text-[19px] text-gold-text-sm italic"
-                }`}
-              >
-                {m.hora}
-              </span>
-              <span className="relative flex flex-col">
-                <span aria-hidden="true" className="absolute top-[9px] -left-[19px] size-[7px] rounded-full border border-gold-line bg-surface" />
-                <span className="text-[17px] font-semibold text-foreground">{m.titulo}</span>
-                <span className="text-[14px] text-primary-deep">{m.detalhe}</span>
-              </span>
-            </li>
-          ))}
-        </ol>
+        <Moldura className="flex flex-col items-center gap-7 px-7 pt-12 pb-10">
+          <div className="flex flex-col items-center gap-2.5 text-center">
+            <h2 className="-mb-1 font-script text-[54px] leading-none font-normal text-marinho">Programação</h2>
+            <p className="font-serif text-sm tracking-[0.3em] text-marinho">
+              SÁBADO · {casamento.dataCurta.replaceAll(".", " . ")}
+            </p>
+          </div>
+
+          {/* Linha do tempo: ícone, ponto no fio, e o momento. */}
+          <ol className="relative flex w-full flex-col gap-[22px]">
+            <span aria-hidden="true" className="absolute top-3.5 bottom-8 left-[49px] w-px bg-line" />
+            {programa.map((m) => (
+              <li key={m.titulo} className="grid grid-cols-[34px_30px_minmax(0,1fr)] items-start">
+                <IconePrograma nome={m.icone} className="mt-1 size-7 text-marinho" />
+                <span aria-hidden="true" className="mt-[13px] ml-[11px] size-[9px] rounded-full bg-marinho ring-4 ring-card" />
+                <span className="flex flex-col">
+                  <span className="font-serif text-[15px] tracking-[0.06em] text-primary-deep lining-nums">{m.hora}</span>
+                  <span className="font-serif text-2xl leading-tight font-medium text-marinho">{m.titulo}</span>
+                  <span className="mt-0.5 font-serif text-[17px] leading-snug text-primary-deep italic">{m.detalhe}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </Moldura>
       </Revelar>
 
-      {/* Onde é */}
-      <Revelar className="flex flex-col gap-4">
-        <div className="h-52 overflow-hidden border border-gold-line bg-background">
-          <iframe
-            title={`Mapa: ${casamento.local.nome}`}
-            src={mapaEmbed}
-            className="h-full w-full border-0"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
-        <div className="flex flex-col gap-1 px-1">
+      {/* Onde é: fora do cartão, simples de ler. */}
+      <Revelar className="flex flex-col gap-4 px-1.5">
+        <button
+          type="button"
+          onClick={() => setRota(true)}
+          aria-label="Croqui do caminho até o Campestre. Toque para escolher como chegar."
+          className="relative overflow-hidden rounded-[3px] border border-gold-line focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        >
+          <Croqui />
+          <span className="absolute right-2.5 bottom-2.5 rounded-[3px] border border-line bg-background px-2.5 py-1 text-xs font-semibold text-primary">
+            Tocar para a rota
+          </span>
+        </button>
+        <p className="-mt-1 text-center text-[13px] text-primary-deep">Desenho sem escala, só para se localizar.</p>
+        <div className="flex flex-col items-center gap-0.5 text-center">
           <p className="font-serif text-[28px] leading-tight">{casamento.local.nome}</p>
           <p className="text-[15px]">
             {casamento.local.endereco}
@@ -73,49 +69,12 @@ export function ODia() {
           </p>
           <p className="text-[13px] text-primary-deep">{casamento.local.referencia}</p>
         </div>
-        <div className="flex flex-col gap-2.5">
-          <a
-            href={mapaRota}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="botao bg-primary text-[13px] tracking-[0.12em] text-card hover:bg-primary-deep"
-          >
-            Abrir rota no Google Maps
-          </a>
-          <div className="grid grid-cols-2 gap-2.5">
-            <a href={mapaWaze} target="_blank" rel="noopener noreferrer" className={SECUNDARIO}>
-              Abrir no Waze
-            </a>
-            <button type="button" onClick={copiar} className={SECUNDARIO}>
-              Copiar endereço
-            </button>
-          </div>
-        </div>
+        <button type="button" onClick={() => setRota(true)} className="botao w-full bg-primary text-card hover:bg-primary-deep">
+          Como chegar
+        </button>
       </Revelar>
 
-      {/* Traje e agenda: o resto que se pergunta antes de sair de casa. */}
-      <Revelar className="flex flex-col gap-4 border-t border-gold-line pt-6">
-        <a href="#dresscode" className="flex min-h-11 items-center justify-between gap-3 px-1">
-          <span className="flex flex-col">
-            <span className="text-[13px] text-primary-deep">Traje</span>
-            <span className="text-[15px] text-foreground">{dressCode.resumo}</span>
-          </span>
-          <span className="text-sm text-primary underline decoration-gold-line underline-offset-4">Ver detalhes</span>
-        </a>
-        <div className="flex flex-col items-center gap-1">
-          <button type="button" onClick={baixarAgenda} className={`${SECUNDARIO} w-full`}>
-            Salvar na agenda
-          </button>
-          <a
-            href={linkGoogleAgenda}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex min-h-11 items-center text-sm text-primary-deep underline decoration-gold-line underline-offset-4"
-          >
-            ou adicionar no Google Agenda
-          </a>
-        </div>
-      </Revelar>
+      <ComoChegar aberto={rota} mudar={setRota} />
     </section>
   );
 }

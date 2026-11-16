@@ -22,8 +22,9 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
       aparece em "Dúvidas" e na tela "Não encontramos esse nome" do RSVP.
 - [ ] **Dúvidas**: responder as que estão entre colchetes em `duvidas` (crianças, estacionamento,
       hospedagem, cerimônia ao ar livre) e tirar/acrescentar perguntas.
-- [ ] **O dia**: escolher o visual do bloco (versões A–D na página de comparação). Os textos já
-      são os do cartão "Programação".
+- [ ] **Croqui do local**: conferir o desenho em "O dia" (`components/site/croqui.tsx`): a Rua
+      Zeus sai da R. Rubens Francisco Dias? Os condomínios ficam de cada lado? Tem lago com a ilha?
+      Ajusto o traçado com o que vocês disserem (ou com um print do mapa).
 - [ ] **Formato do QR impresso**: o cartão traz um código impresso embaixo do QR, então o QR deve
       levar a `…/confirmar/CÓDIGO/`. Abrir um QR para confirmar e cadastrar em `/noivos` cada
       convite com exatamente o código impresso.
@@ -58,6 +59,10 @@ dinheiro vai para os noivos, que compram o que quiserem.
   pessoal. O site não envia nada automático.
 
 ## Feito
+
+- 16/11/2026 — "O dia" na versão D: cartão "Programação" igual ao impresso (moldura recortada,
+  título cursivo, ícones) e o local com croqui desenhado e a gaveta "Como chegar" (Google Maps,
+  Waze, Uber, copiar endereço). Saiu o "Salvar na agenda" desse bloco.
 
 - 16/11/2026 — Textos dos cartões impressos no site: programação com os 5 momentos (boas-vindas,
   cerimônia, serviço volante, jantar, sobremesas), traje Social com as cores a evitar (o site
