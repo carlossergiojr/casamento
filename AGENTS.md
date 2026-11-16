@@ -5,6 +5,12 @@ no GitHub Pages por enquanto; Vercel quando houver servidor). Antes de mudar qua
 — ela prevalece sobre qualquer convenção. Features relevantes passam por Spec Kit
 (`/speckit-specify` → `/speckit-plan` → `/speckit-tasks` → `/speckit-implement`).
 
+## O que falta
+
+`PENDENCIAS.md` é a lista viva do que falta. Quando perguntarem "o que falta?", "onde estamos?"
+ou pedirem a próxima tarefa, responda a partir dela, seguindo a ordem das listas (uma de cada
+vez). Ao concluir algo, marque o item e mova para "Feito" com a data, no mesmo commit.
+
 ## Regras práticas
 
 - Visual: `specs/001-visual-do-site/DESIGN.md` é a fonte (tokens, medidas, onde vai a estampa).

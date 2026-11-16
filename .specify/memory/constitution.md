@@ -1,6 +1,7 @@
 <!--
 SYNC IMPACT REPORT
-Versão: 1.0.2 → 1.0.3 — PATCH: noivo só "Carlos" (sem "Sergio") em todo o site.
+Versão: 1.0.3 → 1.0.4 — PATCH: sem e-mail automático (os noivos avisam pelo WhatsApp); sai o Resend.
+Antes: 1.0.2 → 1.0.3 — PATCH: noivo só "Carlos" (sem "Sergio") em todo o site.
 Antes: 1.0.1 → 1.0.2 — PATCH: cerimônia às 15h (era 16h); prazo do RSVP 03/01/2027.
 Antes: 1.0.0 → 1.0.1 — PATCH: glossário fixa a ordem dos nomes (Victória & Carlos, V & C).
 Histórico: (template) → 1.0.0 — ratificação inicial, constituição curta de propósito.
@@ -44,7 +45,7 @@ dos noivos fica fora do site público e protegido do jeito mais simples que func
 ### IV. Servidor decide o que importa
 
 Tudo que grava dado ou envolve dinheiro (confirmação, pagamento, presente comprado) é validado
-no servidor (zod) e nunca confia no navegador. Efeitos externos (pagamento, e-mail) ficam fora
+no servidor (zod) e nunca confia no navegador. Efeitos externos (pagamento) ficam fora
 de transação de banco e são idempotentes.
 
 ### V. Dados com registro
@@ -55,7 +56,7 @@ entra por migration versionada — nunca alteração manual em produção.
 ## Stack
 
 Next.js (App Router) + TypeScript strict · Tailwind CSS + shadcn/ui · Motion para animações ·
-hospedagem na Vercel. Mais tarde: Neon (Postgres) + Drizzle, Mercado Pago, Resend — entram só
+hospedagem na Vercel. Mais tarde: Neon (Postgres) + Drizzle, Mercado Pago — entram só
 na feature que precisar deles.
 
 ## Fluxo
@@ -71,4 +72,4 @@ Esta constituição prevalece sobre outras convenções. Mudança = editar este 
 justificativa e subir a versão (MAJOR remove/redefine princípio, MINOR acrescenta, PATCH
 esclarece).
 
-**Version**: 1.0.3 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-02
+**Version**: 1.0.4 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-16
