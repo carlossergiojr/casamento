@@ -1,6 +1,6 @@
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { TelaInterna } from "@/components/interno";
+import { FotoPresente } from "@/components/site/foto-presente";
 import { formatarValor, presentes } from "@/lib/conteudo";
 import { FormPresente } from "./form-presente";
 
@@ -22,7 +22,7 @@ export default async function DetalhePresente({ params }: PageProps<"/presentes/
   return (
     <TelaInterna voltar="/#presentes" rotuloVoltar="Presentes" semFaixa>
       <div className="relative h-[280px] bg-surface">
-        <Image src={presente.foto} alt={presente.nome} fill priority sizes="(max-width: 640px) 100vw, 640px" className="object-cover" />
+        <FotoPresente presente={presente} priority sizes="(max-width: 640px) 100vw, 640px" />
       </div>
       <main className="flex flex-1 flex-col gap-5 px-6 pt-7 pb-9">
         <div className="flex flex-col gap-1">

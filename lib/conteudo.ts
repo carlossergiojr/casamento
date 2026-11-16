@@ -88,39 +88,122 @@ export const dressCode = {
   evite: "[O que evitar — a definir]",
 };
 
+/** Ordem das categorias = ordem dos filtros na lista de presentes. */
+export const categoriasPresente = [
+  "Cozinha",
+  "Mesa e bar",
+  "Eletroportáteis",
+  "Eletrodomésticos",
+  "Quarto e banho",
+  "Casa",
+] as const;
+export type CategoriaPresente = (typeof categoriasPresente)[number];
+
 export type Presente = {
   id: string;
   nome: string;
+  categoria: CategoriaPresente;
   /** Centavos. */
   valor: number;
-  foto: string;
+  /** Foto real do item (ex.: publico("/presentes/air-fryer.jpg")). Sem foto, entra a estampa. */
+  foto?: string;
   presenteado: boolean;
 };
 
+/** [id, nome, valor em reais, foto opcional] */
+type Item = [string, string, number, string?];
+const categoria = (nome: CategoriaPresente, itens: Item[]): Presente[] =>
+  itens.map(([id, nomeItem, reais, arquivo]) => ({
+    id,
+    nome: nomeItem,
+    categoria: nome,
+    valor: reais * 100,
+    foto: arquivo ? publico(`/presentes/${arquivo}`) : undefined,
+    presenteado: false,
+  }));
+
 /**
- * Presentes "virtuais": o convidado escolhe o item e paga por Pix ou cartão; o valor cai para os
- * noivos, que compram o que quiserem. Mistura do que mais aparece nas listas (casa, cozinha,
- * eletros) com cotas de lua de mel e alguns divertidos, em faixas de R$ 90 a R$ 1.500 para caber
- * em todo bolso. Valores em centavos; ajuste à vontade. Ordem = ordem na página.
+ * Presentes "virtuais": o convidado escolhe o objeto e paga por Pix ou cartão; o valor vai para
+ * os noivos, que compram o item. ~60 objetos para ~150 convidados (um por família/casal, com
+ * folga), de R$ 100 a R$ 2.800. Valores aproximados de loja em 2026; ajuste à vontade.
+ * Foto: salve em public/presentes/ e ponha o nome do arquivo como 4º valor do item.
  */
 export const presentes: Presente[] = [
-  { id: "cafe-da-manha", nome: "Café da manhã na cama do primeiro dia de casados", valor: 12000 },
-  { id: "air-fryer", nome: "Air fryer", valor: 45000 },
-  { id: "jantar-lua-de-mel", nome: "Jantar romântico na lua de mel", valor: 35000 },
-  { id: "jogo-de-cama", nome: "Jogo de cama casal", valor: 28000 },
-  { id: "pizza-domingo", nome: "Pizza de domingo (porque ninguém vai querer cozinhar)", valor: 9000 },
-  { id: "cafeteira", nome: "Cafeteira de cápsulas", valor: 50000 },
-  { id: "passeio-de-barco", nome: "Passeio de barco na lua de mel", valor: 42000 },
-  { id: "jogo-de-panelas", nome: "Jogo de panelas antiaderente", valor: 60000 },
-  { id: "tacas", nome: "Jogo de taças para brindar", valor: 18000 },
-  { id: "aparelho-de-jantar", nome: "Aparelho de jantar", valor: 40000 },
-  { id: "jogo-de-toalhas", nome: "Jogo de toalhas de banho", valor: 20000 },
-  { id: "batedeira", nome: "Batedeira", valor: 38000 },
-  { id: "aspirador-robo", nome: "Aspirador robô (o melhor amigo do casal)", valor: 120000 },
-  { id: "diaria-lua-de-mel", nome: "Uma diária de hotel na lua de mel", valor: 80000 },
-  { id: "passagem-lua-de-mel", nome: "Ajuda nas passagens da lua de mel", valor: 150000 },
-  { id: "vinho", nome: "Vinho para o primeiro aniversário de casados", valor: 15000 },
-].map((p) => ({ ...p, presenteado: false, foto: foto(`presente-${p.id}`, 600, 600) }));
+  ...categoria("Cozinha", [
+    ["jogo-de-panelas", "Jogo de panelas antiaderente", 600],
+    ["panela-de-pressao", "Panela de pressão", 250],
+    ["frigideiras", "Jogo de frigideiras", 280],
+    ["jogo-de-facas", "Jogo de facas com cepo", 350],
+    ["potes-de-vidro", "Kit de potes herméticos de vidro", 180],
+    ["utensilios-silicone", "Kit de utensílios de silicone", 150],
+    ["tabua-de-corte", "Tábua de corte de madeira", 120],
+    ["assadeiras", "Jogo de assadeiras de vidro", 160],
+    ["formas-de-bolo", "Jogo de formas de bolo", 130],
+    ["escorredor", "Escorredor de louça inox", 170],
+    ["lixeira-cozinha", "Lixeira inox com pedal", 200],
+    ["panos-de-prato", "Kit de panos de prato", 100],
+  ]),
+  ...categoria("Mesa e bar", [
+    ["aparelho-de-jantar", "Aparelho de jantar (30 peças)", 400],
+    ["faqueiro", "Faqueiro inox (42 peças)", 350],
+    ["tacas-de-vinho", "Jogo de taças de vinho", 180],
+    ["tacas-de-espumante", "Jogo de taças de espumante", 180],
+    ["copos", "Jogo de copos de vidro", 120],
+    ["xicaras", "Jogo de xícaras de café", 150],
+    ["travessas", "Jogo de travessas de porcelana", 250],
+    ["jogo-americano", "Jogo americano (6 lugares)", 140],
+    ["toalha-de-mesa", "Toalha de mesa de linho", 220],
+    ["tabua-de-frios", "Tábua de frios com acessórios", 190],
+    ["jarra", "Jarra de vidro com copos", 110],
+  ]),
+  ...categoria("Eletroportáteis", [
+    ["air-fryer", "Air fryer", 450],
+    ["cafeteira", "Cafeteira de cápsulas", 500],
+    ["liquidificador", "Liquidificador", 300],
+    ["batedeira", "Batedeira planetária", 600],
+    ["processador", "Processador de alimentos", 400],
+    ["mixer", "Mixer de mão", 250],
+    ["sanduicheira", "Sanduicheira e grill", 200],
+    ["chaleira", "Chaleira elétrica", 180],
+    ["torradeira", "Torradeira", 200],
+    ["panela-de-arroz", "Panela elétrica de arroz", 250],
+    ["ferro-de-passar", "Ferro de passar a vapor", 220],
+    ["aspirador-vertical", "Aspirador de pó vertical", 500],
+  ]),
+  ...categoria("Eletrodomésticos", [
+    ["micro-ondas", "Micro-ondas", 750],
+    ["forno-eletrico", "Forno elétrico de bancada", 700],
+    ["purificador", "Purificador de água", 900],
+    ["aspirador-robo", "Aspirador robô", 1200],
+    ["lava-loucas", "Lava-louças", 2500],
+    ["smart-tv", "Smart TV 50\"", 2800],
+  ]),
+  ...categoria("Quarto e banho", [
+    ["jogo-de-cama-queen", "Jogo de cama queen 400 fios", 350],
+    ["jogo-de-cama-percal", "Jogo de cama casal percal", 250],
+    ["edredom", "Edredom queen", 380],
+    ["cobre-leito", "Cobre-leito queen", 320],
+    ["travesseiros", "Par de travesseiros", 250],
+    ["protetor-de-colchao", "Protetor de colchão impermeável", 150],
+    ["toalhas-de-banho", "Jogo de toalhas de banho (4 peças)", 200],
+    ["roupoes", "Par de roupões", 300],
+    ["tapetes-banheiro", "Kit de tapetes de banheiro", 120],
+    ["acessorios-banheiro", "Kit de acessórios para banheiro", 150],
+  ]),
+  ...categoria("Casa", [
+    ["tapete-sala", "Tapete para sala", 600],
+    ["manta-sofa", "Manta para sofá", 180],
+    ["almofadas", "Kit de almofadas", 200],
+    ["espelho", "Espelho decorativo", 400],
+    ["luminaria", "Luminária de chão", 450],
+    ["cortina", "Cortina de linho", 300],
+    ["vasos", "Kit de vasos com plantas", 200],
+    ["difusor", "Difusor de aromas", 130],
+    ["porta-retratos", "Kit de porta-retratos", 100],
+    ["caixa-de-som", "Caixa de som bluetooth", 400],
+    ["kit-ferramentas", "Kit de ferramentas", 250],
+  ]),
+];
 
 export const formatarValor = (centavos: number) =>
   (centavos / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });

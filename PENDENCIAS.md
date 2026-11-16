@@ -11,9 +11,11 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
       legenda (hoje "[legenda curta]").
 - [ ] **Dress code**: traje esperado, texto curto explicando, o que evitar e as cores sugeridas
       (hoje são marcadores "[a definir]").
-- [ ] **Lista de presentes real**: revisar os 16 itens e valores (primeira versão em 16/11/2026),
-      dizer o destino da lua de mel e o que já têm em casa, e trocar as fotos aleatórias por
-      fotos dos itens ou ilustrações no estilo do site.
+- [ ] **Lista de presentes real**: revisar os 62 objetos e valores (só objetos, por categoria),
+      tirar o que já têm em casa, e mandar as **fotos dos produtos** (salvas em
+      `public/presentes/`, nome do arquivo como 4º valor do item). Sem foto, aparece a borboleta.
+- [ ] **E-mail no formulário do presente**: o campo diz "para receber a confirmação", mas não vai
+      ter e-mail automático. Decidir junto com o pagamento (o Mercado Pago pode pedir e-mail).
 - [ ] **Lista de convidados**: os convites de verdade (titular + pessoas de cada convite), no lugar
       dos 3 de exemplo (CAVI01–03).
 
@@ -47,4 +49,5 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 - 16/11/2026 — Envelope de abertura desligado por enquanto (`ENVELOPE_LIGADO` em
   `lib/convite-aberto.ts`); "Victória" e "Carlos" se escrevem juntos na capa.
-- 16/11/2026 — Primeira versão real da lista de presentes (16 itens, R$ 90 a R$ 1.500).
+- 16/11/2026 — Lista de presentes com 62 objetos em 6 categorias (R$ 100 a R$ 2.800), filtro por
+  categoria e borboleta no lugar das fotos aleatórias.

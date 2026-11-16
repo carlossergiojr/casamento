@@ -1,7 +1,6 @@
-import Image from "next/image";
-import Link from "next/link";
-import { casamento, dressCode, formatarValor, presentes, publico } from "@/lib/conteudo";
+import { casamento, dressCode, publico } from "@/lib/conteudo";
 import { Fio } from "./enfeites";
+import { GradePresentes } from "./presentes";
 import { Revelar } from "./revelar";
 
 const TITULO = "font-serif text-[40px] leading-[1.1] text-primary italic";
@@ -51,47 +50,11 @@ export function ListaPresentes() {
       <Revelar className="flex flex-col items-center gap-2.5 px-2 text-center">
         <h2 className={TITULO}>Lista de presentes</h2>
         <p className="text-[15px] text-primary-deep">
-          Escolha um presente e pague aqui mesmo, por Pix ou cartão. Dá para deixar um recadinho
-          junto.
+          Escolha um presente e pague aqui mesmo, por Pix ou cartão: o valor chega até nós e a
+          gente compra o item. Dá para deixar um recadinho junto.
         </p>
       </Revelar>
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-        {presentes.map((p, i) => (
-          <Revelar
-            key={p.id}
-            atraso={(i % 2) * 0.08}
-            className="flex flex-col rounded-[3px] border border-surface bg-card"
-          >
-            <div className="relative h-[130px] bg-surface">
-              <Image
-                src={p.foto}
-                alt={p.nome}
-                fill
-                sizes="(max-width: 768px) 45vw, 200px"
-                className={`object-cover ${p.presenteado ? "opacity-60 grayscale-[40%]" : ""}`}
-              />
-            </div>
-            <div className="flex flex-1 flex-col gap-1 p-3">
-              <span className="text-sm leading-[1.35]">{p.nome}</span>
-              <span className="font-serif text-2xl text-gold lining-nums">{formatarValor(p.valor)}</span>
-              <div className="mt-auto pt-1.5">
-                {p.presenteado ? (
-                  <span className="block rounded-[3px] border border-gold-line px-1.5 py-[13px] text-center text-xs font-semibold tracking-[0.12em] text-gold-text-sm uppercase">
-                    Presenteado ✓
-                  </span>
-                ) : (
-                  <Link
-                    href={`/presentes/${p.id}`}
-                    className="block rounded-[3px] border border-primary px-1.5 py-[13px] text-center text-xs font-semibold tracking-[0.12em] text-primary uppercase transition-colors hover:bg-primary hover:text-card"
-                  >
-                    Presentear
-                  </Link>
-                )}
-              </div>
-            </div>
-          </Revelar>
-        ))}
-      </div>
+      <GradePresentes />
     </section>
   );
 }
