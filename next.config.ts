@@ -8,6 +8,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   trailingSlash: true,
   images: { unoptimized: true },
+  // Avisa no build quando esta versão do Next tiver falha de segurança conhecida.
+  experimental: { agentUpgrade: "security" },
   turbopack: {
     rules: {
       "*.css": {
