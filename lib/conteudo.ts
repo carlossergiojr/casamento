@@ -210,6 +210,19 @@ export const presentes: Presente[] = [
   ]),
 ];
 
+/**
+ * Presentes em destaque na página inicial (ids da lista acima, nesta ordem; o ideal são 4 ou 6).
+ * A lista completa fica em /presentes.
+ */
+export const destaquesPresente = [
+  "air-fryer",
+  "jogo-de-cama-queen",
+  "aparelho-de-jantar",
+  "cafeteira",
+  "tacas-de-vinho",
+  "jogo-de-panelas",
+];
+
 export const formatarValor = (centavos: number) =>
   (centavos / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 

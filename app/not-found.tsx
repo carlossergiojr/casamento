@@ -17,7 +17,7 @@ export default function NaoEncontrada() {
             Voltar ao convite
           </Link>
           <Link
-            href="/#presentes"
+            href="/presentes/"
             className="botao border border-primary text-primary hover:bg-primary hover:text-card"
           >
             Ver a lista de presentes

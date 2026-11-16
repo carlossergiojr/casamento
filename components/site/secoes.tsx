@@ -1,6 +1,7 @@
-import { casamento, dressCode, publico } from "@/lib/conteudo";
+import Link from "next/link";
+import { casamento, dressCode, presentes, publico } from "@/lib/conteudo";
 import { Fio } from "./enfeites";
-import { GradePresentes } from "./presentes";
+import { DestaquesPresentes } from "./presentes";
 import { Revelar } from "./revelar";
 
 const TITULO = "font-serif text-[40px] leading-[1.1] text-primary italic";
@@ -54,7 +55,10 @@ export function ListaPresentes() {
           gente compra o item. Dá para deixar um recadinho junto.
         </p>
       </Revelar>
-      <GradePresentes />
+      <DestaquesPresentes />
+      <Link href="/presentes/" className="botao border border-primary text-primary hover:bg-primary hover:text-card">
+        Ver lista completa ({presentes.length} presentes)
+      </Link>
     </section>
   );
 }

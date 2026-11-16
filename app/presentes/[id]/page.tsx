@@ -20,7 +20,7 @@ export default async function DetalhePresente({ params }: PageProps<"/presentes/
   if (!presente || presente.presenteado) notFound();
 
   return (
-    <TelaInterna voltar="/#presentes" rotuloVoltar="Presentes" semFaixa>
+    <TelaInterna voltar="/presentes/" rotuloVoltar="Presentes" semFaixa>
       <div className="relative h-[280px] bg-surface">
         <FotoPresente presente={presente} priority sizes="(max-width: 640px) 100vw, 640px" />
       </div>

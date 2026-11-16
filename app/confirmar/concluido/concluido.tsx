@@ -72,7 +72,7 @@ export function Concluido({ convite }: { convite: ConvitePublico | null }) {
       </p>
 
       <div className="mt-auto flex w-full flex-col gap-3">
-        <Link href="/#presentes" className="botao bg-primary text-card hover:bg-primary-deep">
+        <Link href="/presentes/" className="botao bg-primary text-card hover:bg-primary-deep">
           Ver lista de presentes
         </Link>
         <button

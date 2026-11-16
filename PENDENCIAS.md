@@ -14,6 +14,7 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
 - [ ] **Lista de presentes real**: revisar os 62 objetos e valores (só objetos, por categoria),
       tirar o que já têm em casa, e mandar as **fotos dos produtos** (salvas em
       `public/presentes/`, nome do arquivo como 4º valor do item). Sem foto, aparece a borboleta.
+      Escolher também os **destaques da home** (`destaquesPresente` em `lib/conteudo.ts`).
 - [ ] **E-mail no formulário do presente**: o campo diz "para receber a confirmação", mas não vai
       ter e-mail automático. Decidir junto com o pagamento (o Mercado Pago pode pedir e-mail).
 - [ ] **Lista de convidados**: os convites de verdade (titular + pessoas + o código que está no QR
@@ -53,6 +54,9 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## Feito
 
+- 16/11/2026 — Lista de presentes enxuta: a home mostra só 6 destaques e o botão "Ver lista
+  completa"; a lista inteira foi para `/presentes`, em linhas compactas, com filtro por categoria,
+  ordem por preço e os já presenteados no fim.
 - 16/11/2026 — No ar: site na Vercel (https://casamento-cavi.vercel.app) com o banco Neon; GitHub
   Pages só redireciona os QR (conferido com `scripts/checar-redirecionamento.mjs`); Next.js 16.4.6.
 - 16/11/2026 — specs/006 no código: site preparado para a Vercel, banco Neon + Drizzle com

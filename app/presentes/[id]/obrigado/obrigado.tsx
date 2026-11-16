@@ -53,7 +53,7 @@ export function Obrigado({ id, nome, valor }: { id: string; nome: string; valor:
       </p>
 
       <div className="mt-auto flex w-full flex-col gap-3">
-        <Link href="/#presentes" className="botao bg-primary text-card hover:bg-primary-deep">
+        <Link href="/presentes/" className="botao bg-primary text-card hover:bg-primary-deep">
           Voltar à lista
         </Link>
         <Link
