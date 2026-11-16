@@ -5,7 +5,9 @@ import { join } from "node:path";
  * Fontes e estampa para as imagens geradas no build (prévia de compartilhamento e ícones).
  * O ImageResponse não usa o next/font, então as TTFs ficam em `assets/fonts/`.
  */
-const ler = (...caminho: string[]) => readFile(join(process.cwd(), ...caminho));
+// Só roda no build (as rotas de app/marca são estáticas): o comentário evita que o Turbopack
+// leve o projeto inteiro junto para o servidor da Vercel.
+const ler = (...caminho: string[]) => readFile(join(/*turbopackIgnore: true*/ process.cwd(), ...caminho));
 
 export async function fontesMarca() {
   const [leve, italico, karla] = await Promise.all([

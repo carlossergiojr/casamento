@@ -22,24 +22,28 @@ const titulo = `${casamento.casalCurto} · ${casamento.dataCurta}`;
 const descricao = `Vamos nos casar! Sábado, 23 de janeiro de 2027, às ${casamento.hora}, no ${casamento.local.nome} — ${casamento.local.cidade}. ${casamento.hashtag}`;
 
 // Prévia do link no WhatsApp e redes (specs/002 FR-002, FR-003). As imagens são geradas no build
-// em app/marca/ (rotas .png, com o basePath escrito à mão: os arquivos de metadata do Next o perdem).
+// em app/marca/. Na Vercel, o endereço vem de VERCEL_PROJECT_PRODUCTION_URL (preenchido por ela).
+const site = process.env.VERCEL_PROJECT_PRODUCTION_URL
+  ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+  : "http://localhost:3000";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://carlossergiojr.github.io"),
+  metadataBase: new URL(site),
   title: titulo,
   description: descricao,
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: "Victória & Carlos · #Cavi2027",
-    url: "/casamento/",
+    url: "/",
     title: titulo,
     description: descricao,
-    images: [{ url: "/casamento/marca/og.jpg", type: "image/jpeg", width: 1200, height: 630, alt: `Convite de casamento de ${casamento.casalCurto}` }],
+    images: [{ url: "/marca/og.jpg", type: "image/jpeg", width: 1200, height: 630, alt: `Convite de casamento de ${casamento.casalCurto}` }],
   },
-  twitter: { card: "summary_large_image", title: titulo, description: descricao, images: ["/casamento/marca/og.jpg"] },
+  twitter: { card: "summary_large_image", title: titulo, description: descricao, images: ["/marca/og.jpg"] },
   icons: {
-    icon: { url: "/casamento/marca/icone.png", type: "image/png", sizes: "64x64" },
-    apple: "/casamento/marca/icone-apple.png",
+    icon: { url: "/marca/icone.png", type: "image/png", sizes: "64x64" },
+    apple: "/marca/icone-apple.png",
   },
 };
 

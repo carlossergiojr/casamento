@@ -1,7 +1,7 @@
 # Cavi 2027 — orientação para agentes
 
 Site do casamento de Victória & Carlos (Next.js 16 + Tailwind 4 + shadcn/ui + Motion,
-no GitHub Pages por enquanto; Vercel quando houver servidor). Antes de mudar qualquer coisa, leia a constituição: `.specify/memory/constitution.md`
+na Vercel com Neon + Drizzle; o GitHub Pages só redireciona os QR Codes antigos). Antes de mudar qualquer coisa, leia a constituição: `.specify/memory/constitution.md`
 — ela prevalece sobre qualquer convenção. Features relevantes passam por Spec Kit
 (`/speckit-specify` → `/speckit-plan` → `/speckit-tasks` → `/speckit-implement`).
 
@@ -24,15 +24,21 @@ vez). Ao concluir algo, marque o item e mova para "Feito" com a data, no mesmo c
 - Cabeçalhos utilitários do tema em `app/globals.css`: `sobretitulo`, `botao`, `toile`.
   (Não use `overline`: é classe do Tailwind para text-decoration.)
 - Primitivas de UI pelo `npx shadcn@latest add` (estilo base-nova, Base UI).
-- Nada é gravado nem enviado ainda: RSVP e pagamento são só visuais (specs/001 FR-009). A área dos
-  noivos (`/noivos`) guarda só no navegador (`lib/noivos.ts`); nada dos noivos vai para o repositório.
-- Publicação: export estático (`output: "export"`, `basePath: "/casamento"`) no GitHub Pages pelo
-  workflow `.github/workflows/pages.yml` a cada push na `main`. Arquivo de `/public` em `<img>`
-  ou `<form action>` passa por `publico()` (`lib/conteudo.ts`); `next/link` já põe o basePath.
+- Banco (specs/006): schema em `lib/db/schema.ts`; mudou → `npm run db:gerar` e versione a migration
+  de `drizzle/` (o build da Vercel aplica). Gravação só por Server Action com zod (`app/*/acoes.ts`).
+  Convites e convidados reais só no banco, nunca no repositório (é público).
+- `/noivos`: senha única (`NOIVOS_SENHA`) e cookie assinado (`SESSAO_SEGREDO`), `lib/sessao.ts`;
+  toda ação dos noivos passa por `comSessao`. Pagamento dos presentes ainda é só visual.
+- Publicação: a Vercel publica cada push (prévia por branch, produção na `main`), com
+  `DATABASE_URL`, `DATABASE_URL_UNPOOLED`, `NOIVOS_SENHA`, `SESSAO_SEGREDO`. O GitHub Pages
+  (`carlossergiojr.github.io/casamento/`, o endereço dos QR) publica só `redirecionamento/`
+  (workflow `.github/workflows/pages.yml`); trocar o domínio = trocar `DESTINO` lá.
 
 ## Verificar
 
 `npx tsc --noEmit && npm run build`, e a tela conferida no navegador em tamanho de celular.
+Local: Postgres + `.env.local` (ver `specs/006-banco-e-senha/quickstart.md`), `npm run db:migrar`
+e `npm run db:semente` (convites CAVI01–03 de teste).
 
 <!-- BEGIN:nextjs-agent-rules -->
 

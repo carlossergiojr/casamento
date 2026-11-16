@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { Petalas } from "@/components/site/petalas";
 import { Revelar } from "@/components/site/revelar";
-import { casamento, convitesExemplo } from "@/lib/conteudo";
+import { casamento } from "@/lib/conteudo";
+import type { ConvitePublico } from "@/lib/convites-servidor";
 
 /** Data no formato do iCalendar (UTC): 20270123T180000Z. */
 const ics = (iso: string) => new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
@@ -35,11 +35,9 @@ function baixarAgenda() {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-export function Concluido() {
-  const params = useSearchParams();
-  const convite = convitesExemplo.find((c) => c.codigo === params.get("c"));
-  const r = params.get("r") ?? "";
-  const alguemVai = r.includes("1");
+/** Resultado lido do banco pelo código (specs/006 T022). */
+export function Concluido({ convite }: { convite: ConvitePublico | null }) {
+  const alguemVai = !!convite?.pessoas.some((p) => p.resposta === "vem");
 
   return (
     <>
@@ -58,11 +56,11 @@ export function Concluido() {
       {convite && (
         <Revelar atraso={0.1} className="flex w-full flex-col gap-2 rounded-[3px] bg-surface p-4 text-left">
           {convite.pessoas.map((p, i) => (
-            <div key={p}>
+            <div key={p.id}>
               {i > 0 && <div className="mb-2 h-px bg-line/50" />}
               <div className="flex justify-between gap-3">
-                <span>{p}</span>
-                <span className="font-semibold text-primary">{r[i] === "1" ? "Vai" : "Não vai"}</span>
+                <span>{p.nome}</span>
+                <span className="font-semibold text-primary">{p.resposta === "vem" ? "Vai" : "Não vai"}</span>
               </div>
             </div>
           ))}

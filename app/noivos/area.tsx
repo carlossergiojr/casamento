@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { createContext, startTransition, use, useEffect, useOptimistic, useRef, useState } from "react";
 import { toast } from "sonner";
 import { campo, rotuloCampo, tituloInterno } from "@/components/interno";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
@@ -11,19 +11,49 @@ import {
   type Gasto,
   type Lado,
   type Nota,
+  type Pessoa,
   type Resposta,
+  type Resultado,
   type Tarefa,
+  CHAVE_ANTIGA,
+  estadoConvite,
   fasesPadrao,
   gastosSugeridos,
   lerReais,
   linkWhatsApp,
   mostrarReais,
   novoId,
-  salvar,
-  useDadosNoivos,
-  validar,
 } from "@/lib/noivos";
 import { cn } from "@/lib/utils";
+import {
+  apagar,
+  apagarConvite,
+  exportarCopia,
+  importarCopia,
+  marcarTarefa as marcarNoServidor,
+  sair,
+  salvarConvite,
+  salvarGasto,
+  salvarNota,
+  salvarTarefa,
+} from "./acoes";
+
+/**
+ * Roda uma ação dos noivos: erro vira aviso; sessão vencida recarrega a página, que pede a senha
+ * de novo (specs/006, edge case "sessão vencida"). Devolve true se gravou.
+ */
+async function rodar<T>(acao: Promise<Resultado<T>>): Promise<T | true | false> {
+  const r = await acao.catch(() => ({ ok: false as const, erro: "Sem conexão. Tente de novo." }));
+  if (r.ok) return r.valor ?? true;
+  if (r.erro === "sessao") {
+    toast.error("A sessão terminou. Entre com a senha de novo.");
+    window.location.reload();
+  } else toast.error(r.erro);
+  return false;
+}
+
+/** Marcar tarefa responde na hora (otimista) e grava em seguida. */
+const MarcarTarefa = createContext<(id: string, feita: boolean) => void>(() => {});
 
 const abas = ["Resumo", "Checklist", "Convidados", "Orçamento", "Notas"] as const;
 type Aba = (typeof abas)[number];
@@ -43,16 +73,38 @@ const chip = (ativo: boolean) =>
     ativo ? "border-primary bg-primary text-card" : "border-line bg-card text-primary-deep",
   );
 
-export function AreaNoivos() {
-  const dados = useDadosNoivos();
+export function AreaNoivos({ dados: doServidor }: { dados: DadosNoivos }) {
   const [aba, setAba] = useState<Aba>("Resumo");
+  const [tarefas, marcarOtimista] = useOptimistic(doServidor.tarefas, (ts, m: { id: string; feita: boolean }) =>
+    ts.map((t) => (t.id === m.id ? { ...t, feita: m.feita } : t)),
+  );
+  const dados = { ...doServidor, tarefas };
+  const marcar = (id: string, feita: boolean) =>
+    startTransition(async () => {
+      marcarOtimista({ id, feita });
+      await rodar(marcarNoServidor(id, feita));
+    });
 
   return (
+    <MarcarTarefa value={marcar}>
     <main className="flex flex-1 flex-col gap-6 px-5 py-8">
-      <div className="flex flex-col gap-2">
-        <p className="sobretitulo">Só de vocês dois</p>
-        <h1 className={tituloInterno}>Área dos noivos</h1>
+      <div className="flex items-start justify-between gap-3">
+        <div className="flex flex-col gap-2">
+          <p className="sobretitulo">Só de vocês dois</p>
+          <h1 className={tituloInterno}>Área dos noivos</h1>
+        </div>
+        <button
+          className="min-h-11 shrink-0 px-1 text-sm text-primary-deep underline decoration-gold-line underline-offset-4"
+          onClick={async () => {
+            await sair();
+            window.location.reload();
+          }}
+        >
+          Sair
+        </button>
       </div>
+
+      <DadosAntigos dados={dados} />
 
       <div role="tablist" aria-label="Seções" className="-mx-5 flex gap-2 overflow-x-auto px-5">
         {abas.map((a) => (
@@ -68,22 +120,18 @@ export function AreaNoivos() {
       {aba === "Orçamento" && <Orcamento dados={dados} />}
       {aba === "Notas" && <Notas dados={dados} />}
 
-      <Copias dados={dados} />
+      <Copias />
     </main>
+    </MarcarTarefa>
   );
 }
 
 /* ───────────────────────── Resumo ───────────────────────── */
 
 function contarPessoas(convidados: Convidado[]) {
-  let vem = 0, naoVem = 0, semResposta = 0;
-  for (const c of convidados) {
-    if (c.resposta === "vem") vem += c.quantosVem;
-    else if (c.resposta === "nao-vem") naoVem += c.pessoas.length;
-    else semResposta += c.pessoas.length;
-  }
-  const total = convidados.reduce((s, c) => s + c.pessoas.length, 0);
-  return { total, vem, naoVem, semResposta };
+  const todas = convidados.flatMap((c) => c.pessoas);
+  const n = (r: Resposta) => todas.filter((p) => p.resposta === r).length;
+  return { total: todas.length, vem: n("vem"), naoVem: n("nao-vem"), semResposta: n("pendente") };
 }
 
 /** Contratado = valores fechados; estimativa = itens ainda sem contrato (fora do "falta pagar"). */
@@ -112,8 +160,7 @@ function useDiasFaltando() {
   return dias;
 }
 
-const marcarTarefa = (dados: DadosNoivos, id: string, feita: boolean) =>
-  salvar({ ...dados, tarefas: dados.tarefas.map((t) => (t.id === id ? { ...t, feita } : t)) });
+
 
 const hoje = () => new Date().toISOString().slice(0, 10);
 const dataBr = (iso: string) => iso.split("-").reverse().join("/");
@@ -131,6 +178,7 @@ function Resumo({ dados, irPara }: { dados: DadosNoivos; irPara: (a: Aba) => voi
   const p = contarPessoas(dados.convidados);
   const g = somarGastos(dados.gastos);
   const dias = useDiasFaltando();
+  const marcarTarefa = use(MarcarTarefa);
   const feitas = dados.tarefas.filter((t) => t.feita).length;
   const agora = dados.tarefas.filter((t) => t.urgente && !t.feita);
   const proximos = dados.gastos
@@ -151,7 +199,7 @@ function Resumo({ dados, irPara }: { dados: DadosNoivos; irPara: (a: Aba) => voi
             <ul className="flex flex-col">
               {agora.map((t) => (
                 <li key={t.id} className="flex items-center border-b border-surface last:border-b-0">
-                  <Marcar tarefa={t} onMudar={(v) => marcarTarefa(dados, t.id, v)} />
+                  <Marcar tarefa={t} onMudar={(v) => marcarTarefa(t.id, v)} />
                   <span className="py-2 text-[15px]">{t.titulo}</span>
                 </li>
               ))}
@@ -225,21 +273,21 @@ function Convidados({ dados }: { dados: DadosNoivos }) {
   const [editando, setEditando] = useState<Convidado | null>(null);
 
   const lista = dados.convidados
-    .filter((c) => filtro === "todos" || c.resposta === filtro)
-    .filter((c) => !busca || c.pessoas.some((p) => normalizar(p).includes(normalizar(busca))))
+    .filter((c) => filtro === "todos" || estadoConvite(c) === filtro)
+    .filter(
+      (c) =>
+        !busca ||
+        normalizar(c.codigo) === normalizar(busca) ||
+        [c.titular, ...c.pessoas.map((p) => p.nome)].some((n) => normalizar(n).includes(normalizar(busca))),
+    )
     .sort((a, b) => a.titular.localeCompare(b.titular, "pt-BR"));
 
-  const gravar = (c: Convidado) => {
-    const existe = dados.convidados.some((x) => x.id === c.id);
-    salvar({
-      ...dados,
-      convidados: existe ? dados.convidados.map((x) => (x.id === c.id ? c : x)) : [...dados.convidados, c],
-    });
-    setEditando(null);
+  const gravar = async (c: Convidado) => {
+    const r = await rodar(salvarConvite(c));
+    if (r) setEditando(null);
   };
-  const apagar = (id: string) => {
-    salvar({ ...dados, convidados: dados.convidados.filter((x) => x.id !== id) });
-    setEditando(null);
+  const remover = async (id: string) => {
+    if (await rodar(apagarConvite(id))) setEditando(null);
   };
 
   return (
@@ -247,7 +295,17 @@ function Convidados({ dados }: { dados: DadosNoivos }) {
       <button
         className={botaoPrimario}
         onClick={() =>
-          setEditando({ id: novoId(), titular: "", pessoas: [], telefone: "", lado: "Os dois", resposta: "pendente", quantosVem: 0, obs: "" })
+          setEditando({
+            id: novoId(),
+            codigo: "",
+            titular: "",
+            pessoas: [],
+            telefone: "",
+            lado: "Os dois",
+            obs: "",
+            restricao: "",
+            respondidoEm: null,
+          })
         }
       >
         Adicionar convite
@@ -257,8 +315,8 @@ function Convidados({ dados }: { dados: DadosNoivos }) {
         <>
           <input
             type="search"
-            aria-label="Buscar pelo nome"
-            placeholder="Buscar pelo nome"
+            aria-label="Buscar pelo nome ou código"
+            placeholder="Buscar pelo nome ou código"
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
             className={campo}
@@ -282,16 +340,23 @@ function Convidados({ dados }: { dados: DadosNoivos }) {
       <ul className="flex flex-col gap-2.5">
         {lista.map((c) => {
           const zap = linkWhatsApp(c.telefone);
+          const vem = c.pessoas.filter((p) => p.resposta === "vem").length;
+          const estado = estadoConvite(c);
           return (
             <li key={c.id} className="flex items-stretch rounded-[3px] border border-surface bg-card">
               <button onClick={() => setEditando(c)} className="flex min-h-16 flex-1 flex-col items-start gap-0.5 px-3.5 py-3 text-left">
                 <span className="text-base text-foreground">{c.titular || "(sem nome)"}</span>
                 <span className="text-[13px] text-primary-deep">
                   {c.pessoas.length} {c.pessoas.length === 1 ? "pessoa" : "pessoas"} · {c.lado} ·{" "}
-                  <span className={cn(c.resposta === "vem" && "text-gold-text-sm", c.resposta === "nao-vem" && "text-destructive")}>
-                    {rotuloResposta[c.resposta]}
-                    {c.resposta === "vem" && c.quantosVem !== c.pessoas.length ? ` (${c.quantosVem})` : ""}
+                  <span className={cn(estado === "vem" && "text-gold-text-sm", estado === "nao-vem" && "text-destructive")}>
+                    {rotuloResposta[estado]}
+                    {estado === "vem" && vem !== c.pessoas.length ? ` (${vem})` : ""}
                   </span>
+                </span>
+                {c.restricao && <span className="text-[13px] text-primary">Restrição: {c.restricao}</span>}
+                <span className="text-[12px] text-primary-deep">
+                  {c.codigo}
+                  {c.respondidoEm ? ` · respondeu em ${new Date(c.respondidoEm).toLocaleDateString("pt-BR")}` : ""}
                 </span>
               </button>
               {zap && (
@@ -319,7 +384,7 @@ function Convidados({ dados }: { dados: DadosNoivos }) {
               inicial={editando}
               novo={!dados.convidados.some((x) => x.id === editando.id)}
               onGravar={gravar}
-              onApagar={apagar}
+              onApagar={remover}
             />
           )}
         </DialogContent>
@@ -347,22 +412,34 @@ function FormConvidado({
 }: {
   inicial: Convidado;
   novo: boolean;
-  onGravar: (c: Convidado) => void;
-  onApagar: (id: string) => void;
+  onGravar: (c: Convidado) => Promise<void>;
+  onApagar: (id: string) => Promise<void>;
 }) {
   const [c, setC] = useState(inicial);
-  const [nomes, setNomes] = useState(inicial.pessoas.join("\n"));
+  const [nomes, setNomes] = useState(inicial.pessoas.map((p) => p.nome).join("\n"));
+  const [gravando, setGravando] = useState(false);
   const mudar = (parte: Partial<Convidado>) => setC((x) => ({ ...x, ...parte }));
 
-  const enviar = (e: React.FormEvent) => {
+  // A lista de pessoas segue os nomes digitados; quem já existia mantém id e resposta.
+  const pessoas: Pessoa[] = nomes
+    .split("\n")
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .map((nome, i) => c.pessoas.find((p) => p.nome === nome) ?? { id: c.pessoas[i]?.id ?? novoId(), nome, resposta: c.pessoas[i]?.resposta ?? "pendente" });
+  const responder = (i: number, resposta: Resposta) =>
+    mudar({ pessoas: pessoas.map((p, j) => (j === i ? { ...p, resposta } : p)) });
+
+  const link = c.codigo && typeof window !== "undefined" ? `${window.location.origin}/confirmar/${c.codigo}/` : "";
+
+  const enviar = async (e: React.FormEvent) => {
     e.preventDefault();
-    const pessoas = nomes.split("\n").map((s) => s.trim()).filter(Boolean);
-    const titular = c.titular.trim() || pessoas[0] || "";
+    const titular = c.titular.trim() || pessoas[0]?.nome || "";
     if (!titular) return toast.error("Coloque pelo menos o nome do titular.");
     // "Família Souza" não é uma pessoa: o titular só entra na lista se ela estiver vazia.
-    if (pessoas.length === 0) pessoas.push(titular);
-    const quantosVem = c.resposta === "vem" ? Math.min(c.quantosVem || pessoas.length, pessoas.length) : 0;
-    onGravar({ ...c, titular, pessoas, quantosVem });
+    const lista = pessoas.length ? pessoas : [{ id: novoId(), nome: titular, resposta: "pendente" as const }];
+    setGravando(true);
+    await onGravar({ ...c, titular, pessoas: lista });
+    setGravando(false);
   };
 
   return (
@@ -383,8 +460,47 @@ function FormConvidado({
           placeholder={"Maria Souza\nJoão Souza"}
         />
       </Campo>
+      {pessoas.length > 0 && (
+        <fieldset className="flex flex-col gap-2.5">
+          <legend className={cn(rotuloCampo, "mb-1.5")}>Resposta de cada pessoa</legend>
+          {pessoas.map((p, i) => (
+            <div key={p.id} className="flex flex-col gap-1.5">
+              <span className="text-[15px]">{p.nome}</span>
+              <div className="flex gap-2">
+                {(["pendente", "vem", "nao-vem"] as const).map((r) => (
+                  <button type="button" key={r} aria-pressed={p.resposta === r} onClick={() => responder(i, r)} className={cn(chip(p.resposta === r), "flex-1 justify-center px-2")}>
+                    {rotuloResposta[r]}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </fieldset>
+      )}
+      <Campo id="restricao-noivos" rotulo="Restrição alimentar (do RSVP)">
+        <input id="restricao-noivos" className={campo} value={c.restricao} onChange={(e) => mudar({ restricao: e.target.value })} maxLength={300} />
+      </Campo>
+      <Campo id="codigo" rotulo="Código do convite (o do QR; vazio = gerar)">
+        <input
+          id="codigo"
+          className={cn(campo, "uppercase")}
+          value={c.codigo}
+          onChange={(e) => mudar({ codigo: e.target.value })}
+          maxLength={20}
+          autoCapitalize="characters"
+        />
+      </Campo>
+      {link && (
+        <button
+          type="button"
+          className={botaoSecundario}
+          onClick={() => navigator.clipboard.writeText(link).then(() => toast.success("Link copiado."))}
+        >
+          Copiar link de confirmação
+        </button>
+      )}
       <Campo id="telefone" rotulo="WhatsApp">
-        <input id="telefone" type="tel" inputMode="tel" className={campo} value={c.telefone} onChange={(e) => mudar({ telefone: e.target.value })} placeholder="(81) 99999-9999" />
+        <input id="telefone" type="tel" inputMode="tel" className={campo} value={c.telefone} onChange={(e) => mudar({ telefone: e.target.value })} placeholder="(75) 99999-9999" />
       </Campo>
       <fieldset className="flex flex-col gap-1.5">
         <legend className={cn(rotuloCampo, "mb-1.5")}>Convidado de</legend>
@@ -396,40 +512,17 @@ function FormConvidado({
           ))}
         </div>
       </fieldset>
-      <fieldset className="flex flex-col gap-1.5">
-        <legend className={cn(rotuloCampo, "mb-1.5")}>Resposta</legend>
-        <div className="flex gap-2">
-          {(["pendente", "vem", "nao-vem"] as const).map((r) => (
-            <button type="button" key={r} aria-pressed={c.resposta === r} onClick={() => mudar({ resposta: r })} className={cn(chip(c.resposta === r), "flex-1 justify-center")}>
-              {rotuloResposta[r]}
-            </button>
-          ))}
-        </div>
-      </fieldset>
-      {c.resposta === "vem" && (
-        <Campo id="quantos" rotulo="Quantas pessoas vêm (vazio = todas)">
-          <input
-            id="quantos"
-            type="number"
-            inputMode="numeric"
-            min={1}
-            className={campo}
-            value={c.quantosVem || ""}
-            onChange={(e) => mudar({ quantosVem: Number(e.target.value) || 0 })}
-          />
-        </Campo>
-      )}
-      <Campo id="obs-convidado" rotulo="Observações">
-        <input id="obs-convidado" className={campo} value={c.obs} onChange={(e) => mudar({ obs: e.target.value })} placeholder="Ex.: restrição alimentar, criança de colo" />
+      <Campo id="obs-convidado" rotulo="Observações (só vocês veem)">
+        <input id="obs-convidado" className={campo} value={c.obs} onChange={(e) => mudar({ obs: e.target.value })} placeholder="Ex.: criança de colo" />
       </Campo>
-      <button type="submit" className={botaoPrimario}>
-        Salvar
+      <button type="submit" className={botaoPrimario} disabled={gravando}>
+        {gravando ? "Salvando…" : "Salvar"}
       </button>
       {!novo && (
         <button
           type="button"
           className="min-h-11 text-sm text-destructive"
-          onClick={() => window.confirm(`Apagar o convite de ${c.titular}?`) && onApagar(c.id)}
+          onClick={() => window.confirm(`Apagar o convite de ${c.titular}${c.respondidoEm ? " (já tem resposta)" : ""}?`) && onApagar(c.id)}
         >
           Apagar convite
         </button>
@@ -445,14 +538,17 @@ function Orcamento({ dados }: { dados: DadosNoivos }) {
   const g = somarGastos(dados.gastos);
   const novo = (item = ""): Gasto => ({ id: novoId(), item, fornecedor: "", previsto: 0, pago: 0, vencimento: "", obs: "", estimado: false });
 
-  const gravar = (x: Gasto) => {
-    const existe = dados.gastos.some((y) => y.id === x.id);
-    salvar({ ...dados, gastos: existe ? dados.gastos.map((y) => (y.id === x.id ? x : y)) : [...dados.gastos, x] });
-    setEditando(null);
+  const [comecando, setComecando] = useState(false);
+  const gravar = async (x: Gasto) => {
+    if (await rodar(salvarGasto(x))) setEditando(null);
   };
-  const apagar = (id: string) => {
-    salvar({ ...dados, gastos: dados.gastos.filter((y) => y.id !== id) });
-    setEditando(null);
+  const remover = async (id: string) => {
+    if (await rodar(apagar("gasto", id))) setEditando(null);
+  };
+  const comecarSugerida = async () => {
+    setComecando(true);
+    for (const item of gastosSugeridos) if (!(await rodar(salvarGasto(novo(item))))) break;
+    setComecando(false);
   };
 
   return (
@@ -489,7 +585,7 @@ function Orcamento({ dados }: { dados: DadosNoivos }) {
           <p className="text-[15px] text-primary-deep">
             Nenhum gasto ainda. Dá para começar com os itens que quase todo casamento tem e ir preenchendo os valores.
           </p>
-          <button className={botaoSecundario} onClick={() => salvar({ ...dados, gastos: gastosSugeridos.map((i) => novo(i)) })}>
+          <button className={botaoSecundario} onClick={comecarSugerida} disabled={comecando}>
             Começar com a lista sugerida
           </button>
         </>
@@ -540,7 +636,7 @@ function Orcamento({ dados }: { dados: DadosNoivos }) {
       <Dialog open={editando !== null} onOpenChange={(aberto) => !aberto && setEditando(null)}>
         <DialogContent className="max-h-[90dvh] max-w-[calc(100%-1.5rem)] overflow-y-auto rounded-[3px] bg-background p-5 sm:max-w-md">
           {editando && (
-            <FormGasto inicial={editando} novo={!dados.gastos.some((y) => y.id === editando.id)} onGravar={gravar} onApagar={apagar} />
+            <FormGasto inicial={editando} novo={!dados.gastos.some((y) => y.id === editando.id)} onGravar={gravar} onApagar={remover} />
           )}
         </DialogContent>
       </Dialog>
@@ -556,8 +652,8 @@ function FormGasto({
 }: {
   inicial: Gasto;
   novo: boolean;
-  onGravar: (g: Gasto) => void;
-  onApagar: (id: string) => void;
+  onGravar: (g: Gasto) => Promise<void>;
+  onApagar: (id: string) => Promise<void>;
 }) {
   const [x, setX] = useState(inicial);
   const [previsto, setPrevisto] = useState(mostrarReais(inicial.previsto));
@@ -651,14 +747,12 @@ function Checklist({ dados }: { dados: DadosNoivos }) {
     .filter((t) => categoria === "Todas" || t.categoria === categoria)
     .filter((t) => !esconderFeitas || !t.feita);
 
-  const gravar = (t: Tarefa) => {
-    const existe = dados.tarefas.some((x) => x.id === t.id);
-    salvar({ ...dados, tarefas: existe ? dados.tarefas.map((x) => (x.id === t.id ? t : x)) : [...dados.tarefas, t] });
-    setEditando(null);
+  const marcarTarefa = use(MarcarTarefa);
+  const gravar = async (t: Tarefa) => {
+    if (await rodar(salvarTarefa(t))) setEditando(null);
   };
-  const apagar = (id: string) => {
-    salvar({ ...dados, tarefas: dados.tarefas.filter((x) => x.id !== id) });
-    setEditando(null);
+  const remover = async (id: string) => {
+    if (await rodar(apagar("tarefa", id))) setEditando(null);
   };
   const nova = (): Tarefa => ({
     id: novoId(),
@@ -725,7 +819,7 @@ function Checklist({ dados }: { dados: DadosNoivos }) {
             <ul className="flex flex-col">
               {daFase.map((t) => (
                 <li key={t.id} className="flex items-start border-b border-surface last:border-b-0">
-                  <Marcar tarefa={t} onMudar={(v) => marcarTarefa(dados, t.id, v)} />
+                  <Marcar tarefa={t} onMudar={(v) => marcarTarefa(t.id, v)} />
                   <button onClick={() => setEditando(t)} className="flex min-h-11 flex-1 flex-col items-start gap-0.5 py-2.5 text-left">
                     <span className={cn("text-[15px]", t.feita ? "text-primary-deep line-through" : "text-foreground")}>{t.titulo}</span>
                     {t.nota && !t.feita && <span className="line-clamp-2 text-[13px] text-primary-deep">{t.nota}</span>}
@@ -750,7 +844,7 @@ function Checklist({ dados }: { dados: DadosNoivos }) {
               fases={ordemFases(dados.tarefas)}
               categorias={categorias}
               onGravar={gravar}
-              onApagar={apagar}
+              onApagar={remover}
             />
           )}
         </DialogContent>
@@ -771,8 +865,8 @@ function FormTarefa({
   novo: boolean;
   fases: string[];
   categorias: string[];
-  onGravar: (t: Tarefa) => void;
-  onApagar: (id: string) => void;
+  onGravar: (t: Tarefa) => Promise<void>;
+  onApagar: (id: string) => Promise<void>;
 }) {
   const [t, setT] = useState(inicial);
   const mudar = (parte: Partial<Tarefa>) => setT((x) => ({ ...x, ...parte }));
@@ -843,14 +937,11 @@ function FormTarefa({
 function Notas({ dados }: { dados: DadosNoivos }) {
   const [editando, setEditando] = useState<Nota | null>(null);
 
-  const gravar = (n: Nota) => {
-    const existe = dados.notas.some((x) => x.id === n.id);
-    salvar({ ...dados, notas: existe ? dados.notas.map((x) => (x.id === n.id ? n : x)) : [...dados.notas, n] });
-    setEditando(null);
+  const gravar = async (n: Nota) => {
+    if (await rodar(salvarNota(n))) setEditando(null);
   };
-  const apagar = (id: string) => {
-    salvar({ ...dados, notas: dados.notas.filter((x) => x.id !== id) });
-    setEditando(null);
+  const remover = async (id: string) => {
+    if (await rodar(apagar("nota", id))) setEditando(null);
   };
 
   return (
@@ -878,7 +969,7 @@ function Notas({ dados }: { dados: DadosNoivos }) {
       <Dialog open={editando !== null} onOpenChange={(aberto) => !aberto && setEditando(null)}>
         <DialogContent className="max-h-[90dvh] max-w-[calc(100%-1.5rem)] overflow-y-auto rounded-[3px] bg-background p-5 sm:max-w-md">
           {editando && (
-            <FormNota inicial={editando} novo={!dados.notas.some((x) => x.id === editando.id)} onGravar={gravar} onApagar={apagar} />
+            <FormNota inicial={editando} novo={!dados.notas.some((x) => x.id === editando.id)} onGravar={gravar} onApagar={remover} />
           )}
         </DialogContent>
       </Dialog>
@@ -894,8 +985,8 @@ function FormNota({
 }: {
   inicial: Nota;
   novo: boolean;
-  onGravar: (n: Nota) => void;
-  onApagar: (id: string) => void;
+  onGravar: (n: Nota) => Promise<void>;
+  onApagar: (id: string) => Promise<void>;
 }) {
   const [n, setN] = useState(inicial);
 
@@ -932,37 +1023,59 @@ function FormNota({
 
 /* ───────────────────────── Cópias ───────────────────────── */
 
-function Copias({ dados }: { dados: DadosNoivos }) {
+function baixarArquivo(conteudo: unknown, nome: string) {
+  const blob = new Blob([JSON.stringify(conteudo, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = nome;
+  a.click();
+  window.setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+const hojeArquivo = () => new Date().toISOString().slice(0, 10);
+
+/** Contagens de um arquivo de cópia, para a confirmação antes de importar. */
+function resumoCopia(texto: string) {
+  try {
+    const d = JSON.parse(texto) as Partial<Record<"convidados" | "gastos" | "tarefas" | "notas", unknown[]>>;
+    const n = (k: keyof typeof d) => (Array.isArray(d[k]) ? d[k].length : 0);
+    return `${n("convidados")} convites, ${n("gastos")} gastos, ${n("tarefas")} tarefas, ${n("notas")} notas`;
+  } catch {
+    return null;
+  }
+}
+
+async function importar(texto: string) {
+  const r = await rodar(importarCopia(texto));
+  if (r && r !== true) {
+    toast.success(`Cópia carregada: ${r.convidados} convites, ${r.gastos} gastos, ${r.tarefas} tarefas, ${r.notas} notas.`);
+    return true;
+  }
+  return false;
+}
+
+function Copias() {
   const arquivo = useRef<HTMLInputElement>(null);
 
-  const baixar = () => {
-    const blob = new Blob([JSON.stringify(dados, null, 2)], { type: "application/json" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `cavi2027-noivos-${new Date().toISOString().slice(0, 10)}.json`;
-    a.click();
-    URL.revokeObjectURL(a.href);
+  const baixar = async () => {
+    const r = await rodar(exportarCopia());
+    if (r && r !== true) baixarArquivo(r, `cavi2027-noivos-${hojeArquivo()}.json`);
   };
 
   const carregar = async (f: File | undefined) => {
     if (!f) return;
-    try {
-      const novos = validar(JSON.parse(await f.text()));
-      if (window.confirm(`Trocar o que está neste aparelho por esta cópia (${novos.convidados.length} convites, ${novos.gastos.length} gastos, ${novos.tarefas.length} tarefas, ${novos.notas.length} notas)?`)) {
-        salvar(novos);
-        toast.success("Cópia carregada.");
-      }
-    } catch {
-      toast.error("Esse arquivo não é uma cópia da área dos noivos.");
-    }
+    const texto = await f.text();
+    const resumo = resumoCopia(texto);
+    if (!resumo) toast.error("Esse arquivo não é uma cópia da área dos noivos.");
+    else if (window.confirm(`Trocar tudo o que está salvo por esta cópia (${resumo})?`)) await importar(texto);
     if (arquivo.current) arquivo.current.value = "";
   };
 
   return (
     <section className="mt-4 flex flex-col gap-3 border-t border-gold-line pt-6">
       <p className="text-[13px] text-primary-deep">
-        Por enquanto tudo fica salvo só neste aparelho, e nada aparece no site. Para passar para o outro celular ou
-        guardar um backup, salve uma cópia e abra no outro aparelho.
+        Tudo fica salvo no banco: vocês dois veem a mesma coisa, em qualquer aparelho. Nada disso aparece no site.
+        “Salvar cópia” baixa um backup; “Abrir cópia” troca tudo pelo conteúdo do arquivo.
       </p>
       <div className="grid grid-cols-2 gap-2.5">
         <button className={botaoSecundario} onClick={baixar}>
@@ -973,6 +1086,53 @@ function Copias({ dados }: { dados: DadosNoivos }) {
         </button>
       </div>
       <input ref={arquivo} type="file" accept="application/json,.json" hidden onChange={(e) => carregar(e.target.files?.[0])} />
+    </section>
+  );
+}
+
+/**
+ * Antes do banco, os dados ficavam só no aparelho (localStorage). Na primeira entrada, oferece
+ * levá-los ao banco, uma vez, e apagar daqui (specs/006 FR-019).
+ */
+function DadosAntigos({ dados }: { dados: DadosNoivos }) {
+  const [antigo, setAntigo] = useState<string | null>(null);
+  useEffect(() => {
+    try {
+      setAntigo(localStorage.getItem(CHAVE_ANTIGA));
+    } catch {
+      // Sem armazenamento: nada a levar.
+    }
+  }, []);
+  if (!antigo) return null;
+
+  const bancoVazio = !dados.convidados.length && !dados.gastos.length && !dados.tarefas.length && !dados.notas.length;
+  const esquecer = () => {
+    try {
+      localStorage.removeItem(CHAVE_ANTIGA);
+    } catch {}
+    setAntigo(null);
+  };
+
+  return (
+    <section className="flex flex-col gap-3 rounded-[3px] border border-gold-line bg-card px-4 py-3.5">
+      <p className="text-[15px]">
+        Este aparelho tem dados de antes do banco ({resumoCopia(antigo) ?? "arquivo antigo"}).
+      </p>
+      {bancoVazio ? (
+        <button className={botaoPrimario} onClick={async () => (await importar(antigo)) && esquecer()}>
+          Levar para o banco
+        </button>
+      ) : (
+        <button
+          className={botaoSecundario}
+          onClick={() => {
+            baixarArquivo(JSON.parse(antigo), `cavi2027-noivos-aparelho-${hojeArquivo()}.json`);
+            esquecer();
+          }}
+        >
+          Baixar e apagar deste aparelho
+        </button>
+      )}
     </section>
   );
 }

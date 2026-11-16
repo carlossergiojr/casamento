@@ -2,25 +2,12 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { campo, passo, rotuloCampo, tituloInterno } from "@/components/interno";
-import { convitesExemplo } from "@/lib/conteudo";
+import { buscarConvite, type ResultadoBusca } from "./acoes";
 
-const normalizar = (s: string) =>
-  s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().trim();
-
-/** Busca de exemplo no cliente (plan R3) — vira consulta ao banco na feature do RSVP. */
-function buscar(termo: string) {
-  const t = normalizar(termo);
-  if (t.length < 3) return null;
-  return convitesExemplo.filter(
-    (c) =>
-      normalizar(c.codigo) === t ||
-      c.pessoas.some((p) => normalizar(p).includes(t)) ||
-      normalizar(c.titular).includes(t),
-  );
-}
+type Achado = NonNullable<Extract<ResultadoBusca, { ok: true }>["convites"]>;
 
 function SetaDireita() {
   return (
@@ -33,9 +20,30 @@ function SetaDireita() {
 export function BuscaConvite() {
   const params = useSearchParams();
   const [termo, setTermo] = useState(params.get("nome") ?? "");
-  // "Não encontrei meu nome" abre a mesma orientação de quando a busca não acha nada.
-  const [ajuda, setAjuda] = useState(false);
-  const resultado = ajuda ? null : buscar(termo);
+  // "Não encontrei meu nome" abre a mesma orientação de quando a busca não acha nada; um código
+  // de QR que não existe no banco chega aqui com ?naoEncontrado=1.
+  const [ajuda, setAjuda] = useState(params.has("naoEncontrado"));
+  const [achados, setAchados] = useState<{ termo: string; lista: Achado | null }>({ termo: "", lista: null });
+  const [erro, setErro] = useState("");
+
+  // Busca no servidor (specs/006 FR-007), esperando a pessoa parar de digitar.
+  useEffect(() => {
+    let valendo = true;
+    const id = window.setTimeout(async () => {
+      const r = await buscarConvite(termo).catch(() => ({ ok: false as const, erro: "Sem conexão. Tente de novo." }));
+      if (!valendo) return;
+      if (r.ok) {
+        setErro("");
+        setAchados({ termo, lista: r.convites });
+      } else setErro(r.erro);
+    }, 300);
+    return () => {
+      valendo = false;
+      window.clearTimeout(id);
+    };
+  }, [termo]);
+
+  const resultado = ajuda || achados.termo !== termo ? null : achados.lista;
   const naoEncontrado = ajuda || (resultado !== null && resultado.length === 0);
 
   return (
@@ -68,6 +76,8 @@ export function BuscaConvite() {
         />
       </div>
 
+      {erro && <p className="text-[15px] text-destructive" role="alert">{erro}</p>}
+
       <AnimatePresence mode="wait">
         {resultado && resultado.length > 0 && (
           <motion.div
@@ -90,15 +100,12 @@ export function BuscaConvite() {
                 <span className="flex flex-col">
                   <span className="font-semibold">{c.titular}</span>
                   <span className="text-[13px] text-primary-deep">
-                    {c.pessoas.length === 1 ? "Convite individual" : `Convite para ${c.pessoas.length} pessoas`}
+                    {c.quantas === 1 ? "Convite individual" : `Convite para ${c.quantas} pessoas`}
                   </span>
                 </span>
                 <SetaDireita />
               </Link>
             ))}
-            <p className="text-xs text-primary-deep">
-              [Nomes de exemplo — experimente “Maria”, “Lima” ou “CAVI01”]
-            </p>
           </motion.div>
         )}
 

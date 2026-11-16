@@ -4,7 +4,7 @@
 
 **Created**: 2026-11-16
 
-**Status**: Draft
+**Status**: Implemented (falta publicar: ver PENDENCIAS.md, lista 2)
 
 **Input**: "Banco de dados e senha dos noivos na Vercel. Sair do GitHub Pages para a Vercel,
 mantendo o GitHub Pages só como redirecionamento dos QR Codes já impressos. Banco com migrations.

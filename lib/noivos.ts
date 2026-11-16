@@ -1,26 +1,23 @@
-"use client";
-
-import { useSyncExternalStore } from "react";
-
 /**
- * Dados da área dos noivos. Por enquanto ficam SÓ no navegador de quem usa (localStorage):
- * nada vai para o repositório nem para o site público. Para passar de um celular para o outro,
- * use "Salvar cópia" e "Carregar cópia". Quando o banco (Neon) entrar, este arquivo vira a ponte
- * para ele (PENDENCIAS.md, listas 2 e 4).
+ * Tipos e utilidades da área dos noivos, usados no servidor e na tela. Os dados moram no banco
+ * (specs/006); a leitura fica em `lib/noivos-servidor.ts` e a gravação em `app/noivos/acoes.ts`.
  */
 
 export type Lado = "Victória" | "Carlos" | "Os dois";
 export type Resposta = "pendente" | "vem" | "nao-vem";
 
+export type Pessoa = { id: string; nome: string; resposta: Resposta };
+
 export type Convidado = {
   id: string;
+  codigo: string; // o do QR; vazio num convite novo = o servidor gera
   titular: string;
-  pessoas: string[]; // todas as pessoas do convite, titular incluído
+  pessoas: Pessoa[];
   telefone: string;
   lado: Lado;
-  resposta: Resposta;
-  quantosVem: number; // quando resposta = "vem"
   obs: string;
+  restricao: string; // informada no RSVP
+  respondidoEm: string | null; // ISO
 };
 
 export type Gasto = {
@@ -31,7 +28,7 @@ export type Gasto = {
   pago: number; // centavos
   vencimento: string; // AAAA-MM-DD do próximo pagamento, ou ""
   obs: string;
-  estimado?: boolean; // valor ainda é estimativa (sem contrato fechado)
+  estimado: boolean; // valor ainda é estimativa (sem contrato fechado)
 };
 
 export type Tarefa = {
@@ -47,76 +44,26 @@ export type Tarefa = {
 export type Nota = { id: string; titulo: string; texto: string };
 
 export type DadosNoivos = {
-  versao: 1;
   convidados: Convidado[];
   gastos: Gasto[];
   tarefas: Tarefa[];
   notas: Nota[];
 };
 
-const CHAVE = "cavi2027:noivos";
-const VAZIO: DadosNoivos = { versao: 1, convidados: [], gastos: [], tarefas: [], notas: [] };
+/** Resultado das ações dos noivos. "sessao" = precisa da senha de novo. */
+export type Resultado<T = undefined> = { ok: true; valor?: T } | { ok: false; erro: string };
 
-let cache: DadosNoivos | null = null;
-const ouvintes = new Set<() => void>();
+/** Onde ficavam os dados antes do banco (só no aparelho). */
+export const CHAVE_ANTIGA = "cavi2027:noivos";
 
-function ler(): DadosNoivos {
-  if (cache) return cache;
-  try {
-    const bruto = localStorage.getItem(CHAVE);
-    cache = bruto ? validar(JSON.parse(bruto)) : VAZIO;
-  } catch {
-    cache = VAZIO;
-  }
-  return cache;
+export const novoId = () => crypto.randomUUID();
+
+/** Situação do convite inteiro, a partir das respostas por pessoa. */
+export function estadoConvite(c: Convidado): Resposta {
+  if (c.pessoas.some((p) => p.resposta === "vem")) return "vem";
+  if (c.pessoas.length > 0 && c.pessoas.every((p) => p.resposta === "nao-vem")) return "nao-vem";
+  return "pendente";
 }
-
-export function salvar(dados: DadosNoivos) {
-  cache = dados;
-  try {
-    localStorage.setItem(CHAVE, JSON.stringify(dados));
-  } catch {
-    // Sem armazenamento (aba anônima): continua funcionando até fechar a página.
-  }
-  ouvintes.forEach((f) => f());
-}
-
-function assinar(f: () => void) {
-  ouvintes.add(f);
-  const outraAba = (e: StorageEvent) => {
-    if (e.key === CHAVE) {
-      cache = null;
-      f();
-    }
-  };
-  window.addEventListener("storage", outraAba);
-  return () => {
-    ouvintes.delete(f);
-    window.removeEventListener("storage", outraAba);
-  };
-}
-
-export function useDadosNoivos() {
-  return useSyncExternalStore(assinar, ler, () => VAZIO);
-}
-
-/** Aceita um JSON de "Carregar cópia"; joga erro se não for um arquivo da área dos noivos. */
-export function validar(x: unknown): DadosNoivos {
-  const d = x as Partial<DadosNoivos> | null;
-  if (!d || d.versao !== 1 || !Array.isArray(d.convidados) || !Array.isArray(d.gastos)) {
-    throw new Error("Arquivo não é uma cópia da área dos noivos.");
-  }
-  // Cópias antigas não têm checklist nem notas.
-  return {
-    versao: 1,
-    convidados: d.convidados,
-    gastos: d.gastos,
-    tarefas: Array.isArray(d.tarefas) ? d.tarefas : [],
-    notas: Array.isArray(d.notas) ? d.notas : [],
-  };
-}
-
-export const novoId = () => Math.random().toString(36).slice(2, 10);
 
 /** "1.234,56" ou "1234" → centavos. Vazio ou inválido vira 0. */
 export function lerReais(texto: string) {

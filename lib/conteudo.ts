@@ -6,8 +6,8 @@
 const foto = (semente: string, largura: number, altura: number) =>
   `https://picsum.photos/seed/cavi-${semente}/${largura}/${altura}`;
 
-/** Caminho de arquivo de /public sob o basePath (GitHub Pages serve em /casamento). */
-export const publico = (caminho: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${caminho}`;
+/** Caminho de arquivo de /public. Era onde entrava o prefixo /casamento do GitHub Pages; na Vercel não há prefixo. */
+export const publico = (caminho: string) => caminho;
 
 /** Chegada (boas-vindas), como aparece nos textos. Mude junto com `casamento.inicio`. */
 const hora = "15h30";
@@ -31,6 +31,8 @@ export const casamento = {
   dataPorExtenso: "23 de janeiro",
   hashtag: "#Cavi2027",
   prazoRsvp: "3 de janeiro de 2027",
+  /** Último instante em que o convidado ainda pode responder (o servidor recusa depois). */
+  fimRsvp: "2027-01-03T23:59:59-03:00",
   local: {
     nome: "Campestre",
     cidade: "Feira de Santana, BA",
@@ -211,16 +213,6 @@ export const presentes: Presente[] = [
 export const formatarValor = (centavos: number) =>
   (centavos / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 
-export type Convite = { codigo: string; titular: string; pessoas: string[] };
-
-/** Convites de exemplo — viram o banco na feature do RSVP. */
-export const convitesExemplo: Convite[] = [
-  { codigo: "CAVI01", titular: "Maria Souza", pessoas: ["Maria Souza", "João Souza"] },
-  { codigo: "CAVI02", titular: "Maria Clara Alves", pessoas: ["Maria Clara Alves"] },
-  {
-    codigo: "CAVI03",
-    titular: "Família Lima",
-    pessoas: ["Ana Lima", "Pedro Lima", "Sofia Lima"],
-  },
-];
+/** Depois disso o convidado não muda mais a resposta (specs/006 FR-009); os noivos podem. */
+export const prazoEncerrado = (agora = Date.now()) => agora > new Date(casamento.fimRsvp).getTime();
 

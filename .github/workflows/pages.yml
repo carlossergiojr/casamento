@@ -1,9 +1,12 @@
-# Publica o site no GitHub Pages (carlossergiojr.github.io/casamento/) a cada push na main.
-name: Publicar no GitHub Pages
+# O site mora na Vercel. O GitHub Pages (carlossergiojr.github.io/casamento/, o endereço dos QR
+# Codes impressos) só publica redirecionamento/: leva cada caminho antigo para o mesmo caminho
+# no site novo (specs/006, contracts/redirecionamento.md).
+name: Publicar redirecionamento no GitHub Pages
 
 on:
   push:
     branches: [main]
+    paths: [redirecionamento/**, .github/workflows/pages.yml]
   workflow_dispatch:
 
 permissions:
@@ -20,15 +23,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: npm
-      - run: npm ci
-      - run: npm run build
+      - name: Endereço da Vercel preenchido
+        run: |
+          if grep -q "preencher.vercel.app" redirecionamento/*.html; then
+            echo "Troque https://preencher.vercel.app pelo endereço real antes de publicar." >&2
+            exit 1
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: out
+          path: redirecionamento
 
   deploy:
     needs: build

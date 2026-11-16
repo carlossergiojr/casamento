@@ -16,20 +16,23 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
       `public/presentes/`, nome do arquivo como 4º valor do item). Sem foto, aparece a borboleta.
 - [ ] **E-mail no formulário do presente**: o campo diz "para receber a confirmação", mas não vai
       ter e-mail automático. Decidir junto com o pagamento (o Mercado Pago pode pedir e-mail).
-- [ ] **Lista de convidados**: os convites de verdade (titular + pessoas de cada convite), no lugar
-      dos 3 de exemplo (CAVI01–03). Já dá para ir digitando na área dos noivos (`/noivos`); quando o
-      banco entrar, ela é importada de lá (pela "Salvar cópia").
+- [ ] **Lista de convidados**: os convites de verdade (titular + pessoas + o código que está no QR
+      de cada um), digitados na área dos noivos (`/noivos`) depois que ela estiver no ar. Os 3 de
+      exemplo (CAVI01–03) agora só existem no banco de teste.
+- [ ] **Formato do QR impresso**: abrir um QR e ver se é `…/casamento/confirmar/` ou
+      `…/confirmar/CÓDIGO/`. Os dois funcionam; com código, cadastrar o mesmo código no convite.
 
-## 2. Banco + confirmação de presença (RSVP) de verdade
+## 2. Colocar no ar o banco, a senha e o RSVP (specs/006)
 
-Primeiro passo é dos noivos: criar conta grátis (entrando com o GitHub) na **Vercel** (vercel.com,
-importando o repositório `casamento`) e no **Neon** (neon.tech, criando um projeto). Só depois
-disso o agente consegue ligar o banco.
+O código está pronto na branch e testado com banco local. Falta publicar, nesta ordem:
 
-- [ ] Sair do GitHub Pages para a **Vercel** (specs/001 T021: o Pages vira redirecionamento).
-- [ ] Banco **Neon (Postgres) + Drizzle**, com migrations (constituição, princípio V).
-- [ ] RSVP gravando de verdade, validado no servidor (zod), com prazo até 03/01/2027.
-- [ ] **QR Code por convite** para imprimir no convite físico, levando direto ao código.
+- [ ] **Noivos**: projeto na **Vercel** importando o repositório, com as variáveis
+      `DATABASE_URL` (Neon, com pooling), `DATABASE_URL_UNPOOLED` (sem pooling), `NOIVOS_SENHA` e
+      `SESSAO_SEGREDO` (`openssl rand -base64 32`), em Production e Preview.
+- [ ] Testar a **prévia da branch** na Vercel: senha, importar a cópia, RSVP de um convite de teste.
+- [ ] Trocar `https://preencher.vercel.app` pelo endereço real em `redirecionamento/*.html`.
+- [ ] **Merge na `main`**: Vercel em produção e GitHub Pages redirecionando no mesmo push; rodar
+      `node scripts/checar-redirecionamento.mjs https://carlossergiojr.github.io/casamento <vercel> <códigos>`.
 
 ## 3. Pagamento dos presentes
 
@@ -42,13 +45,9 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## 4. Área dos noivos
 
-As telas já existem em `/noivos` (sem link no site, fora dos buscadores), com os dados guardados só
-no aparelho de quem usa (`lib/noivos.ts`, localStorage) e cópia em arquivo para passar de um celular
-para o outro. Falta a parte de segurança e o banco, que dependem da lista 2.
+`/noivos` (sem link no site, fora dos buscadores) tem senha única e guarda tudo no banco
+(specs/006); entra no ar com a lista 2.
 
-- [ ] Entrada protegida por senha única dos noivos (sem conta, sem cadastro).
-- [ ] Guardar convidados e orçamento no **Neon** (os dois veem a mesma coisa, sem passar cópia),
-      e as respostas do RSVP caindo direto na lista de convidados.
 - [ ] **Presentes recebidos**: quem deu, valor e recadinho; total arrecadado (depende da lista 3).
 
 ## Fora do escopo (decidido)
@@ -58,6 +57,9 @@ para o outro. Falta a parte de segurança e o banco, que dependem da lista 2.
 
 ## Feito
 
+- 16/11/2026 — specs/006 no código: site preparado para a Vercel, banco Neon + Drizzle com
+  migrations, RSVP gravando (por pessoa, restrição alimentar, prazo 03/01), `/noivos` com senha
+  única e dados no banco (importa a cópia antiga), GitHub Pages pronto para só redirecionar.
 - 16/11/2026 — Área dos noivos ganhou Checklist (tarefas por etapa e categoria, "resolver agora"),
   Notas, contagem de dias no resumo e orçamento com contratado × estimativa. Site com o horário do
   convite (boas-vindas 15h30, cerimônia 16h20) e campo de restrição alimentar no RSVP (só visual).

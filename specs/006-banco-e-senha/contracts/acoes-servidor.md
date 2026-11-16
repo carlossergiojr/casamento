@@ -15,7 +15,7 @@ com texto para mostrar ao usuário; nada de exceção técnica na tela.
 - Código normalizado; inexistente → `redirect("/confirmar/?naoEncontrado=1")`.
 - Entrega ao cliente só `{ codigo, titular, pessoas: { id, nome, resposta }[], restricao,
   prazoEncerrado }`. Nunca `telefone`, `obs`, `lado`.
-- Conta no limite `busca`.
+- Não conta no limite: abrir um convite exige já saber o código; o que varre a lista é a busca.
 
 ### `responderConvite(entrada)`
 - `entrada = { codigo, respostas: { pessoaId, resposta: "vem" | "nao-vem" }[], restricao? }`.

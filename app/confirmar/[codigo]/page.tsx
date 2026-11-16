@@ -1,22 +1,20 @@
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 import { TelaInterna } from "@/components/interno";
-import { convitesExemplo } from "@/lib/conteudo";
+import { prazoEncerrado } from "@/lib/conteudo";
+import { lerConvitePublico } from "@/lib/convites-servidor";
 import { RespostaConvite } from "./resposta";
 
-export const metadata = { title: "Confirme sua presença · V & C" };
+export const metadata = { title: "Confirme sua presença · V & C", robots: { index: false } };
 
-export function generateStaticParams() {
-  return convitesExemplo.map((c) => ({ codigo: c.codigo }));
-}
-
+/** Qualquer código do banco abre aqui, inclusive os criados depois da publicação (specs/006 FR-006). */
 export default async function ConfirmarConvite({ params }: PageProps<"/confirmar/[codigo]">) {
   const { codigo } = await params;
-  const convite = convitesExemplo.find((c) => c.codigo === codigo);
-  if (!convite) notFound();
+  const convite = await lerConvitePublico(decodeURIComponent(codigo));
+  if (!convite) redirect("/confirmar/?naoEncontrado=1");
 
   return (
     <TelaInterna voltar="/confirmar">
-      <RespostaConvite convite={convite} />
+      <RespostaConvite convite={convite} prazoEncerrado={prazoEncerrado()} />
     </TelaInterna>
   );
 }

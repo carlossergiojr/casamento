@@ -1,10 +1,13 @@
-import { Suspense } from "react";
 import { TelaSucesso } from "@/components/interno";
+import { lerConvitePublico } from "@/lib/convites-servidor";
 import { Concluido } from "./concluido";
 
-export const metadata = { title: "Que alegria! · V & C" };
+export const metadata = { title: "Que alegria! · V & C", robots: { index: false } };
 
-export default function ConfirmacaoConcluida() {
+export default async function ConfirmacaoConcluida({ searchParams }: PageProps<"/confirmar/concluido">) {
+  const { c } = await searchParams;
+  const convite = typeof c === "string" ? await lerConvitePublico(c) : null;
+
   return (
     <TelaSucesso
       icone={
@@ -13,9 +16,7 @@ export default function ConfirmacaoConcluida() {
         </svg>
       }
     >
-      <Suspense>
-        <Concluido />
-      </Suspense>
+      <Concluido convite={convite} />
     </TelaSucesso>
   );
 }

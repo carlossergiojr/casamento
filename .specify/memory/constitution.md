@@ -1,6 +1,8 @@
 <!--
 SYNC IMPACT REPORT
-Versão: 1.0.3 → 1.0.4 — PATCH: sem e-mail automático (os noivos avisam pelo WhatsApp); sai o Resend.
+Versão: 1.0.4 → 1.0.5 — PATCH: horário do convite (boas-vindas 15h30, cerimônia 16h20); site na
+Vercel com Neon, GitHub Pages só redireciona os QR Codes antigos (specs/006).
+Antes: 1.0.3 → 1.0.4 — PATCH: sem e-mail automático (os noivos avisam pelo WhatsApp); sai o Resend.
 Antes: 1.0.2 → 1.0.3 — PATCH: noivo só "Carlos" (sem "Sergio") em todo o site.
 Antes: 1.0.1 → 1.0.2 — PATCH: cerimônia às 15h (era 16h); prazo do RSVP 03/01/2027.
 Antes: 1.0.0 → 1.0.1 — PATCH: glossário fixa a ordem dos nomes (Victória & Carlos, V & C).
@@ -11,7 +13,7 @@ TODOs pendentes: nenhum
 
 # Constituição do site Cavi 2027
 
-Site do casamento de **Victória & Carlos** — sábado, 23/01/2027, 15h, Campestre
+Site do casamento de **Victória & Carlos** — sábado, 23/01/2027, boas-vindas 15h30 e cerimônia 16h20, Campestre
 (Feira de Santana/BA). Quem abre é convidado, quase sempre pelo celular, vindo do QR Code do
 convite. Idioma do produto e da documentação: **PT-BR**.
 
@@ -56,8 +58,8 @@ entra por migration versionada — nunca alteração manual em produção.
 ## Stack
 
 Next.js (App Router) + TypeScript strict · Tailwind CSS + shadcn/ui · Motion para animações ·
-hospedagem na Vercel. Mais tarde: Neon (Postgres) + Drizzle, Mercado Pago — entram só
-na feature que precisar deles.
+hospedagem na Vercel · Neon (Postgres) + Drizzle. O endereço antigo do GitHub Pages
+(o dos QR Codes impressos) só redireciona para a Vercel. Mais tarde: Mercado Pago.
 
 ## Fluxo
 
@@ -72,4 +74,4 @@ Esta constituição prevalece sobre outras convenções. Mudança = editar este 
 justificativa e subir a versão (MAJOR remove/redefine princípio, MINOR acrescenta, PATCH
 esclarece).
 
-**Version**: 1.0.4 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-16
+**Version**: 1.0.5 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-16
