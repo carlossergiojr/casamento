@@ -32,14 +32,21 @@ export function ODia() {
       {/* Programação: hora à esquerda, um fio dourado ligando os momentos. */}
       <Revelar>
         <ol className="relative flex flex-col gap-5 px-2">
-          <span aria-hidden="true" className="absolute top-3 bottom-3 left-[104px] w-px bg-gold-line" />
+          <span aria-hidden="true" className="absolute top-3 bottom-3 left-[112px] w-px bg-gold-line" />
           {programa.map((m) => (
-            <li key={m.titulo} className="grid grid-cols-[88px_1fr] items-baseline gap-8">
-              <span className="text-right font-serif text-[26px] leading-none text-gold lining-nums">{m.hora}</span>
+            <li key={m.titulo} className="grid grid-cols-[96px_1fr] items-baseline gap-8">
+              {/* "15h30" grande; "Em seguida", "Para fechar" menores, em itálico. */}
+              <span
+                className={`text-right font-serif leading-none lining-nums ${
+                  /\d/.test(m.hora) ? "text-[26px] text-gold" : "text-[19px] text-gold-text-sm italic"
+                }`}
+              >
+                {m.hora}
+              </span>
               <span className="relative flex flex-col">
                 <span aria-hidden="true" className="absolute top-[9px] -left-[19px] size-[7px] rounded-full border border-gold-line bg-surface" />
                 <span className="text-[17px] font-semibold text-foreground">{m.titulo}</span>
-                {m.detalhe && <span className="text-[14px] text-primary-deep">{m.detalhe}</span>}
+                <span className="text-[14px] text-primary-deep">{m.detalhe}</span>
               </span>
             </li>
           ))}

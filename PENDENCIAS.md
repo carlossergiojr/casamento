@@ -9,8 +9,6 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
 
 - [ ] **Fotos do pré-wedding**: trocar as 8 fotos de exemplo da galeria pelas reais e escrever a
       legenda (hoje "[legenda curta]").
-- [ ] **Dress code**: traje esperado, texto curto explicando, o que evitar e as cores sugeridas
-      (hoje são marcadores "[a definir]").
 - [ ] **Lista de presentes real**: revisar os 62 objetos e valores (só objetos, por categoria),
       tirar o que já têm em casa, e mandar as **fotos dos produtos** (salvas em
       `public/presentes/`, nome do arquivo como 4º valor do item). Sem foto, aparece a borboleta.
@@ -24,10 +22,11 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
       aparece em "Dúvidas" e na tela "Não encontramos esse nome" do RSVP.
 - [ ] **Dúvidas**: responder as que estão entre colchetes em `duvidas` (crianças, estacionamento,
       hospedagem, cerimônia ao ar livre) e tirar/acrescentar perguntas.
-- [ ] **O dia**: conferir a programação em `programa` (hoje "Depois — Recepção e festa") e o traje
-      em uma linha (`dressCode.resumo`). Nomes das cores do traje em `dressCode.cores`.
-- [ ] **Formato do QR impresso**: abrir um QR e ver se é `…/casamento/confirmar/` ou
-      `…/confirmar/CÓDIGO/`. Os dois funcionam; com código, cadastrar o mesmo código no convite.
+- [ ] **O dia**: escolher o visual do bloco (versões A–D na página de comparação). Os textos já
+      são os do cartão "Programação".
+- [ ] **Formato do QR impresso**: o cartão traz um código impresso embaixo do QR, então o QR deve
+      levar a `…/confirmar/CÓDIGO/`. Abrir um QR para confirmar e cadastrar em `/noivos` cada
+      convite com exatamente o código impresso.
 
 ## 2. Banco, senha e RSVP no ar (specs/006)
 
@@ -59,6 +58,10 @@ dinheiro vai para os noivos, que compram o que quiserem.
   pessoal. O site não envia nada automático.
 
 ## Feito
+
+- 16/11/2026 — Textos dos cartões impressos no site: programação com os 5 momentos (boas-vindas,
+  cerimônia, serviço volante, jantar, sobremesas), traje Social com as cores a evitar (o site
+  sugeria azul, que é das madrinhas) e a dica de verão, e a seção "Guia do convidado".
 
 - 16/11/2026 — Revisão de UX (specs/007): capa corrigida com "Reduzir movimento" (antes ficava
   vazia), data/local/"Eu vou!" na primeira tela, bloco "O dia" (programação, mapa, Google Maps,

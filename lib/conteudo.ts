@@ -52,12 +52,30 @@ export const mapaEmbed = `https://maps.google.com/maps?q=${buscaMapa}&z=15&outpu
 export const mapaRota = `https://www.google.com/maps/dir/?api=1&destination=${buscaMapa}`;
 export const mapaWaze = `https://waze.com/ul?q=${buscaMapa}&navigate=yes`;
 
-/** Programação do dia, na ordem (bloco "O dia", logo depois da capa). */
-export const programa: { hora: string; titulo: string; detalhe?: string }[] = [
-  { hora, titulo: "Boas-vindas" },
-  { hora: cerimonia, titulo: "Cerimônia", detalhe: "Na ilha do Campestre." },
-  { hora: "Depois", titulo: "Recepção e festa" },
+/** Programação do dia, igual ao cartão "Programação" impresso (bloco "O dia", após a capa). */
+export const programa: { hora: string; titulo: string; detalhe: string }[] = [
+  { hora, titulo: "Boas-vindas", detalhe: "Chegue com calma e aproveite um drink fresquinho" },
+  { hora: cerimonia, titulo: "Cerimônia", detalhe: "O momento do sim" },
+  { hora: "Em seguida", titulo: "Serviço volante", detalhe: "Petiscos e banda ao vivo, entre brindes e abraços" },
+  { hora: "Depois", titulo: "Jantar", detalhe: "Um buffet para saborearmos juntos" },
+  { hora: "Para fechar", titulo: "Sobremesas", detalhe: "Uma mesa doce para adoçar a noite" },
 ];
+
+/**
+ * "Guia do convidado", igual ao cartão impresso. `icone` é o nome do ícone em
+ * components/site/guia.tsx.
+ */
+export const guiaConvidado: { icone: string; texto: string }[] = [
+  { icone: "envelope", texto: "O convite é pessoal: valem os nomes do envelope" },
+  { icone: "relogio", texto: "Chegue no horário, queremos você no sim" },
+  { icone: "igreja", texto: "Participe também da cerimônia" },
+  { icone: "camera", texto: "Deixe o caminho livre para os fotógrafos" },
+  { icone: "coracao", texto: "Gentileza com todos, sempre" },
+  { icone: "sol", texto: "Só boas palavras e boas energias" },
+  { icone: "flor", texto: "A decoração fica para o fim da festa" },
+  { icone: "pessoas", texto: "Não vá embora sem se despedir de nós" },
+];
+export const guiaFecho = "E, acima de tudo, divirta-se muito!";
 
 /**
  * Contato dos noivos para dúvidas (WhatsApp). Número só com DDI+DDD+número, sem espaço:
@@ -78,7 +96,7 @@ export const duvidas: { pergunta: string; resposta: string }[] = [
   {
     pergunta: "Posso levar acompanhante?",
     resposta:
-      "Os nomes que estão no convite são os convidados. Se alguém da sua casa não aparece na confirmação, fale com a gente antes de levar.",
+      "O convite é pessoal: valem os nomes do envelope. Se alguém da sua casa não aparece na confirmação, fale com a gente antes de levar.",
   },
   { pergunta: "Crianças são bem-vindas?", resposta: "[A definir pelos noivos.]" },
   {
@@ -88,7 +106,7 @@ export const duvidas: { pergunta: string; resposta: string }[] = [
   {
     pergunta: "A cerimônia é ao ar livre?",
     resposta:
-      "É, e em janeiro faz calor. Tecidos leves ajudam, e salto bloco ou sapato baixo vai melhor do que salto fino na grama. [Confirmar com os noivos.]",
+      "[Confirmar com os noivos.] Janeiro é verão: tecidos leves e saltos grossos ou tipo bloco deixam o dia mais confortável.",
   },
   { pergunta: "Tem estacionamento?", resposta: "[A definir pelos noivos.]" },
   {
@@ -137,19 +155,23 @@ export const galeria = {
   })),
 };
 
+/** Igual ao cartão "Traje" impresso. */
 export const dressCode = {
-  traje: "[Traje esperado]",
-  texto: "[Texto curto explicando o traje — ainda a definir.]",
-  /** Nome que aparece embaixo de cada bolinha (no celular não tem "passar o mouse"). */
-  cores: [
-    { nome: "Ardósia", cor: "#636E84" },
-    { nome: "Névoa", cor: "#9AA3B4" },
-    { nome: "Areia", cor: "#C9B8A0" },
-    { nome: "Gelo", cor: "#E9EBEF" },
+  traje: "Social",
+  texto:
+    "Pedimos, com carinho, que evitem branco, off-white, creme e nude, reservados à noiva, e os tons de azul, cor das nossas madrinhas.",
+  /** Cores a EVITAR, com o nome embaixo de cada bolinha (no celular não tem "passar o mouse"). */
+  evitar: [
+    { nome: "branco", cor: "#FFFFFF" },
+    { nome: "off-white", cor: "#F6F2E9" },
+    { nome: "creme", cor: "#EFE4C8" },
+    { nome: "nude", cor: "#E3C8B3" },
+    { nome: "azul", cor: "#2E6A9E" },
+    { nome: "azul claro", cor: "#A8C1D7" },
   ],
+  dica: "Janeiro é verão: tecidos leves e saltos grossos ou tipo bloco deixam o dia mais confortável.",
   /** Uma linha, para o bloco "O dia". */
-  resumo: "[Traje — a definir]",
-  evite: "[O que evitar — a definir]",
+  resumo: "Social",
 };
 
 /** Ordem das categorias = ordem dos filtros na lista de presentes. */

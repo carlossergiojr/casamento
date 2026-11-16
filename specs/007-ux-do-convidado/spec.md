@@ -41,6 +41,11 @@ a primeira tela só mostrava a foto, e com "Reduzir movimento" ligado a capa fic
 - **FR-012**: com o envelope desligado, o `data-convite="aberto"` vai direto no `<html>`, sem
   `<script>` inline.
 
+- **FR-013**: textos dos cartões impressos: `programa` com os 5 momentos do cartão "Programação",
+  `dressCode` igual ao cartão "Traje" (Social; cores a **evitar**: branco, off-white, creme, nude,
+  azul e azul claro; dica de verão) e a seção **"Guia do convidado"** (`guiaConvidado`), antes de
+  "Dúvidas".
+
 ## Mantido (de propósito)
 
 Paleta azul + dourado, toile só nas faixas, Cormorant + Karla, nomes "se escrevendo" na capa,

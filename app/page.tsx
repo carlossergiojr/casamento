@@ -4,6 +4,7 @@ import { BarraAtalhos } from "@/components/site/barra-atalhos";
 import { Cabecalho, Capa } from "@/components/site/capa";
 import { Duvidas } from "@/components/site/duvidas";
 import { Galeria } from "@/components/site/galeria";
+import { Guia } from "@/components/site/guia";
 import { Historia } from "@/components/site/historia";
 import { ODia } from "@/components/site/o-dia";
 import { ChamadaRsvp, DressCode, ListaPresentes, Rodape } from "@/components/site/secoes";
@@ -26,6 +27,7 @@ export default function Inicio() {
           <ListaPresentes />
           <Historia />
           <Galeria />
+          <Guia />
           <Duvidas />
         </main>
         <Rodape />

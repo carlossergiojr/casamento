@@ -8,7 +8,7 @@ import { FalarComNoivos } from "./whatsapp";
  */
 export function Duvidas() {
   return (
-    <section id="duvidas" className="flex flex-col gap-6 bg-surface px-5 py-16">
+    <section id="duvidas" className="flex flex-col gap-6 px-5 py-16">
       <Revelar>
         <h2 className="text-center font-serif text-[40px] leading-[1.1] text-primary italic">Dúvidas</h2>
       </Revelar>

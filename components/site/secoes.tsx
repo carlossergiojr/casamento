@@ -19,21 +19,21 @@ export function DressCode() {
         className="absolute top-7 left-[22px] h-auto w-14 -rotate-[18deg]"
       />
       <Revelar className="flex flex-col items-center gap-[22px]">
-        <h2 className={TITULO}>Dress code</h2>
-        <p className="font-serif text-[26px] leading-tight text-foreground">{dressCode.traje}</p>
+        <h2 className={TITULO}>Traje</h2>
+        <p className="font-serif text-[30px] leading-tight text-foreground">{dressCode.traje}</p>
         <p className="text-[15px]">{dressCode.texto}</p>
         <div className="flex flex-col items-center gap-3">
-          <p className="text-[13px] text-primary-deep">Cores sugeridas</p>
-          {/* Com o nome embaixo: no celular não tem "passar o mouse" para ver. */}
-          <ul className="grid grid-cols-4 gap-3">
-            {dressCode.cores.map(({ nome, cor }) => (
-              <li key={cor} className="flex w-[68px] flex-col items-center gap-1.5">
+          <p className="text-[13px] text-primary-deep">Cores para evitar</p>
+          {/* Com o nome ao lado: no celular não tem "passar o mouse" para ver. */}
+          <ul className="grid grid-cols-2 gap-x-8 gap-y-3 text-left">
+            {dressCode.evitar.map(({ nome, cor }) => (
+              <li key={nome} className="flex items-center gap-2.5">
                 <span
                   aria-hidden="true"
-                  className="size-11 rounded-full border-[3px] border-card ring-1 ring-line"
+                  className="size-8 flex-none rounded-full border-2 border-card ring-1 ring-line"
                   style={{ background: cor }}
                 />
-                <span className="text-[12px] leading-tight text-primary-deep">{nome}</span>
+                <span className="text-[15px] text-foreground">{nome}</span>
               </li>
             ))}
           </ul>
@@ -41,8 +41,7 @@ export function DressCode() {
       </Revelar>
       <Revelar className="relative flex w-full flex-col gap-1.5 pt-[18px]">
         <Fio />
-        <p className="text-[13px] text-primary-deep">Evite</p>
-        <p className="text-[15px]">{dressCode.evite}</p>
+        <p className="font-serif text-[19px] leading-snug text-primary-deep italic">{dressCode.dica}</p>
       </Revelar>
     </section>
   );
