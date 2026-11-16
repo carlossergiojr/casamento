@@ -15,7 +15,7 @@ function restante(agora: number) {
   };
 }
 
-/** Contagem viva até 23/01/2027 15h (specs/001 FR-003). Zeros depois da hora. */
+/** Contagem viva até 23/01/2027 15h30, boas-vindas (specs/001 FR-003). Zeros depois da hora. */
 export function Contagem() {
   // null no servidor: o número certo só existe no relógio de quem abre.
   const [agora, setAgora] = useState<number | null>(null);

@@ -51,6 +51,8 @@ export function Capa() {
         <p className="text-[15px] text-primary-deep">
           {casamento.diaHora}
           <br />
+          Cerimônia às {casamento.cerimonia}
+          <br />
           {casamento.local.nome} · {casamento.local.cidade}
         </p>
 

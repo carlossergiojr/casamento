@@ -58,6 +58,9 @@ para o outro. Falta a parte de segurança e o banco, que dependem da lista 2.
 
 ## Feito
 
+- 16/11/2026 — Área dos noivos ganhou Checklist (tarefas por etapa e categoria, "resolver agora"),
+  Notas, contagem de dias no resumo e orçamento com contratado × estimativa. Site com o horário do
+  convite (boas-vindas 15h30, cerimônia 16h20) e campo de restrição alimentar no RSVP (só visual).
 - 16/11/2026 — Envelope de abertura desligado por enquanto (`ENVELOPE_LIGADO` em
   `lib/convite-aberto.ts`); "Victória" e "Carlos" se escrevem juntos na capa.
 - 16/11/2026 — Lista de presentes com 62 objetos em 6 categorias (R$ 100 a R$ 2.800), filtro por

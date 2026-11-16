@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { passo, tituloInterno } from "@/components/interno";
+import { campo, passo, rotuloCampo, tituloInterno } from "@/components/interno";
 import { casamento, type Convite } from "@/lib/conteudo";
 
 type Resposta = "vou" | "nao";
@@ -65,6 +65,20 @@ export function RespostaConvite({ convite }: { convite: Convite }) {
           </div>
         </fieldset>
       ))}
+
+      {respostas.includes("vou") && (
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="restricao" className={rotuloCampo}>
+            Alguma restrição alimentar ou alergia? (opcional)
+          </label>
+          <input
+            id="restricao"
+            name="restricao"
+            className={campo}
+            placeholder="Ex.: alergia a camarão, vegetariano"
+          />
+        </div>
+      )}
 
       <p className="text-[13px] text-primary-deep">
         Os nomes vêm do convite e não podem ser alterados. Dúvidas? Fale direto com os noivos.

@@ -31,12 +31,31 @@ export type Gasto = {
   pago: number; // centavos
   vencimento: string; // AAAA-MM-DD do próximo pagamento, ou ""
   obs: string;
+  estimado?: boolean; // valor ainda é estimativa (sem contrato fechado)
 };
 
-export type DadosNoivos = { versao: 1; convidados: Convidado[]; gastos: Gasto[] };
+export type Tarefa = {
+  id: string;
+  titulo: string;
+  nota: string;
+  fase: string; // ex.: "Dezembro · até o recesso"
+  categoria: string; // ex.: "Convites"
+  feita: boolean;
+  urgente: boolean; // entra em "Para resolver agora" no resumo
+};
+
+export type Nota = { id: string; titulo: string; texto: string };
+
+export type DadosNoivos = {
+  versao: 1;
+  convidados: Convidado[];
+  gastos: Gasto[];
+  tarefas: Tarefa[];
+  notas: Nota[];
+};
 
 const CHAVE = "cavi2027:noivos";
-const VAZIO: DadosNoivos = { versao: 1, convidados: [], gastos: [] };
+const VAZIO: DadosNoivos = { versao: 1, convidados: [], gastos: [], tarefas: [], notas: [] };
 
 let cache: DadosNoivos | null = null;
 const ouvintes = new Set<() => void>();
@@ -87,7 +106,14 @@ export function validar(x: unknown): DadosNoivos {
   if (!d || d.versao !== 1 || !Array.isArray(d.convidados) || !Array.isArray(d.gastos)) {
     throw new Error("Arquivo não é uma cópia da área dos noivos.");
   }
-  return { versao: 1, convidados: d.convidados, gastos: d.gastos };
+  // Cópias antigas não têm checklist nem notas.
+  return {
+    versao: 1,
+    convidados: d.convidados,
+    gastos: d.gastos,
+    tarefas: Array.isArray(d.tarefas) ? d.tarefas : [],
+    notas: Array.isArray(d.notas) ? d.notas : [],
+  };
 }
 
 export const novoId = () => Math.random().toString(36).slice(2, 10);
@@ -109,6 +135,17 @@ export function linkWhatsApp(telefone: string) {
   if (n.length <= 11) n = `55${n}`;
   return `https://wa.me/${n}`;
 }
+
+/** Etapas do checklist, na ordem; tarefas com outra etapa aparecem depois destas. */
+export const fasesPadrao = [
+  "Agora · até 30 de novembro",
+  "Dezembro · até o recesso",
+  "Reta final · 5 a 16 de janeiro",
+  "Semana do casamento · 17 a 22 de janeiro",
+  "Dia 23 de janeiro",
+  "Depois do casamento",
+  "Já resolvido",
+];
 
 /** Itens que quase todo casamento tem, para começar o orçamento sem página em branco. */
 export const gastosSugeridos = [
