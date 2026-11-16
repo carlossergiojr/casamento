@@ -37,8 +37,15 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## 4. Área dos noivos
 
-- [ ] Página protegida (do jeito mais simples) para ver quem confirmou, quem não vai, os
-      presentes recebidos e os recadinhos.
+Só pode existir depois da lista 2 (Vercel + Neon): no GitHub Pages tudo é público, então
+convidados e valores não podem ficar no repositório nem no site estático.
+
+- [ ] Entrada protegida por senha única dos noivos (sem conta, sem cadastro).
+- [ ] **Convidados**: cadastrar e editar convites (titular, pessoas, telefone, lado — dela/dele),
+      ver quem confirmou, quem não vai e quem ainda não respondeu, com totais e link do WhatsApp.
+- [ ] **Orçamento**: cada gasto do casamento (buffet, fotógrafo, vestido, decoração…) com valor
+      previsto, valor pago, parcelas e vencimento; totais de previsto × pago × falta pagar.
+- [ ] **Presentes recebidos**: quem deu, valor e recadinho; total arrecadado.
 
 ## Fora do escopo (decidido)
 
