@@ -9,9 +9,9 @@ export function Capa() {
   return (
     <section id="inicio" className="flex flex-col">
       {/* Nomes direto no céu da foto, sem cartão: o casal fica inteiro embaixo. */}
-      {/* 500px: a foto quase inteira cabe (perde só um fio de céu) e a data, o local e o "Eu vou!"
-          sobem para a primeira tela do celular (specs/007). */}
-      <div className="relative h-[500px] overflow-hidden bg-line md:h-[760px]">
+      {/* 640px: a foto do casal ocupa a primeira tela inteira do celular; a data, o local e o
+          "Eu vou!" vêm logo ao rolar. */}
+      <div className="relative h-[640px] overflow-hidden bg-line md:h-[760px]">
         <Image
           src={casamento.fotoCapa}
           alt={`${casamento.primeiro} e ${casamento.segundo}`}
@@ -22,9 +22,9 @@ export function Capa() {
         />
         <div className="pointer-events-none absolute inset-[14px] border border-background" />
 
-        <Revelar aposConvite className="absolute inset-x-0 top-0 flex flex-col items-center gap-4 px-6 pt-9 text-center">
+        <Revelar aposConvite className="absolute inset-x-0 top-0 flex flex-col items-center gap-4 px-6 pt-14 text-center">
           <p className="sobretitulo">Vamos nos casar</p>
-          <h1 className="flex flex-col font-nomes text-[52px] leading-[1.1] font-normal text-primary-deep">
+          <h1 className="flex flex-col font-nomes text-[60px] leading-[1.05] font-normal text-primary-deep">
             {/* Os dois nomes se escrevem juntos, em caligrafia; o "&" entra no meio do traço. */}
             <Tinta atraso={0.35}>{casamento.primeiro}</Tinta>
             <Tinta atraso={0.85} duracao={0.9} className="font-serif text-[34px] text-gold italic">

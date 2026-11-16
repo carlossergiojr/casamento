@@ -63,7 +63,7 @@ dinheiro vai para os noivos, que compram o que quiserem.
 - 16/11/2026 — Barra de atalhos do rodapé removida (cara de aplicativo). No lugar, a data no
   cabeçalho do topo com dois tracinhos ao lado: tocando, abre a lista de seções e leva até a
   escolhida (o cabeçalho some ao descer e volta ao subir). Nomes da capa e da prévia do link em
-  caligrafia (Great Vibes).
+  caligrafia (Allura); foto da capa de volta à tela inteira (640px).
 
 - 16/11/2026 — Capa com "Eu vou!" e "Como chegar" lado a lado (abre a gaveta da rota). Depois do
   prazo do RSVP (03/01) o site troca sozinho o destaque: "Como chegar" vira o botão cheio e o outro

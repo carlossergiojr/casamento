@@ -27,8 +27,8 @@ Mobile-first (a maioria abre pelo QR Code). Deploy: GitHub Pages em `carlossergi
 Regra: azul domina; dourado ≤ 5% da página.
 
 ### Tipografia (Google Fonts)
-- **Great Vibes** 400 (`font-nomes`) — só os nomes "Victória" e "Carlos" na capa (52px) e na
-  prévia do link. O "&" continua em Cormorant itálico dourado.
+- **Allura** 400 (`font-nomes`) — só os nomes "Victória" e "Carlos" na capa (60px) e na prévia
+  do link. (A Great Vibes ficava com cara de negrito.) O "&" continua em Cormorant itálico dourado.
 - **Cormorant Garamond** 300/400/500 + itálico — títulos de seção (40px itálico), números, citações.
 - **Pinyon Script** 400 (`font-script`) — letra cursiva do convite impresso, **só** nos títulos
   "Programação" e "Traje" (specs/007).

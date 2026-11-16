@@ -48,9 +48,9 @@ export async function GET() {
               display: "flex",
               alignItems: "baseline",
               marginTop: 22,
-              fontFamily: "Great Vibes",
+              fontFamily: "Allura",
               fontWeight: 400,
-              fontSize: 96,
+              fontSize: 104,
               color: c.primaria,
             }}
           >

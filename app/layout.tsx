@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Great_Vibes, Karla, Pinyon_Script } from "next/font/google";
+import { Allura, Cormorant_Garamond, Karla, Pinyon_Script } from "next/font/google";
 import { casamento } from "@/lib/conteudo";
 import { ENVELOPE_LIGADO, scriptConviteAberto } from "@/lib/convite-aberto";
 import { Movimento } from "@/components/movimento";
@@ -20,9 +20,9 @@ const pinyon = Pinyon_Script({
   weight: "400",
 });
 
-// Caligrafia dos nomes da capa.
-const greatVibes = Great_Vibes({
-  variable: "--font-great-vibes",
+// Caligrafia dos nomes da capa: traço fino, sem cara de negrito.
+const allura = Allura({
+  variable: "--font-allura",
   subsets: ["latin"],
   weight: "400",
 });
@@ -75,7 +75,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       // Envelope desligado: o convite já nasce "aberto" no HTML, sem script nenhum.
       data-convite={ENVELOPE_LIGADO ? undefined : "aberto"}
-      className={`${cormorant.variable} ${karla.variable} ${pinyon.variable} ${greatVibes.variable} antialiased`}
+      className={`${cormorant.variable} ${karla.variable} ${pinyon.variable} ${allura.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>

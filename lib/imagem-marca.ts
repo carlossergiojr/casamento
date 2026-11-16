@@ -14,10 +14,10 @@ export async function fontesMarca() {
     ler("assets/fonts/CormorantGaramond-Light.ttf"),
     ler("assets/fonts/CormorantGaramond-Italic.ttf"),
     ler("assets/fonts/Karla-SemiBold.ttf"),
-    ler("assets/fonts/GreatVibes-Regular.ttf"),
+    ler("assets/fonts/Allura-Regular.ttf"),
   ]);
   return [
-    { name: "Great Vibes", data: caligrafia, weight: 400 as const, style: "normal" as const },
+    { name: "Allura", data: caligrafia, weight: 400 as const, style: "normal" as const },
     { name: "Cormorant", data: leve, weight: 300 as const, style: "normal" as const },
     { name: "Cormorant", data: italico, weight: 400 as const, style: "italic" as const },
     { name: "Karla", data: karla, weight: 600 as const, style: "normal" as const },
