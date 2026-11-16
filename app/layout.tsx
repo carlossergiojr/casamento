@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Karla } from "next/font/google";
+import { Cormorant_Garamond, Great_Vibes, Karla } from "next/font/google";
 import { casamento } from "@/lib/conteudo";
 import { scriptConviteAberto } from "@/lib/convite-aberto";
 import { Toaster } from "@/components/ui/sonner";
@@ -10,6 +10,13 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight: ["300", "400", "500"],
   style: ["normal", "italic"],
+});
+
+// Caligrafia só nos nomes da capa.
+const greatVibes = Great_Vibes({
+  variable: "--font-great-vibes",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 const karla = Karla({
@@ -56,7 +63,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="pt-BR"
       data-scroll-behavior="smooth"
-      className={`${cormorant.variable} ${karla.variable} antialiased`}
+      className={`${cormorant.variable} ${greatVibes.variable} ${karla.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>

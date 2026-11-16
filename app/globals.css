@@ -32,6 +32,7 @@
   --font-sans: var(--font-karla);
   --font-serif: var(--font-cormorant);
   --font-heading: var(--font-cormorant);
+  --font-script: var(--font-great-vibes);
 
   --radius-sm: var(--radius);
   --radius-md: var(--radius);

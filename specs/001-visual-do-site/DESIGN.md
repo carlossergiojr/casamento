@@ -26,7 +26,9 @@ Mobile-first (a maioria abre pelo QR Code). Deploy: GitHub Pages em `carlossergi
 Regra: azul domina; dourado ≤ 5% da página.
 
 ### Tipografia (Google Fonts)
-- **Cormorant Garamond** 300/400/500 + itálico — nomes, títulos de seção (40px itálico), números, citações.
+- **Great Vibes** (`font-script`) — só os nomes "Victória" e "Carlos" na capa (60px) e na prévia
+  do link. O "&" continua em Cormorant itálico dourado.
+- **Cormorant Garamond** 300/400/500 + itálico — títulos de seção (40px itálico), números, citações.
 - **Karla** 400/500/600 — corpo (15–16px), labels (13px), botões (13–14px, 600, uppercase, letter-spacing .12–.14em), overlines (11–12px, uppercase, letter-spacing .2–.3em).
 
 ### Forma

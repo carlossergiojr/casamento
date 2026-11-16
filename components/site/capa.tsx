@@ -35,10 +35,10 @@ export function Capa() {
 
         <Revelar aposConvite className="absolute inset-x-0 top-0 flex flex-col items-center gap-4 px-6 pt-14 text-center">
           <p className="sobretitulo">Vamos nos casar</p>
-          <h1 className="flex flex-col gap-0.5 font-serif text-[52px] leading-[1.02] font-light text-primary-deep">
-            {/* Os dois nomes se escrevem juntos; o "&" entra no meio do traço. */}
+          <h1 className="flex flex-col font-script text-[60px] leading-[1.12] font-normal text-primary-deep">
+            {/* Os dois nomes se escrevem juntos, em caligrafia; o "&" entra no meio do traço. */}
             <Tinta atraso={0.35}>{casamento.primeiro}</Tinta>
-            <Tinta atraso={0.85} duracao={0.9} className="text-[40px] text-gold italic">
+            <Tinta atraso={0.85} duracao={0.9} className="font-serif text-[40px] text-gold italic">
               &amp;
             </Tinta>
             <Tinta atraso={0.35}>{casamento.segundo}</Tinta>

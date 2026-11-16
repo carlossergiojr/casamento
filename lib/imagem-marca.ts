@@ -10,12 +10,14 @@ import { join } from "node:path";
 const ler = (...caminho: string[]) => readFile(join(/*turbopackIgnore: true*/ process.cwd(), ...caminho));
 
 export async function fontesMarca() {
-  const [leve, italico, karla] = await Promise.all([
+  const [leve, italico, karla, caligrafia] = await Promise.all([
     ler("assets/fonts/CormorantGaramond-Light.ttf"),
     ler("assets/fonts/CormorantGaramond-Italic.ttf"),
     ler("assets/fonts/Karla-SemiBold.ttf"),
+    ler("assets/fonts/GreatVibes-Regular.ttf"),
   ]);
   return [
+    { name: "Great Vibes", data: caligrafia, weight: 400 as const, style: "normal" as const },
     { name: "Cormorant", data: leve, weight: 300 as const, style: "normal" as const },
     { name: "Cormorant", data: italico, weight: 400 as const, style: "italic" as const },
     { name: "Karla", data: karla, weight: 600 as const, style: "normal" as const },
