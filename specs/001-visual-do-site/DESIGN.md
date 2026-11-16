@@ -61,6 +61,8 @@ Capa, Nossa história, galeria em polaroid e rodapé: **Tailwind puro** (editori
 
 ## 3. Página inicial (ordem das seções)
 
+> **Atualizado na specs/007**: a ordem agora é Capa → O dia (horários, mapa, rota, traje, agenda) → Dress code → Você vem? → Presentes → Nossa história → Pré-wedding → Dúvidas → Rodapé, e a foto da capa tem 500px no celular. A lista abaixo é o desenho original.
+
 1. **Header** 52px: monograma "V & C" (& dourado) à esquerda, "23.01.2027" à direita.
 2. **Capa**: foto do casal (retrato, 640px de altura no celular, `object-bottom`) com moldura fina creme inset 14px, **sem cartão**: overline "Vamos nos casar" e os nomes (52px, light, `primary-deep`; "&" dourado itálico) direto no céu da foto. Pede foto com céu limpo em cima. Abaixo da foto, no creme: data "23 · 01 · 2027", "Sábado, às 15h / Campestre · Feira de Santana, BA", **contagem regressiva** e o botão **"Eu vou!"** (→ RSVP), largura toda. (O "Lista de presentes" saiu: a barra de atalhos da specs/004 já tem "Presentes".)
 3. **Nossa história** (fundo surface): borboleta + título; o texto em trechos alternando esquerda/direita com fios dourados; fecha com "Agora só falta você." em dourado itálico 34px. Texto final está no briefing.

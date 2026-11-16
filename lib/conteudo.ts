@@ -27,7 +27,7 @@ export const casamento = {
   dataCapa: "23 · 01 · 2027",
   hora,
   cerimonia,
-  diaHora: `Sábado · boas-vindas às ${hora}`,
+  diaHora: `Sábado · boas-vindas ${hora}`,
   dataPorExtenso: "23 de janeiro",
   hashtag: "#Cavi2027",
   prazoRsvp: "3 de janeiro de 2027",
@@ -50,6 +50,57 @@ const buscaMapa = encodeURIComponent(
 );
 export const mapaEmbed = `https://maps.google.com/maps?q=${buscaMapa}&z=15&output=embed`;
 export const mapaRota = `https://www.google.com/maps/dir/?api=1&destination=${buscaMapa}`;
+export const mapaWaze = `https://waze.com/ul?q=${buscaMapa}&navigate=yes`;
+
+/** Programação do dia, na ordem (bloco "O dia", logo depois da capa). */
+export const programa: { hora: string; titulo: string; detalhe?: string }[] = [
+  { hora, titulo: "Boas-vindas" },
+  { hora: cerimonia, titulo: "Cerimônia", detalhe: "Na ilha do Campestre." },
+  { hora: "Depois", titulo: "Recepção e festa" },
+];
+
+/**
+ * Contato dos noivos para dúvidas (WhatsApp). Número só com DDI+DDD+número, sem espaço:
+ * ex. "5575999999999". Vazio = o site mostra "[WhatsApp a definir]" no lugar do botão.
+ */
+export const contato = {
+  nome: "Victória e Carlos",
+  whatsapp: "",
+};
+export const linkWhatsapp = (texto = "Oi! Tenho uma dúvida sobre o casamento.") =>
+  contato.whatsapp ? `https://wa.me/${contato.whatsapp}?text=${encodeURIComponent(texto)}` : null;
+
+/**
+ * Perguntas frequentes. O que está entre colchetes os noivos ainda precisam responder; o resto
+ * vem do que já foi decidido (lista fechada, prazo do RSVP, presente virtual).
+ */
+export const duvidas: { pergunta: string; resposta: string }[] = [
+  {
+    pergunta: "Posso levar acompanhante?",
+    resposta:
+      "Os nomes que estão no convite são os convidados. Se alguém da sua casa não aparece na confirmação, fale com a gente antes de levar.",
+  },
+  { pergunta: "Crianças são bem-vindas?", resposta: "[A definir pelos noivos.]" },
+  {
+    pergunta: "Até quando confirmo presença?",
+    resposta: "Até 3 de janeiro de 2027, aqui mesmo no site, com o seu nome ou o código do convite. Dá para mudar a resposta até esse dia.",
+  },
+  {
+    pergunta: "A cerimônia é ao ar livre?",
+    resposta:
+      "É, e em janeiro faz calor. Tecidos leves ajudam, e salto bloco ou sapato baixo vai melhor do que salto fino na grama. [Confirmar com os noivos.]",
+  },
+  { pergunta: "Tem estacionamento?", resposta: "[A definir pelos noivos.]" },
+  {
+    pergunta: "Vou de outra cidade. Onde fico?",
+    resposta: "[Sugestões de hotel em Feira de Santana — a definir pelos noivos.]",
+  },
+  {
+    pergunta: "Como funciona a lista de presentes?",
+    resposta:
+      "Você escolhe um item e paga por Pix ou cartão; o valor vem para nós e a gente compra. Se preferir, dá para mandar um valor livre para a lua de mel.",
+  },
+];
 
 /** "Nossa história" em trechos; alinhamento alterna esquerda/direita. */
 export const historia: { linhas: string[]; borboleta?: boolean }[] = [
@@ -89,7 +140,15 @@ export const galeria = {
 export const dressCode = {
   traje: "[Traje esperado]",
   texto: "[Texto curto explicando o traje — ainda a definir.]",
-  cores: ["#636E84", "#9AA3B4", "#C9B8A0", "#E9EBEF"],
+  /** Nome que aparece embaixo de cada bolinha (no celular não tem "passar o mouse"). */
+  cores: [
+    { nome: "Ardósia", cor: "#636E84" },
+    { nome: "Névoa", cor: "#9AA3B4" },
+    { nome: "Areia", cor: "#C9B8A0" },
+    { nome: "Gelo", cor: "#E9EBEF" },
+  ],
+  /** Uma linha, para o bloco "O dia". */
+  resumo: "[Traje — a definir]",
   evite: "[O que evitar — a definir]",
 };
 
@@ -223,8 +282,36 @@ export const destaquesPresente = [
   "jogo-de-panelas",
 ];
 
+/** "R$ 450" quando é valor redondo, "R$ 49,90" quando tem centavos. */
 export const formatarValor = (centavos: number) =>
-  (centavos / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+  (centavos / 100).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    minimumFractionDigits: centavos % 100 ? 2 : 0,
+    maximumFractionDigits: 2,
+  });
+
+/**
+ * Presente de valor livre: o convidado escolhe quanto manda (para a lua de mel). Tem página
+ * própria em /presentes/livre/, fora da lista de objetos.
+ */
+export const presenteLivre = {
+  id: "livre",
+  nome: "Cota lua de mel",
+  texto: "Prefere não escolher um objeto? Mande o valor que quiser para a nossa lua de mel.",
+  /** Em reais: os botões de valor rápido. */
+  sugestoes: [100, 200, 300, 500],
+  /** Em reais. */
+  minimo: 20,
+};
+
+/** Presente pelo id da URL: um da lista ou a cota livre (valor `null`: o convidado escolhe). */
+export function acharPresente(id: string): { id: string; nome: string; valor: number | null; presenteado: boolean } | undefined {
+  if (id === presenteLivre.id) return { id, nome: presenteLivre.nome, valor: null, presenteado: false };
+  return presentes.find((p) => p.id === id);
+}
+/** Todos os ids com página (lista + cota livre), para o generateStaticParams. */
+export const idsPresentes = () => [...presentes.map((p) => ({ id: p.id })), { id: presenteLivre.id }];
 
 /** Depois disso o convidado não muda mais a resposta (specs/006 FR-009); os noivos podem. */
 export const prazoEncerrado = (agora = Date.now()) => agora > new Date(casamento.fimRsvp).getTime();

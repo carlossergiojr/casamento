@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { MapPin } from "lucide-react";
 import { casamento } from "@/lib/conteudo";
 import { Contagem } from "./contagem";
 import { Tinta } from "./enfeites";
@@ -22,7 +23,9 @@ export function Capa() {
   return (
     <section id="inicio" className="flex flex-col">
       {/* Nomes direto no céu da foto, sem cartão: o casal fica inteiro embaixo. */}
-      <div className="relative h-[640px] overflow-hidden bg-line md:h-[760px]">
+      {/* 500px: a foto quase inteira cabe (perde só um fio de céu) e a data, o local e o "Eu vou!"
+          sobem para a primeira tela do celular (specs/007). */}
+      <div className="relative h-[500px] overflow-hidden bg-line md:h-[760px]">
         <Image
           src={casamento.fotoCapa}
           alt={`${casamento.primeiro} e ${casamento.segundo}`}
@@ -33,12 +36,12 @@ export function Capa() {
         />
         <div className="pointer-events-none absolute inset-[14px] border border-background" />
 
-        <Revelar aposConvite className="absolute inset-x-0 top-0 flex flex-col items-center gap-4 px-6 pt-14 text-center">
+        <Revelar aposConvite className="absolute inset-x-0 top-0 flex flex-col items-center gap-4 px-6 pt-9 text-center">
           <p className="sobretitulo">Vamos nos casar</p>
-          <h1 className="flex flex-col gap-0.5 font-serif text-[52px] leading-[1.02] font-light text-primary-deep">
+          <h1 className="flex flex-col gap-0.5 font-serif text-[46px] leading-[1.02] font-light text-primary-deep">
             {/* Os dois nomes se escrevem juntos; o "&" entra no meio do traço. */}
             <Tinta atraso={0.35}>{casamento.primeiro}</Tinta>
-            <Tinta atraso={0.85} duracao={0.9} className="text-[40px] text-gold italic">
+            <Tinta atraso={0.85} duracao={0.9} className="text-[34px] text-gold italic">
               &amp;
             </Tinta>
             <Tinta atraso={0.35}>{casamento.segundo}</Tinta>
@@ -46,22 +49,26 @@ export function Capa() {
         </Revelar>
       </div>
 
-      <Revelar aposConvite atraso={0.3} className="relative flex flex-col items-center gap-5 px-[36px] pt-10 pb-9 text-center">
+      <Revelar aposConvite atraso={0.3} className="relative flex flex-col items-center gap-3 px-6 pt-6 pb-9 text-center">
         <p className="font-serif text-2xl tracking-[0.1em]">{casamento.dataCapa}</p>
-        <p className="text-[15px] text-primary-deep">
-          {casamento.diaHora}
+        <p className="text-[14px] text-primary-deep">
+          {casamento.diaHora} · cerimônia {casamento.cerimonia}
           <br />
-          Cerimônia às {casamento.cerimonia}
-          <br />
-          {casamento.local.nome} · {casamento.local.cidade}
+          {/* Leva ao bloco "O dia", com mapa e rota. */}
+          <a href="#local" className="-my-2.5 inline-flex min-h-11 items-center gap-1.5 text-[15px] text-primary underline decoration-gold-line underline-offset-4">
+            <MapPin aria-hidden="true" className="size-4" strokeWidth={1.5} />
+            {casamento.local.nome} · {casamento.local.cidade}
+          </a>
         </p>
-
-        <Contagem />
 
         {/* Só a ação principal; presentes e o resto ficam na barra de atalhos (specs/004). */}
         <Link href="/confirmar" className="botao w-full bg-primary text-card hover:bg-primary-deep">
           Eu vou!
         </Link>
+
+        <div className="w-full pt-3">
+          <Contagem />
+        </div>
       </Revelar>
     </section>
   );

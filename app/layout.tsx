@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Karla } from "next/font/google";
 import { casamento } from "@/lib/conteudo";
-import { scriptConviteAberto } from "@/lib/convite-aberto";
+import { ENVELOPE_LIGADO, scriptConviteAberto } from "@/lib/convite-aberto";
+import { Movimento } from "@/components/movimento";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
@@ -58,11 +59,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="pt-BR"
       data-scroll-behavior="smooth"
+      // Envelope desligado: o convite já nasce "aberto" no HTML, sem script nenhum.
+      data-convite={ENVELOPE_LIGADO ? undefined : "aberto"}
       className={`${cormorant.variable} ${karla.variable} antialiased`}
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: scriptConviteAberto }} />
+        {ENVELOPE_LIGADO && <script dangerouslySetInnerHTML={{ __html: scriptConviteAberto }} />}
         <noscript>
           <style>
             {"[data-envelope]{display:none!important}[data-revelar]{opacity:1!important;transform:none!important;clip-path:none!important}"}
@@ -70,7 +73,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </noscript>
       </head>
       <body className="min-h-dvh">
-        {children}
+        <Movimento>{children}</Movimento>
         {/* Acima da barra de atalhos (specs/004 D6). */}
         <Toaster position="bottom-center" theme="light" offset={{ bottom: 88 }} mobileOffset={{ bottom: 88 }} />
       </body>

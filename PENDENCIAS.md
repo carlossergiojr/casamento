@@ -20,6 +20,12 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
 - [ ] **Lista de convidados**: os convites de verdade (titular + pessoas + o código que está no QR
       de cada um), digitados na área dos noivos (`/noivos`) depois que ela estiver no ar. Os 3 de
       exemplo (CAVI01–03) agora só existem no banco de teste.
+- [ ] **WhatsApp dos noivos**: o número em `contato.whatsapp` (só dígitos, com 55 e DDD). Ele
+      aparece em "Dúvidas" e na tela "Não encontramos esse nome" do RSVP.
+- [ ] **Dúvidas**: responder as que estão entre colchetes em `duvidas` (crianças, estacionamento,
+      hospedagem, cerimônia ao ar livre) e tirar/acrescentar perguntas.
+- [ ] **O dia**: conferir a programação em `programa` (hoje "Depois — Recepção e festa") e o traje
+      em uma linha (`dressCode.resumo`). Nomes das cores do traje em `dressCode.cores`.
 - [ ] **Formato do QR impresso**: abrir um QR e ver se é `…/casamento/confirmar/` ou
       `…/confirmar/CÓDIGO/`. Os dois funcionam; com código, cadastrar o mesmo código no convite.
 
@@ -53,6 +59,12 @@ dinheiro vai para os noivos, que compram o que quiserem.
   pessoal. O site não envia nada automático.
 
 ## Feito
+
+- 16/11/2026 — Revisão de UX (specs/007): capa corrigida com "Reduzir movimento" (antes ficava
+  vazia), data/local/"Eu vou!" na primeira tela, bloco "O dia" (programação, mapa, Google Maps,
+  Waze, copiar endereço, traje, salvar na agenda), nova ordem da home, seção "Dúvidas" com
+  WhatsApp, cota lua de mel de valor livre, presentes em linhas na home, valores sem centavos,
+  cores do traje com nome e menos caixa alta.
 
 - 16/11/2026 — Lista de presentes enxuta: a home mostra só 6 destaques e o botão "Ver lista
   completa"; a lista inteira foi para `/presentes`, em linhas compactas, com filtro por categoria,

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { TelaInterna, tituloInterno } from "@/components/interno";
-import { ListaCompletaPresentes } from "@/components/site/presentes";
+import { CotaLivre, ListaCompletaPresentes } from "@/components/site/presentes";
 
 export const metadata: Metadata = { title: "Lista de presentes" };
 
@@ -16,6 +16,7 @@ export default function PaginaPresentes() {
             item. Dá para deixar um recadinho junto.
           </p>
         </div>
+        <CotaLivre />
         <ListaCompletaPresentes />
       </main>
     </TelaInterna>

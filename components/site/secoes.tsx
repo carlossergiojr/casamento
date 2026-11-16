@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { casamento, dressCode, presentes, publico } from "@/lib/conteudo";
 import { Fio } from "./enfeites";
-import { DestaquesPresentes } from "./presentes";
+import { CotaLivre, DestaquesPresentes } from "./presentes";
 import { Revelar } from "./revelar";
 
 const TITULO = "font-serif text-[40px] leading-[1.1] text-primary italic";
@@ -10,7 +10,7 @@ export function DressCode() {
   return (
     <section
       id="dresscode"
-      className="relative flex flex-col items-center gap-[22px] bg-surface px-7 py-16 text-center"
+      className="relative flex flex-col items-center gap-[22px] px-7 py-16 text-center"
     >
       <img
         src={publico("/estampa/spot-butterfly-1.png")}
@@ -20,25 +20,28 @@ export function DressCode() {
       />
       <Revelar className="flex flex-col items-center gap-[22px]">
         <h2 className={TITULO}>Dress code</h2>
-        <p className="text-xs tracking-[0.24em] text-primary-deep uppercase">{dressCode.traje}</p>
+        <p className="font-serif text-[26px] leading-tight text-foreground">{dressCode.traje}</p>
         <p className="text-[15px]">{dressCode.texto}</p>
         <div className="flex flex-col items-center gap-3">
-          <p className="text-xs tracking-[0.2em] text-primary-deep uppercase">Cores sugeridas</p>
-          <div className="flex gap-3.5">
-            {dressCode.cores.map((cor) => (
-              <span
-                key={cor}
-                title={cor}
-                className="size-11 rounded-full border-[3px] border-card ring-1 ring-line"
-                style={{ background: cor }}
-              />
+          <p className="text-[13px] text-primary-deep">Cores sugeridas</p>
+          {/* Com o nome embaixo: no celular não tem "passar o mouse" para ver. */}
+          <ul className="grid grid-cols-4 gap-3">
+            {dressCode.cores.map(({ nome, cor }) => (
+              <li key={cor} className="flex w-[68px] flex-col items-center gap-1.5">
+                <span
+                  aria-hidden="true"
+                  className="size-11 rounded-full border-[3px] border-card ring-1 ring-line"
+                  style={{ background: cor }}
+                />
+                <span className="text-[12px] leading-tight text-primary-deep">{nome}</span>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </Revelar>
       <Revelar className="relative flex w-full flex-col gap-1.5 pt-[18px]">
         <Fio />
-        <p className="text-xs tracking-[0.2em] text-primary-deep uppercase">Evite</p>
+        <p className="text-[13px] text-primary-deep">Evite</p>
         <p className="text-[15px]">{dressCode.evite}</p>
       </Revelar>
     </section>
@@ -59,6 +62,7 @@ export function ListaPresentes() {
       <Link href="/presentes/" className="botao border border-primary text-primary hover:bg-primary hover:text-card">
         Ver lista completa ({presentes.length} presentes)
       </Link>
+      <CotaLivre />
     </section>
   );
 }
@@ -96,7 +100,7 @@ export function ChamadaRsvp() {
             />
           </div>
           <button type="submit" className="botao w-full bg-primary text-card hover:bg-primary-deep">
-            Buscar meu convite
+            Confirmar presença
           </button>
         </form>
       </Revelar>

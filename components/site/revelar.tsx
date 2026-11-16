@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReduzir } from "@/lib/use-reduzir";
 import type { ComponentProps } from "react";
 import { useConviteAberto } from "@/lib/use-convite-aberto";
 
@@ -16,7 +17,7 @@ export function Revelar({
   children,
   ...resto
 }: { atraso?: number; aposConvite?: boolean } & ComponentProps<typeof motion.div>) {
-  const reduzir = useReducedMotion();
+  const reduzir = useReduzir();
   const aberto = useConviteAberto();
   const variantes = {
     oculto: reduzir ? { opacity: 0 } : { opacity: 0, y: 24 },

@@ -17,7 +17,7 @@ vez). Ao concluir algo, marque o item e mova para "Feito" com a data, no mesmo c
   Tokens só pelo nome (`text-primary`, `bg-surface`, `text-gold`, `border-gold-line`), nunca hex
   solto em componente novo. Sem gradiente; sombra só nas polaroids; cantos de 3px.
 - Mobile-first: confira toda tela em 375–390px. Alvos de toque ≥ 44px, inputs com fonte 16px.
-- Animação com `motion/react`; toda animação respeita `useReducedMotion()`. Entrada de bloco
+- Animação com `motion/react`; toda animação respeita `useReduzir()` (`lib/use-reduzir.ts`; não use o `useReducedMotion()` do Motion, que quebra a hidratação — specs/007). Entrada de bloco
   por `<Revelar>` (`components/site/revelar.tsx`).
 - Conteúdo editável (textos, datas, fotos, presentes, convites de exemplo) só em
   `lib/conteudo.ts`. Fotos de exemplo vêm de picsum.photos até as reais chegarem.

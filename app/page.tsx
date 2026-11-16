@@ -2,9 +2,10 @@ import { Envelope } from "@/components/envelope";
 import { ENVELOPE_LIGADO } from "@/lib/convite-aberto";
 import { BarraAtalhos } from "@/components/site/barra-atalhos";
 import { Cabecalho, Capa } from "@/components/site/capa";
-import { ComoChegar } from "@/components/site/como-chegar";
+import { Duvidas } from "@/components/site/duvidas";
 import { Galeria } from "@/components/site/galeria";
 import { Historia } from "@/components/site/historia";
+import { ODia } from "@/components/site/o-dia";
 import { ChamadaRsvp, DressCode, ListaPresentes, Rodape } from "@/components/site/secoes";
 
 export default function Inicio() {
@@ -16,13 +17,16 @@ export default function Inicio() {
       <div id="site" className="mx-auto max-w-[640px] bg-background md:border-x md:border-surface">
         <Cabecalho />
         <main>
+          {/* Primeiro o prático (quando, onde, o que vestir, confirmar, presentear); depois a
+              história e as fotos, para quem quer ficar (specs/007). */}
           <Capa />
+          <ODia />
+          <DressCode />
+          <ChamadaRsvp />
+          <ListaPresentes />
           <Historia />
           <Galeria />
-          <DressCode />
-          <ListaPresentes />
-          <ChamadaRsvp />
-          <ComoChegar />
+          <Duvidas />
         </main>
         <Rodape />
         {/* Dentro do #site: fica inerte enquanto o envelope está na frente (specs/004 D5). */}

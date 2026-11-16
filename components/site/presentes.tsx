@@ -8,6 +8,8 @@ import {
   formatarValor,
   presentes,
   type CategoriaPresente,
+  presenteLivre,
+  publico,
   type Presente,
 } from "@/lib/conteudo";
 import { FotoPresente } from "./foto-presente";
@@ -17,8 +19,24 @@ const destaques = destaquesPresente
   .map((id) => presentes.find((p) => p.id === id))
   .filter((p): p is Presente => !!p && !p.presenteado);
 
-/** Prévia da página inicial: só os presentes em destaque, em cartões grandes. */
+/** Com todas as fotos reais, a home mostra cartões grandes; sem elas, linhas compactas. */
+const comFotos = destaques.every((p) => p.foto);
+
+/** Prévia da página inicial: só os presentes em destaque. */
 export function DestaquesPresentes() {
+  if (!comFotos) {
+    return (
+      <Revelar>
+        <ul className="flex flex-col border-t border-surface">
+          {destaques.map((p) => (
+            <li key={p.id}>
+              <LinhaPresente presente={p} />
+            </li>
+          ))}
+        </ul>
+      </Revelar>
+    );
+  }
   return (
     <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
       {destaques.map((p, i) => (
@@ -32,7 +50,7 @@ export function DestaquesPresentes() {
             <div className="mt-auto pt-1.5">
               <Link
                 href={`/presentes/${p.id}/`}
-                className="block rounded-[3px] border border-primary px-1.5 py-[13px] text-center text-xs font-semibold tracking-[0.12em] text-primary uppercase transition-colors hover:bg-primary hover:text-card"
+                className="flex min-h-11 items-center justify-center rounded-[3px] border border-primary px-1.5 text-center text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-card"
               >
                 Presentear
               </Link>
@@ -41,6 +59,31 @@ export function DestaquesPresentes() {
         </Revelar>
       ))}
     </div>
+  );
+}
+
+/** Cota de valor livre (lua de mel): para quem prefere não escolher um objeto. */
+export function CotaLivre() {
+  return (
+    <Link
+      href={`/presentes/${presenteLivre.id}/`}
+      className="group flex items-center gap-4 rounded-[3px] border border-gold-line bg-card p-4 transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+    >
+      <img src={publico("/estampa/spot-bird.png")} alt="" aria-hidden="true" className="h-auto w-14 flex-none -scale-x-100" />
+      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+        <span className="font-serif text-[22px] leading-tight text-primary italic">{presenteLivre.nome}</span>
+        <span className="text-[13px] text-primary-deep">Você escolhe o valor.</span>
+      </span>
+      <Seta />
+    </Link>
+  );
+}
+
+function Seta() {
+  return (
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" className="flex-none text-primary-deep">
+      <path d="M7 3 L13 9 L7 15" />
+    </svg>
   );
 }
 
@@ -72,7 +115,7 @@ export function ListaCompletaPresentes() {
             type="button"
             aria-pressed={filtro === f}
             onClick={() => setFiltro(f)}
-            className={`min-h-11 shrink-0 rounded-[3px] border px-3.5 text-xs font-semibold tracking-[0.12em] whitespace-nowrap uppercase transition-colors ${
+            className={`min-h-11 shrink-0 rounded-[3px] border px-3.5 text-sm font-semibold whitespace-nowrap transition-colors ${
               filtro === f ? "border-primary bg-primary text-card" : "border-line bg-card text-primary"
             }`}
           >
@@ -125,9 +168,9 @@ function LinhaPresente({ presente: p }: { presente: Presente }) {
         <span className="font-serif text-xl text-gold lining-nums">{formatarValor(p.valor)}</span>
       </div>
       {p.presenteado ? (
-        <span className="shrink-0 text-xs font-semibold tracking-[0.12em] text-gold-text-sm uppercase">Presenteado ✓</span>
+        <span className="shrink-0 text-[13px] font-semibold text-gold-text-sm">Presenteado ✓</span>
       ) : (
-        <span className="flex min-h-11 shrink-0 items-center rounded-[3px] border border-primary px-3 text-xs font-semibold tracking-[0.12em] text-primary uppercase transition-colors group-hover:bg-primary group-hover:text-card">
+        <span className="flex min-h-11 shrink-0 items-center rounded-[3px] border border-primary px-3 text-sm font-semibold text-primary transition-colors group-hover:bg-primary group-hover:text-card">
           Presentear
         </span>
       )}

@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
+import { motion, useScroll, useSpring, useTransform } from "motion/react";
+import { useReduzir } from "@/lib/use-reduzir";
 
 /**
  * Fio dourado que desce pela "Nossa história" acompanhando a rolagem e liga os trechos; uma
@@ -10,7 +11,7 @@ import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "mo
  */
 export function FioHistoria() {
   const trilho = useRef<HTMLDivElement>(null);
-  const reduzir = useReducedMotion();
+  const reduzir = useReduzir();
   const { scrollYProgress } = useScroll({ target: trilho, offset: ["start 75%", "end 60%"] });
   const progresso = useSpring(scrollYProgress, { stiffness: 90, damping: 24, restDelta: 0.001 });
   const topoConta = useTransform(progresso, (p) => `${p * 100}%`);

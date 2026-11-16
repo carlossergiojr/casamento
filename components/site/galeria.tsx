@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReduzir } from "@/lib/use-reduzir";
 import { galeria } from "@/lib/conteudo";
 import { Revelar } from "./revelar";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -27,7 +28,7 @@ function Polaroid({
   className: string;
   children: React.ReactNode;
 }) {
-  const reduzir = useReducedMotion();
+  const reduzir = useReduzir();
   return (
     <motion.div
       data-revelar
@@ -86,7 +87,7 @@ export function Galeria() {
       </div>
 
       <Dialog>
-        <DialogTrigger className="mt-8 flex min-h-11 items-center self-center border-b border-gold-line text-sm font-semibold tracking-[0.12em] text-primary uppercase">
+        <DialogTrigger className="mt-8 flex min-h-11 items-center self-center text-[15px] font-semibold text-primary underline decoration-gold-line underline-offset-4">
           Ver todas as fotos
         </DialogTrigger>
         <DialogContent className="max-w-[calc(100%-1.5rem)] rounded-[3px] bg-background p-4 pt-12 sm:max-w-xl">

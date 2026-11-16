@@ -49,7 +49,7 @@ export function Contagem() {
           <span className="font-serif text-[44px] leading-none text-gold tabular-nums lining-nums">
             {item.valor}
           </span>
-          <span className="mt-1.5 text-[11px] tracking-[0.2em] text-primary-deep uppercase">
+          <span className="mt-1.5 text-[13px] text-primary-deep">
             {item.rotulo}
           </span>
         </div>

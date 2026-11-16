@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReduzir } from "@/lib/use-reduzir";
 import { Revelar } from "@/components/site/revelar";
 import { casamento, publico } from "@/lib/conteudo";
-import { lerPresente, type DadosPresente } from "@/lib/presente-escolhido";
+import { lerPresente, useValorEscolhido, type DadosPresente } from "@/lib/presente-escolhido";
 
-export function Obrigado({ id, nome, valor }: { id: string; nome: string; valor: string }) {
+export function Obrigado({ id, nome, valorFixo }: { id: string; nome: string; valorFixo: number | null }) {
+  const valor = useValorEscolhido(id, valorFixo);
   const [dados, setDados] = useState<DadosPresente | null>(null);
-  const reduzir = useReducedMotion();
+  const reduzir = useReduzir();
   useEffect(() => setDados(lerPresente(id)), [id]);
 
   return (

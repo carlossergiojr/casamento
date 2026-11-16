@@ -4,14 +4,21 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { campo, rotuloCampo } from "@/components/interno";
+import { useValorEscolhido } from "@/lib/presente-escolhido";
 
 type Metodo = "pix" | "cartao";
+
+/** Valor no resumo do topo (na cota livre, o que o convidado escolheu). */
+export function ValorEscolhido({ id, valorFixo }: { id: string; valorFixo: number | null }) {
+  return useValorEscolhido(id, valorFixo);
+}
 
 /**
  * Prévia visual do pagamento (plan R4): campos sem `name`, nada é enviado nem guardado.
  * O Mercado Pago entra numa feature própria.
  */
-export function Pagamento({ id, valor }: { id: string; valor: string }) {
+export function Pagamento({ id, valorFixo }: { id: string; valorFixo: number | null }) {
+  const valor = useValorEscolhido(id, valorFixo);
   const [metodo, setMetodo] = useState<Metodo>("pix");
 
   // Abas acessíveis: setas, Home e End trocam de aba (specs/002 FR-012).

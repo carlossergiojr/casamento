@@ -3,21 +3,95 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { campo, rotuloCampo } from "@/components/interno";
+import { formatarValor } from "@/lib/conteudo";
 import { guardarPresente } from "@/lib/presente-escolhido";
 
-export function FormPresente({ id }: { id: string }) {
+type Livre = { sugestoes: number[]; minimo: number };
+
+/** Só dígitos e uma vírgula: "150", "150,50". Devolve centavos (ou NaN). */
+function lerReais(texto: string) {
+  const limpo = texto.replace(/[^\d,]/g, "").replace(",", ".");
+  return limpo ? Math.round(Number(limpo) * 100) : NaN;
+}
+
+export function FormPresente({ id, livre }: { id: string; livre?: Livre }) {
   const router = useRouter();
   const [nome, setNome] = useState("");
   const [recado, setRecado] = useState("");
+  const [valorTexto, setValorTexto] = useState("");
+  const [erroValor, setErroValor] = useState("");
+
+  const centavos = lerReais(valorTexto);
 
   function continuar(e: React.FormEvent) {
     e.preventDefault();
-    guardarPresente(id, { nome: nome.trim(), recado: recado.trim() });
+    if (livre) {
+      if (!(centavos >= livre.minimo * 100)) {
+        setErroValor(`Escolha um valor a partir de ${formatarValor(livre.minimo * 100)}.`);
+        document.getElementById("g-valor")?.focus();
+        return;
+      }
+    }
+    guardarPresente(id, { nome: nome.trim(), recado: recado.trim(), valor: livre ? centavos : undefined });
     router.push(`/presentes/${id}/pagamento`);
   }
 
   return (
     <form onSubmit={continuar} className="flex flex-1 flex-col gap-5">
+      {livre && (
+        <fieldset className="flex flex-col gap-2.5">
+          <legend className={`${rotuloCampo} mb-2`}>Quanto você quer mandar?</legend>
+          <div className="grid grid-cols-4 gap-2">
+            {livre.sugestoes.map((r) => {
+              const ativo = centavos === r * 100;
+              return (
+                <button
+                  key={r}
+                  type="button"
+                  aria-pressed={ativo}
+                  aria-label={formatarValor(r * 100)}
+                  onClick={() => {
+                    setValorTexto(String(r));
+                    setErroValor("");
+                  }}
+                  className={`h-12 rounded-[3px] border font-serif text-xl lining-nums transition-colors ${
+                    ativo ? "border-primary bg-primary text-card" : "border-line bg-card text-primary hover:border-primary"
+                  }`}
+                >
+                  {r}
+                </button>
+              );
+            })}
+          </div>
+          <label htmlFor="g-valor" className="sr-only">
+            Outro valor, em reais
+          </label>
+          <div className="relative">
+            <span aria-hidden="true" className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-primary-deep">
+              R$
+            </span>
+            <input
+              id="g-valor"
+              inputMode="decimal"
+              autoComplete="off"
+              placeholder="Outro valor"
+              value={valorTexto}
+              onChange={(e) => {
+                setValorTexto(e.target.value);
+                setErroValor("");
+              }}
+              aria-invalid={!!erroValor}
+              aria-describedby={erroValor ? "g-valor-erro" : undefined}
+              className={`${campo} pl-11`}
+            />
+          </div>
+          {erroValor && (
+            <p id="g-valor-erro" role="alert" className="text-[13px] text-destructive">
+              {erroValor}
+            </p>
+          )}
+        </fieldset>
+      )}
       <div className="flex flex-col gap-2">
         <label htmlFor="g-nome" className={rotuloCampo}>
           Seu nome
@@ -43,7 +117,7 @@ export function FormPresente({ id }: { id: string }) {
         />
       </div>
       <button type="submit" className="botao mt-auto w-full bg-primary text-card hover:bg-primary-deep">
-        Ir para o pagamento
+        {livre && centavos >= livre.minimo * 100 ? `Mandar ${formatarValor(centavos)}` : "Ir para o pagamento"}
       </button>
     </form>
   );

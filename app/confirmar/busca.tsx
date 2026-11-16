@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { campo, passo, rotuloCampo, tituloInterno } from "@/components/interno";
+import { FalarComNoivos } from "@/components/site/whatsapp";
 import { buscarConvite, type ResultadoBusca } from "./acoes";
 
 type Achado = NonNullable<Extract<ResultadoBusca, { ok: true }>["convites"]>;
@@ -127,6 +128,7 @@ export function BuscaConvite() {
               Tente escrever como está no convite, ou use o código impresso nele. Se mesmo assim
               não aparecer, fale direto com os noivos — eles resolvem pra você.
             </p>
+            <FalarComNoivos texto="Oi! Não achei meu nome na confirmação do casamento." className="mt-1 w-full" />
             <p className="pt-1 text-[13px] text-primary-deep">
               A confirmação é só para quem já está na lista de convidados.
             </p>

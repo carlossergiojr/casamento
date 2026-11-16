@@ -1,17 +1,17 @@
 import { notFound } from "next/navigation";
 import { TelaSucesso } from "@/components/interno";
-import { formatarValor, presentes } from "@/lib/conteudo";
+import { acharPresente, idsPresentes } from "@/lib/conteudo";
 import { Obrigado } from "./obrigado";
 
 export const metadata = { title: "Muito obrigado! · V & C" };
 
 export function generateStaticParams() {
-  return presentes.map((p) => ({ id: p.id }));
+  return idsPresentes();
 }
 
 export default async function PaginaObrigado({ params }: PageProps<"/presentes/[id]/obrigado">) {
   const { id } = await params;
-  const presente = presentes.find((p) => p.id === id);
+  const presente = acharPresente(id);
   if (!presente) notFound();
 
   return (
@@ -22,7 +22,7 @@ export default async function PaginaObrigado({ params }: PageProps<"/presentes/[
         </svg>
       }
     >
-      <Obrigado id={presente.id} nome={presente.nome} valor={formatarValor(presente.valor)} />
+      <Obrigado id={presente.id} nome={presente.nome} valorFixo={presente.valor} />
     </TelaSucesso>
   );
 }

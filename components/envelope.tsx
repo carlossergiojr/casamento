@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useAnimate, useReducedMotion } from "motion/react";
+import { motion, useAnimate } from "motion/react";
+import { useReduzir } from "@/lib/use-reduzir";
 import { casamento, publico } from "@/lib/conteudo";
 import { CHAVE_CONVITE_ABERTO, EVENTO_CONVITE_ABERTO } from "@/lib/convite-aberto";
 
@@ -28,7 +29,7 @@ const ORIGEM = `50% ${BICO}%`;
  */
 export function Envelope() {
   const [fase, setFase] = useState<Fase>("fechado");
-  const reduzir = useReducedMotion();
+  const reduzir = useReduzir();
   const [cena, animar] = useAnimate<HTMLDivElement>();
 
   // Enquanto o envelope está na tela, ele é um diálogo modal: o site por trás não rola nem

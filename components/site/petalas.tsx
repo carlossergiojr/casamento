@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { motion } from "motion/react";
+import { useReduzir } from "@/lib/use-reduzir";
 import { publico } from "@/lib/conteudo";
 
 /** Sorteio fixo por índice: igual no servidor e no navegador (sem erro de hidratação). */
@@ -31,7 +32,7 @@ const PECAS = Array.from({ length: 22 }, (_, i) => {
  * (tela "Que alegria!"). Não aparecem com `prefers-reduced-motion`.
  */
 export function Petalas() {
-  const reduzir = useReducedMotion();
+  const reduzir = useReduzir();
   if (reduzir) return null;
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-40 overflow-hidden">

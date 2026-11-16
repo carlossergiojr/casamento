@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState, type MouseEvent } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
+import { useReduzir } from "@/lib/use-reduzir";
 import { Gift, MailCheck, MapPin, type LucideProps } from "lucide-react";
 
 /** Cabide de traço fino (o "Shirt" do lucide é uma camiseta, informal demais para o traje). */
@@ -13,12 +14,12 @@ function Cabide(props: LucideProps) {
   );
 }
 
-// Na ordem da página (specs/004 D1). "Confirmar" é o destaque.
+// Na ordem da página (specs/004 D1, reordenada na specs/007). "Confirmar" é o destaque.
 const ATALHOS = [
-  { id: "dresscode", rotulo: "Traje", Icone: Cabide },
-  { id: "presentes", rotulo: "Presentes", Icone: Gift },
-  { id: "rsvp", rotulo: "Confirmar", Icone: MailCheck, destaque: true },
   { id: "local", rotulo: "Local", Icone: MapPin },
+  { id: "dresscode", rotulo: "Traje", Icone: Cabide },
+  { id: "rsvp", rotulo: "Confirmar", Icone: MailCheck, destaque: true },
+  { id: "presentes", rotulo: "Presentes", Icone: Gift },
 ];
 
 const CAMPOS = "input, textarea, select";
@@ -31,7 +32,7 @@ const MOLA = { type: "spring", stiffness: 480, damping: 38 } as const;
  * marcam a seção que está no meio da tela. Somem com o teclado aberto.
  */
 export function BarraAtalhos() {
-  const reduzir = useReducedMotion();
+  const reduzir = useReduzir();
   const [rolou, setRolou] = useState(false);
   const [digitando, setDigitando] = useState(false);
   const [ativo, setAtivo] = useState<string | null>(null);
@@ -141,7 +142,7 @@ export function BarraAtalhos() {
                     href={`#${id}`}
                     onClick={(evento) => tocar(evento, id)}
                     aria-current={atual ? "location" : undefined}
-                    className={`flex min-h-[60px] flex-col items-center justify-center gap-1 text-[11px] font-semibold tracking-[0.16em] uppercase transition-colors duration-300 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-primary ${
+                    className={`flex min-h-[60px] flex-col items-center justify-center gap-1 text-[12px] font-semibold tracking-[0.02em] transition-colors duration-300 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-primary ${
                       atual ? "text-gold-text-sm" : "text-primary hover:text-primary-deep"
                     }`}
                   >
