@@ -6,7 +6,7 @@ export const metadata = { title: "Confirme sua presença · V & C" };
 
 export default function Confirmar() {
   return (
-    <TelaInterna voltar="/#rsvp">
+    <TelaInterna voltar="/">
       <Suspense>
         <BuscaConvite />
       </Suspense>

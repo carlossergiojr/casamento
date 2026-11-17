@@ -1,23 +1,27 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import { motion } from "motion/react";
 import { casamento } from "@/lib/conteudo";
 import { useReduzir } from "@/lib/use-reduzir";
 
-// Na ordem da página (specs/007).
-const SECOES = [
+// Na ordem da página (specs/007). Com `href`, o item abre outra tela em vez de rolar até a seção.
+const SECOES: { id: string; rotulo: string; href?: string }[] = [
   { id: "programacao", rotulo: "Programação" },
   { id: "dresscode", rotulo: "Traje" },
   { id: "local", rotulo: "Como chegar" },
-  { id: "rsvp", rotulo: "Confirmar presença" },
+  { id: "rsvp", rotulo: "Confirmar presença", href: "/confirmar" },
   { id: "presentes", rotulo: "Presentes" },
   { id: "historia", rotulo: "Nossa história" },
   { id: "galeria", rotulo: "Fotos" },
   { id: "guia", rotulo: "Guia do convidado" },
   { id: "duvidas", rotulo: "Dúvidas" },
 ];
+
+const ITEM =
+  "flex min-h-12 items-center px-4 font-serif text-[28px] text-primary italic transition-colors duration-200 hover:text-gold focus-visible:outline-2 focus-visible:outline-primary";
 
 /** Rolagem mínima num sentido para o cabeçalho sumir ou voltar (evita tremer no "quique" do iOS). */
 const LIMIAR = 8;
@@ -114,19 +118,25 @@ export function Cabecalho() {
             <Dialog.Title className="sr-only">Seções do site</Dialog.Title>
             <nav aria-label="Seções do site" className="flex flex-1 flex-col items-center justify-center px-7 py-8">
               <ul className="flex flex-col items-center">
-                {SECOES.map(({ id, rotulo }) => (
+                {SECOES.map(({ id, rotulo, href }) => (
                   <li key={id}>
-                    <a
-                      href={`#${id}`}
-                      onClick={(evento) => {
-                        evento.preventDefault();
-                        destino.current = id;
-                        setAberto(false);
-                      }}
-                      className="flex min-h-12 items-center px-4 font-serif text-[28px] text-primary italic transition-colors duration-200 hover:text-gold focus-visible:outline-2 focus-visible:outline-primary"
-                    >
-                      {rotulo}
-                    </a>
+                    {href ? (
+                      <Link href={href} className={ITEM}>
+                        {rotulo}
+                      </Link>
+                    ) : (
+                      <a
+                        href={`#${id}`}
+                        onClick={(evento) => {
+                          evento.preventDefault();
+                          destino.current = id;
+                          setAberto(false);
+                        }}
+                        className={ITEM}
+                      >
+                        {rotulo}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>

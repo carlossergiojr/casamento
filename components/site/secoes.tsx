@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { casamento, presentes, publico } from "@/lib/conteudo";
+import { casamento, presentes } from "@/lib/conteudo";
 import { CotaLivre, DestaquesPresentes } from "./presentes";
 import { Revelar } from "./revelar";
 
@@ -20,47 +20,6 @@ export function ListaPresentes() {
         Ver os {presentes.length} presentes
       </Link>
       <CotaLivre />
-    </section>
-  );
-}
-
-export function ChamadaRsvp() {
-  return (
-    <section
-      id="rsvp"
-      className="relative flex flex-col items-center gap-5 bg-surface px-7 py-16 text-center"
-    >
-      <Revelar className="flex w-full flex-col items-center gap-5">
-        <img
-          src={publico("/estampa/spot-bird.png")}
-          alt=""
-          aria-hidden="true"
-          className="h-auto w-[96px] -scale-x-100"
-        />
-        <h2 className={TITULO}>Você vem?</h2>
-        <p className="text-[15px] text-primary-deep">
-          Confirme até <strong className="text-foreground">{casamento.prazoRsvp}</strong>.
-        </p>
-        {/* GET simples: leva o nome para a busca do RSVP. */}
-        <form action={publico("/confirmar/")} className="flex w-full flex-col gap-5">
-          <div className="flex w-full flex-col gap-2 text-left">
-            <label htmlFor="rsvp-nome" className="text-[13px] text-primary-deep">
-              Seu nome ou código do convite
-            </label>
-            <input
-              id="rsvp-nome"
-              name="nome"
-              type="text"
-              autoComplete="name"
-              placeholder="Ex.: Maria Souza"
-              className="h-[50px] w-full rounded-[3px] border border-line bg-card px-3.5 text-base text-foreground placeholder:text-primary-deep/70 focus:border-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
-            />
-          </div>
-          <button type="submit" className="botao w-full bg-primary text-card hover:bg-primary-deep">
-            Confirmar presença
-          </button>
-        </form>
-      </Revelar>
     </section>
   );
 }

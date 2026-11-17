@@ -60,6 +60,8 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## Feito
 
+- 17/11/2026 — Saiu o bloco "Você vem?" da home. Confirmar presença fica no botão "Eu vou!" da
+  capa e no item "Confirmar presença" do menu, que agora abre direto `/confirmar`.
 - 17/11/2026 — Presentes viraram etiquetas de papel (versão B): furinho com fio dourado, levemente
   tortas como as polaroids, com um desenho de traço de cada item no lugar da foto (o mesmo traço
   da Programação). A etiqueta inteira é o toque; a cota lua de mel é uma etiqueta deitada. Vale
