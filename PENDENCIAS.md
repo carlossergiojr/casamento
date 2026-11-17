@@ -11,7 +11,7 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
       legenda (hoje "[legenda curta]").
 - [ ] **Lista de presentes real**: revisar os 62 objetos e valores (só objetos, por categoria),
       tirar o que já têm em casa, e mandar as **fotos dos produtos** (salvas em
-      `public/presentes/`, nome do arquivo como 4º valor do item). Sem foto, aparece a borboleta.
+      `public/presentes/`, nome do arquivo como 4º valor do item). Sem foto, aparece o desenho de traço do item.
       Escolher também os **destaques da home** (`destaquesPresente` em `lib/conteudo.ts`).
 - [ ] **E-mail no formulário do presente**: o campo diz "para receber a confirmação", mas não vai
       ter e-mail automático. Decidir junto com o pagamento (o Mercado Pago pode pedir e-mail).
@@ -60,6 +60,10 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## Feito
 
+- 17/11/2026 — Presentes viraram etiquetas de papel (versão B): furinho com fio dourado, levemente
+  tortas como as polaroids, com um desenho de traço de cada item no lugar da foto (o mesmo traço
+  da Programação). A etiqueta inteira é o toque; a cota lua de mel é uma etiqueta deitada. Vale
+  para a home, `/presentes` (agrupada por categoria) e a página de cada presente.
 - 16/11/2026 — Contagem da capa com segundos (dias · horas · min · seg); o número desce de leve
   ao trocar (sem animação com "Reduzir movimento").
 - 16/11/2026 — Barra de atalhos do rodapé removida (cara de aplicativo). No lugar, a data no

@@ -1,9 +1,10 @@
 import Image from "next/image";
-import { publico, type Presente } from "@/lib/conteudo";
+import type { Presente } from "@/lib/conteudo";
+import { IconePresente } from "./icones-presente";
 
 /**
- * Foto do presente; enquanto a foto real não chega, uma borboleta da estampa no fundo de papel
- * (nada de foto aleatória que não tem a ver com o item).
+ * Foto do presente; enquanto a foto real não chega, o desenho de traço do item (o mesmo das
+ * etiquetas da lista), nada de foto aleatória que não tem a ver com ele.
  */
 export function FotoPresente({
   presente,
@@ -23,8 +24,7 @@ export function FotoPresente({
   }
   return (
     <div className={`absolute inset-0 flex items-center justify-center ${className}`}>
-      {/* eslint-disable-next-line @next/next/no-img-element -- enfeite pequeno de /public */}
-      <img src={publico("/estampa/spot-butterfly-1.png")} alt="" aria-hidden="true" className="h-auto w-[34%] max-w-[120px] opacity-40" />
+      <IconePresente presente={presente} traco={0.6} className="size-[38%] max-h-[120px] max-w-[120px] text-marinho" />
     </div>
   );
 }

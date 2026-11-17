@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -12,66 +13,85 @@ import {
   publico,
   type Presente,
 } from "@/lib/conteudo";
-import { FotoPresente } from "./foto-presente";
+import { FormaEtiqueta } from "./etiqueta";
+import { IconePresente } from "./icones-presente";
 import { Revelar } from "./revelar";
 
 const destaques = destaquesPresente
   .map((id) => presentes.find((p) => p.id === id))
   .filter((p): p is Presente => !!p && !p.presenteado);
 
-/** Com todas as fotos reais, a home mostra cartões grandes; sem elas, linhas compactas. */
-const comFotos = destaques.every((p) => p.foto);
+/** Grade de etiquetas: duas colunas no celular, três a partir do tablet. Espaço vertical para o fio. */
+const GRADE = "grid grid-cols-2 gap-x-3.5 gap-y-7 pt-3 md:grid-cols-3";
 
-/** Prévia da página inicial: só os presentes em destaque. */
+/** Prévia da página inicial: só os presentes em destaque, como etiquetas. */
 export function DestaquesPresentes() {
-  if (!comFotos) {
-    return (
-      <Revelar>
-        <ul className="flex flex-col border-t border-surface">
-          {destaques.map((p) => (
-            <li key={p.id}>
-              <LinhaPresente presente={p} />
-            </li>
-          ))}
-        </ul>
-      </Revelar>
-    );
-  }
   return (
-    <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-      {destaques.map((p, i) => (
-        <Revelar key={p.id} atraso={(i % 2) * 0.08} className="flex flex-col rounded-[3px] border border-surface bg-card">
-          <div className="relative h-[130px] bg-surface">
-            <FotoPresente presente={p} sizes="(max-width: 768px) 45vw, 200px" />
-          </div>
-          <div className="flex flex-1 flex-col gap-1 p-3">
-            <span className="text-sm leading-[1.35]">{p.nome}</span>
-            <span className="font-serif text-2xl text-gold lining-nums">{formatarValor(p.valor)}</span>
-            <div className="mt-auto pt-1.5">
-              <Link
-                href={`/presentes/${p.id}/`}
-                className="flex min-h-11 items-center justify-center rounded-[3px] border border-primary px-1.5 text-center text-sm font-semibold text-primary transition-colors hover:bg-primary hover:text-card"
-              >
-                Presentear
-              </Link>
-            </div>
-          </div>
-        </Revelar>
-      ))}
-    </div>
+    <Revelar>
+      <ul className={GRADE}>
+        {destaques.map((p, i) => (
+          <li key={p.id} className="flex">
+            <EtiquetaPresente presente={p} indice={i} />
+          </li>
+        ))}
+      </ul>
+    </Revelar>
   );
 }
 
-/** Cota de valor livre (lua de mel): para quem prefere não escolher um objeto. */
+/**
+ * Um presente como etiqueta de papel, levemente torta como as polaroids (endireita no toque).
+ * Sem foto, entra o desenho de traço do item. A etiqueta inteira é o link.
+ */
+function EtiquetaPresente({ presente: p, indice }: { presente: Presente; indice: number }) {
+  // Pares de colunas alternam o giro: −, +, +, − … (as vizinhas nunca pendem para o mesmo lado).
+  const giro = indice % 4 === 0 || indice % 4 === 3 ? "-rotate-[1.6deg]" : "rotate-[1.4deg]";
+  const conteudo = (
+    <>
+      <FormaEtiqueta />
+      {p.foto ? (
+        <span className="relative mb-1.5 aspect-[4/3] w-full overflow-hidden rounded-[3px] bg-surface">
+          <Image src={p.foto} alt="" fill sizes="(max-width: 768px) 40vw, 180px" className={`object-cover ${p.presenteado ? "grayscale-[40%]" : ""}`} />
+        </span>
+      ) : (
+        <IconePresente presente={p} className="mb-1.5 size-10 text-marinho" />
+      )}
+      <span className="text-sm leading-[1.3] text-foreground">{p.nome}</span>
+      <span className="mt-auto pt-0.5">
+        {p.presenteado ? (
+          <span className="text-[13px] font-semibold text-gold-text-sm">Presenteado ✓</span>
+        ) : (
+          <span className="font-serif text-2xl leading-[1.1] text-gold lining-nums">{formatarValor(p.valor)}</span>
+        )}
+      </span>
+    </>
+  );
+  const classe = `relative isolate flex w-full flex-col items-center gap-1 px-2.5 pt-[34px] pb-4 text-center ${giro}`;
+  if (p.presenteado) {
+    return <div className={`${classe} opacity-70`}>{conteudo}</div>;
+  }
+  return (
+    <Link
+      href={`/presentes/${p.id}/`}
+      aria-label={`${p.nome}, ${formatarValor(p.valor)}. Presentear`}
+      className={`${classe} focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary motion-safe:transition-transform motion-safe:duration-300 hover:rotate-0 active:rotate-0`}
+    >
+      {conteudo}
+    </Link>
+  );
+}
+
+/** Cota de valor livre (lua de mel): uma etiqueta deitada, para quem prefere não escolher um objeto. */
 export function CotaLivre() {
   return (
     <Link
       href={`/presentes/${presenteLivre.id}/`}
-      className="group flex items-center gap-4 rounded-[3px] border border-gold-line bg-card p-4 transition-colors hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      className="group relative isolate flex items-center gap-3.5 py-[18px] pr-[18px] pl-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
     >
-      <img src={publico("/estampa/spot-bird.png")} alt="" aria-hidden="true" className="h-auto w-14 flex-none -scale-x-100" />
+      <FormaEtiqueta deitada />
+      <img src={publico("/estampa/spot-bird.png")} alt="" aria-hidden="true" className="h-auto w-[52px] flex-none -scale-x-100" />
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-        <span className="font-serif text-[22px] leading-tight text-primary italic">{presenteLivre.nome}</span>
+        <span className="font-serif text-2xl leading-tight text-primary italic">{presenteLivre.nome}</span>
         <span className="text-[13px] text-primary-deep">Você escolhe o valor.</span>
       </span>
       <Seta />
@@ -91,7 +111,7 @@ type Filtro = "Todos" | CategoriaPresente;
 type Ordem = "sugerida" | "menor" | "maior";
 const filtros: Filtro[] = ["Todos", ...categoriasPresente];
 
-/** Página /presentes: filtro por categoria, ordem por preço e uma linha compacta por presente. */
+/** Página /presentes: filtro por categoria, ordem por preço e as etiquetas em grade. */
 export function ListaCompletaPresentes() {
   const [filtro, setFiltro] = useState<Filtro>("Todos");
   const [ordem, setOrdem] = useState<Ordem>("sugerida");
@@ -103,8 +123,19 @@ export function ListaCompletaPresentes() {
       Number(a.presenteado) - Number(b.presenteado) ||
       (ordem === "menor" ? a.valor - b.valor : ordem === "maior" ? b.valor - a.valor : 0),
   );
-  // Em "Todos" + ordem sugerida, separa por categoria com um subtítulo.
-  const comGrupos = filtro === "Todos" && ordem === "sugerida";
+
+  // Em "Todos" + ordem sugerida, separa por categoria com um subtítulo; senão, uma grade só.
+  const grupos: { titulo?: string; itens: Presente[] }[] = [];
+  if (filtro === "Todos" && ordem === "sugerida") {
+    for (const p of visiveis) {
+      const titulo = p.presenteado ? "Já presenteados" : p.categoria;
+      const ultimo = grupos.at(-1);
+      if (ultimo?.titulo === titulo) ultimo.itens.push(p);
+      else grupos.push({ titulo, itens: [p] });
+    }
+  } else {
+    grupos.push({ itens: visiveis });
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -142,45 +173,18 @@ export function ListaCompletaPresentes() {
         </label>
       </div>
 
-      <ul className="flex flex-col">
-        {visiveis.map((p, i) => {
-          const novoGrupo = comGrupos && !p.presenteado && p.categoria !== visiveis[i - 1]?.categoria;
-          return (
-            <li key={p.id} className="flex flex-col">
-              {novoGrupo && <h2 className="sobretitulo pt-5 pb-2 first:pt-1">{p.categoria}</h2>}
-              <LinhaPresente presente={p} />
-            </li>
-          );
-        })}
-      </ul>
+      {grupos.map((g, gi) => (
+        <section key={g.titulo ?? gi} className="flex flex-col gap-1 pt-2">
+          {g.titulo && <h2 className="font-serif text-[26px] text-primary italic">{g.titulo}</h2>}
+          <ul className={GRADE}>
+            {g.itens.map((p, i) => (
+              <li key={p.id} className="flex">
+                <EtiquetaPresente presente={p} indice={i} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
     </div>
-  );
-}
-
-function LinhaPresente({ presente: p }: { presente: Presente }) {
-  const conteudo = (
-    <>
-      <div className="relative size-16 shrink-0 overflow-hidden rounded-[3px] bg-surface">
-        <FotoPresente presente={p} sizes="64px" className={p.presenteado ? "opacity-60 grayscale-[40%]" : ""} />
-      </div>
-      <div className="flex min-w-0 flex-1 flex-col">
-        <span className="text-[15px] leading-[1.3]">{p.nome}</span>
-        <span className="font-serif text-xl text-gold lining-nums">{formatarValor(p.valor)}</span>
-      </div>
-      {p.presenteado ? (
-        <span className="shrink-0 text-[13px] font-semibold text-gold-text-sm">Presenteado ✓</span>
-      ) : (
-        <span className="flex min-h-11 shrink-0 items-center rounded-[3px] border border-primary px-3 text-sm font-semibold text-primary transition-colors group-hover:bg-primary group-hover:text-card">
-          Presentear
-        </span>
-      )}
-    </>
-  );
-  const classe = "flex items-center gap-3 border-b border-surface py-3";
-  if (p.presenteado) return <div className={`${classe} opacity-80`}>{conteudo}</div>;
-  return (
-    <Link href={`/presentes/${p.id}/`} className={`group ${classe} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary`}>
-      {conteudo}
-    </Link>
   );
 }

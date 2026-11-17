@@ -73,7 +73,7 @@ Capa, Nossa história, galeria em polaroid e rodapé: **Tailwind puro** (editori
 3. **Nossa história** (fundo surface): borboleta + título; o texto em trechos alternando esquerda/direita com fios dourados; fecha com "Agora só falta você." em dourado itálico 34px. Texto final está no briefing.
 4. **Pré-wedding**: polaroids levemente rotacionadas (−3°, 4°, −2°), uma grande + duas sobrepostas; link "Ver todas as fotos" → Dialog com carrossel.
 5. **Dress code** (surface): traje, 4 círculos de cores sugeridas, "Evite". Texto ainda a definir.
-6. **Lista de presentes**: grade 2 colunas; card = foto, nome, preço (dourado), botão "Presentear" ou selo "Presenteado ✓" (já comprado).
+6. **Lista de presentes**: grade 2 colunas de **etiquetas de papel** (`components/site/presentes.tsx`): cantos de cima chanfrados, furo com aro e fio `gold-line`, giro de ±1,5° como as polaroids; dentro, o desenho de traço do item (`icones-presente.tsx`, troca pela foto quando ela existir), nome e preço (dourado). A etiqueta inteira é o link; já comprado mostra "Presenteado ✓". A cota lua de mel é uma etiqueta deitada com o pássaro.
 7. **Você vem?** (surface): pássaro espelhado, prazo 03/01/2027, input nome/código, botão "Buscar meu convite".
 8. **Como chegar**: mapa Google embutido (borda dourada), endereço por extenso, botões "Abrir rota" e "Copiar endereço".
 9. **Rodapé**: faixa toile 160px, "V & C", "23.01.2027 · #Cavi2027".

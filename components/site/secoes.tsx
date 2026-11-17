@@ -79,13 +79,13 @@ export function ListaPresentes() {
       <Revelar className="flex flex-col items-center gap-2.5 px-2 text-center">
         <h2 className={TITULO}>Lista de presentes</h2>
         <p className="text-[15px] text-primary-deep">
-          Escolha um presente e pague aqui mesmo, por Pix ou cartão: o valor chega até nós e a
-          gente compra o item. Dá para deixar um recadinho junto.
+          Escolha um presente e pague aqui mesmo, por Pix ou cartão: a gente compra o item. Dá
+          para deixar um recadinho junto.
         </p>
       </Revelar>
       <DestaquesPresentes />
       <Link href="/presentes/" className="botao border border-primary text-primary hover:bg-primary hover:text-card">
-        Ver lista completa ({presentes.length} presentes)
+        Ver os {presentes.length} presentes
       </Link>
       <CotaLivre />
     </section>
