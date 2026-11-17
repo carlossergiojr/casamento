@@ -81,10 +81,12 @@ export function Cabecalho() {
   };
 
   return (
+    // Escondido, sai do caminho de verdade: sem toque, sem foco de teclado nem leitor de tela.
     <motion.header
+      inert={escondido && !aberto}
       className={`sticky top-0 z-40 flex h-[52px] items-center justify-between border-b bg-background px-5 transition-[border-color] duration-300 ${
         rolou ? "border-gold-line" : "border-transparent"
-      }`}
+      } ${escondido ? "pointer-events-none" : ""}`}
       animate={reduzir ? { opacity: escondido ? 0 : 1 } : { y: escondido ? "-100%" : 0 }}
       transition={{ duration: reduzir ? 0.2 : 0.35, ease: [0.22, 1, 0.36, 1] }}
     >

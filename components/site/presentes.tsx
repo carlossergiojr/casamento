@@ -85,6 +85,7 @@ function EtiquetaPresente({ presente: p, indice }: { presente: Presente; indice:
     // Gira a partir do furo, onde o fio segura a etiqueta.
     <motion.div
       ref={ref}
+      tabIndex={-1}
       className="flex w-full"
       style={{ originX: 0.5, originY: 0 }}
       initial={{ rotate: giro }}
@@ -116,7 +117,7 @@ export function CotaLivre() {
       className="group relative isolate flex items-center gap-3.5 py-[18px] pr-[18px] pl-10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
     >
       <FormaEtiqueta deitada />
-      <img src={publico("/estampa/spot-bird.png")} alt="" aria-hidden="true" className="h-auto w-[52px] flex-none -scale-x-100" />
+      <img src={publico("/estampa/spot-bird.png")} alt="" aria-hidden="true" loading="lazy" className="h-auto w-[52px] flex-none -scale-x-100" />
       <span className="flex min-w-0 flex-1 flex-col gap-0.5">
         <span className="font-serif text-2xl leading-tight text-primary italic">{presenteLivre.nome}</span>
         <span className="text-[13px] text-primary-deep">Você escolhe o valor.</span>

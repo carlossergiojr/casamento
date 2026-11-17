@@ -354,6 +354,8 @@ export const presenteLivre = {
   sugestoes: [100, 200, 300, 500],
   /** Em reais. */
   minimo: 20,
+  /** Em reais: acima disso, só falando com os noivos. */
+  maximo: 20000,
 };
 
 /** Presente pelo id da URL: um da lista ou a cota livre (valor `null`: o convidado escolhe). */

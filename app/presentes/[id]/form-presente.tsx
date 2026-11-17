@@ -5,7 +5,7 @@ import { campo, rotuloCampo } from "@/components/interno";
 import { formatarValor } from "@/lib/conteudo";
 import { iniciarPagamento } from "../acoes";
 
-type Livre = { sugestoes: number[]; minimo: number };
+type Livre = { sugestoes: number[]; minimo: number; maximo: number };
 
 /** Só dígitos e uma vírgula: "150", "150,50". Devolve centavos (ou NaN). */
 function lerReais(texto: string) {
@@ -23,16 +23,20 @@ export function FormPresente({ id, livre }: { id: string; livre?: Livre }) {
 
   const centavos = lerReais(valorTexto);
 
+  const valorOk = !!livre && centavos >= livre.minimo * 100 && centavos <= livre.maximo * 100;
+
   function continuar(e: React.FormEvent) {
     e.preventDefault();
-    if (livre) {
-      if (!(centavos >= livre.minimo * 100)) {
-        setErroValor(`Escolha um valor a partir de ${formatarValor(livre.minimo * 100)}.`);
-        document.getElementById("g-valor")?.focus();
-        return;
-      }
-    }
     setErro("");
+    if (livre && !valorOk) {
+      setErroValor(
+        centavos > livre.maximo * 100
+          ? `Para valores acima de ${formatarValor(livre.maximo * 100)}, fale direto com os noivos.`
+          : `Escolha um valor a partir de ${formatarValor(livre.minimo * 100)}.`,
+      );
+      document.getElementById("g-valor")?.focus();
+      return;
+    }
     // O preço é decidido no servidor; daqui sai só a escolha. Pix ou cartão na página do MP.
     comecar(async () => {
       const r = await iniciarPagamento({ presenteId: id, nome, recado, valor: livre ? centavos : undefined }).catch(
@@ -130,7 +134,7 @@ export function FormPresente({ id, livre }: { id: string; livre?: Livre }) {
         >
           {indo
             ? "Abrindo o pagamento…"
-            : livre && centavos >= livre.minimo * 100
+            : valorOk
               ? `Mandar ${formatarValor(centavos)}`
               : "Pagar com Pix ou cartão"}
         </button>

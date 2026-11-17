@@ -48,6 +48,16 @@ presente vira "Presenteado" e aparece na aba "Presentes" de `/noivos`.
 
 ## Feito
 
+- 17/11/2026 — Revisão de UX (3 agentes), grupos 1 e 2. **Confirmação**: "voltar" depois de
+  enviar não mostra mais o formulário antigo; sem internet, avisa na própria tela e mantém as
+  escolhas; código de QR inexistente diz qual código não achou; quem chega pelo QR não vê "Passo 2
+  de 2" e o voltar leva ao site; o botão diz o que falta marcar; data/hora/local com "ver como
+  chegar"; "Recebemos" tem link "Alterar resposta" e mostra a restrição. Página de erro em
+  português (`app/error.tsx`). **Presentes**: quem sai do Mercado Pago sem pagar lê "Pagamento não
+  concluído, nada foi cobrado" (não mais "Quase lá"); cota livre acima de R$ 20 mil avisa para
+  falar com os noivos. **Celular/acessibilidade**: sem rolagem lateral em 320px (galeria);
+  cabeçalho escondido não pega toque nem foco; cada presente conta uma vez só no Tab; foto da capa
+  com prioridade; passarinho de 93KB → 12KB; contraste do fecho do Guia.
 - 17/11/2026 — Presentes pagos pelo Mercado Pago (specs/008): o formulário leva ao checkout do MP
   (Pix ou cartão), o webhook grava o pagamento, a volta mostra aprovado/pendente/recusado, o
   presente pago vira "Presenteado" e `/noivos` ganhou a aba "Presentes" (total, quem deu,

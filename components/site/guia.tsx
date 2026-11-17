@@ -35,7 +35,7 @@ export function Guia() {
       </Revelar>
       <Revelar className="flex items-center justify-center gap-2.5 border-t border-gold-line pt-6">
         <Sparkles aria-hidden="true" className="size-5 flex-none text-gold" strokeWidth={1.25} />
-        <p className="font-serif text-[22px] text-primary italic">{guiaFecho}</p>
+        <p className="font-serif text-[22px] text-primary-deep italic">{guiaFecho}</p>
       </Revelar>
     </section>
   );

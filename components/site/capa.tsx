@@ -16,7 +16,8 @@ export function Capa() {
           src={casamento.fotoCapa}
           alt={`${casamento.primeiro} e ${casamento.segundo}`}
           fill
-          priority
+          loading="eager"
+          fetchPriority="high"
           sizes="(max-width: 640px) 100vw, 640px"
           className="respirar object-cover object-bottom"
         />

@@ -3,7 +3,7 @@
 import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { z } from "zod";
-import { presenteLivre, presentes } from "@/lib/conteudo";
+import { formatarValor, presenteLivre, presentes } from "@/lib/conteudo";
 import { db, schema } from "@/lib/db";
 import { dentroDoLimite, ipDaRequisicao, registrarTentativa } from "@/lib/limite";
 import { criarPreferencia, jaPresenteado } from "@/lib/mercado-pago";
@@ -31,7 +31,7 @@ async function urlBase() {
 
 /**
  * Começa o pagamento de um presente (specs/008): o preço sai da lista no servidor (na cota livre,
- * o valor escolhido, entre o mínimo e R$ 20 mil), grava a intenção e devolve o checkout do MP.
+ * o valor escolhido, entre o mínimo e o máximo de `presenteLivre`), grava a intenção e devolve o checkout do MP.
  */
 export async function iniciarPagamento(entrada: unknown): Promise<ResultadoPagamento> {
   const dados = Entrada.safeParse(entrada);
@@ -42,8 +42,11 @@ export async function iniciarPagamento(entrada: unknown): Promise<ResultadoPagam
   let centavos: number;
   if (presenteId === presenteLivre.id) {
     centavos = dados.data.valor ?? 0;
-    if (centavos < presenteLivre.minimo * 100 || centavos > 2_000_000) {
-      return { ok: false, erro: `Escolha um valor a partir de R$ ${presenteLivre.minimo}.` };
+    if (centavos < presenteLivre.minimo * 100) {
+      return { ok: false, erro: `Escolha um valor a partir de ${formatarValor(presenteLivre.minimo * 100)}.` };
+    }
+    if (centavos > presenteLivre.maximo * 100) {
+      return { ok: false, erro: `Para valores acima de ${formatarValor(presenteLivre.maximo * 100)}, fale direto com os noivos.` };
     }
     titulo = presenteLivre.nome;
   } else {

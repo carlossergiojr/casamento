@@ -60,7 +60,7 @@ export function Galeria() {
       </Revelar>
 
       <div className="flex flex-col items-center">
-        <Polaroid angulo={-3} atraso={0} className="flex w-[270px] flex-col gap-2.5 p-3 pb-10">
+        <Polaroid angulo={-3} atraso={0} className="flex w-[min(270px,80vw)] flex-col gap-2.5 p-3 pb-10">
           <div className="h-[300px]">
             <Foto i={0} sizes="270px" />
           </div>
@@ -69,17 +69,17 @@ export function Galeria() {
           </span>
         </Polaroid>
         <div className="-mt-6 flex">
-          <Polaroid angulo={4} atraso={0.15} className="w-[170px] translate-x-3 p-2.5 pb-[30px]">
-            <div className="h-[170px]">
+          <Polaroid angulo={4} atraso={0.15} className="w-[min(170px,44vw)] translate-x-3 p-2.5 pb-[30px]">
+            <div className="aspect-[150/170]">
               <Foto i={1} sizes="170px" />
             </div>
           </Polaroid>
           <Polaroid
             angulo={-2}
             atraso={0.3}
-            className="w-[170px] translate-x-[-8px] translate-y-[30px] p-2.5 pb-[30px]"
+            className="w-[min(170px,44vw)] translate-x-[-8px] translate-y-[30px] p-2.5 pb-[30px]"
           >
-            <div className="h-[170px]">
+            <div className="aspect-[150/170]">
               <Foto i={2} sizes="170px" />
             </div>
           </Polaroid>

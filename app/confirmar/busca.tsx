@@ -22,8 +22,9 @@ export function BuscaConvite() {
   const params = useSearchParams();
   const [termo, setTermo] = useState(params.get("nome") ?? "");
   // "Não encontrei meu nome" abre a mesma orientação de quando a busca não acha nada; um código
-  // de QR que não existe no banco chega aqui com ?naoEncontrado=1.
-  const [ajuda, setAjuda] = useState(params.has("naoEncontrado"));
+  // de QR que não existe no banco chega aqui com ?codigo=XXXX (e diz qual código não achou).
+  const codigoQr = params.get("codigo");
+  const [ajuda, setAjuda] = useState(params.has("naoEncontrado") || !!codigoQr);
   const [achados, setAchados] = useState<{ termo: string; lista: Achado | null }>({ termo: "", lista: null });
   const [erro, setErro] = useState("");
 
@@ -95,7 +96,7 @@ export function BuscaConvite() {
             {resultado.map((c) => (
               <Link
                 key={c.codigo}
-                href={`/confirmar/${c.codigo}`}
+                href={`/confirmar/${c.codigo}?de=busca`}
                 className="flex items-center justify-between gap-3 rounded-[3px] bg-surface p-4 transition-colors hover:bg-[#dfe2e8]"
               >
                 <span className="flex flex-col">
@@ -123,10 +124,13 @@ export function BuscaConvite() {
               <circle cx="12" cy="12" r="7.5" />
               <path d="M17.5 17.5 L24 24" />
             </svg>
-            <p className="font-serif text-2xl text-primary">Não encontramos esse nome</p>
+            <p className="font-serif text-2xl text-primary">
+              {codigoQr && ajuda ? "Não encontramos esse convite" : "Não encontramos esse nome"}
+            </p>
             <p className="text-[15px] text-primary-deep">
-              Tente escrever como está no convite, ou use o código impresso nele. Se mesmo assim
-              não aparecer, fale direto com os noivos — eles resolvem pra você.
+              {codigoQr && ajuda
+                ? `O código ${codigoQr} não está na nossa lista. Busque pelo seu nome no campo acima; se não aparecer, fale direto com os noivos — eles resolvem pra você.`
+                : "Tente escrever como está no convite, ou use o código impresso nele. Se mesmo assim não aparecer, fale direto com os noivos — eles resolvem pra você."}
             </p>
             <FalarComNoivos texto="Oi! Não achei meu nome na confirmação do casamento." className="mt-1 w-full" />
             <p className="pt-1 text-[13px] text-primary-deep">

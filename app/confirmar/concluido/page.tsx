@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { TelaSucesso } from "@/components/interno";
 import { lerConvitePublico } from "@/lib/convites-servidor";
 import { Concluido } from "./concluido";
@@ -7,6 +8,8 @@ export const metadata = { title: "Que alegria! · V & C", robots: { index: false
 export default async function ConfirmacaoConcluida({ searchParams }: PageProps<"/confirmar/concluido">) {
   const { c } = await searchParams;
   const convite = typeof c === "string" ? await lerConvitePublico(c) : null;
+  // Sem convite de verdade não há o que comemorar: volta para a busca.
+  if (!convite) redirect("/confirmar/");
 
   return (
     <TelaSucesso

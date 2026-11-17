@@ -7,7 +7,7 @@ import { useReduzir } from "@/lib/use-reduzir";
 import { Revelar } from "@/components/site/revelar";
 import { casamento, publico } from "@/lib/conteudo";
 
-export type Estado = "aprovado" | "pendente" | "recusado";
+export type Estado = "aprovado" | "pendente" | "recusado" | "desistiu";
 
 const textos: Record<Estado, { titulo: string; texto: (recado: boolean) => string }> = {
   aprovado: {
@@ -19,6 +19,10 @@ const textos: Record<Estado, { titulo: string; texto: (recado: boolean) => strin
     titulo: "Quase lá",
     texto: () =>
       "O Mercado Pago ainda está confirmando o pagamento. No Pix costuma levar poucos segundos; assim que aprovar, o presente chega até a gente.",
+  },
+  desistiu: {
+    titulo: "Pagamento não concluído",
+    texto: () => "Você saiu do Mercado Pago antes de terminar. Nada foi cobrado; dá para tentar de novo quando quiser.",
   },
   recusado: {
     titulo: "O pagamento não foi aprovado",
@@ -76,7 +80,7 @@ export function Obrigado({ estado, id, presente, valor, nome, recado }: Props) {
             Atualizar
           </button>
         )}
-        {estado === "recusado" && (
+        {(estado === "recusado" || estado === "desistiu") && (
           <Link href={`/presentes/${id}/`} className="botao bg-primary text-card hover:bg-primary-deep">
             Tentar de novo
           </Link>

@@ -30,7 +30,7 @@ export default async function DetalhePresente({ params }: PageProps<"/presentes/
             <h1 className="font-serif text-[34px] leading-[1.15] text-primary italic">{presenteLivre.nome}</h1>
             <p className="text-[15px] text-primary-deep">{presenteLivre.texto}</p>
           </div>
-          <FormPresente id={presenteLivre.id} livre={{ sugestoes: presenteLivre.sugestoes, minimo: presenteLivre.minimo }} />
+          <FormPresente id={presenteLivre.id} livre={{ sugestoes: presenteLivre.sugestoes, minimo: presenteLivre.minimo, maximo: presenteLivre.maximo }} />
         </main>
       </TelaInterna>
     );

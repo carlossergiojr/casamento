@@ -21,15 +21,22 @@ export default async function PaginaObrigado({ params, searchParams }: PageProps
   const ref = typeof busca.ref === "string" ? busca.ref : "";
   if (!presente || !/^[0-9a-f-]{36}$/.test(ref)) notFound();
 
-  const pagamentoMp = typeof busca.payment_id === "string" ? busca.payment_id : null;
-  if (pagamentoMp && pagamentoMp !== "null") {
+  const pagamentoMp = typeof busca.payment_id === "string" && busca.payment_id !== "null" ? busca.payment_id : null;
+  if (pagamentoMp) {
     await sincronizarPagamento(pagamentoMp).catch((e) => console.error("volta mp:", e));
   }
   const [linha] = await db.select().from(schema.pagamentos).where(eq(schema.pagamentos.id, ref));
   if (!linha || linha.presenteId !== presente.id) notFound();
 
+  // "criado" sem pagamento do MP: a pessoa saiu do checkout antes de pagar.
   const estado: Estado =
-    linha.status === "approved" ? "aprovado" : PENDENTES.has(linha.status) ? "pendente" : "recusado";
+    linha.status === "approved"
+      ? "aprovado"
+      : linha.status === "criado" && !pagamentoMp
+        ? "desistiu"
+        : PENDENTES.has(linha.status)
+          ? "pendente"
+          : "recusado";
 
   return (
     <TelaSucesso
