@@ -82,13 +82,38 @@ export const notas = pgTable("notas", {
   ordem: integer().notNull(),
 });
 
+/**
+ * Um presente que o convidado começou a pagar no Mercado Pago (specs/008). Nasce "criado" ao ir
+ * para o checkout; o webhook e a volta do checkout gravam o status do MP ("approved",
+ * "pending", "rejected"…). Presenteado = tem pagamento "approved".
+ */
+export const pagamentos = pgTable(
+  "pagamentos",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    /** Id do item em lib/conteudo.ts ("livre" = cota lua de mel). */
+    presenteId: text("presente_id").notNull(),
+    nome: text().notNull(),
+    recado: text().notNull().default(""),
+    /** Centavos, decidido no servidor (preço da lista ou valor da cota livre). */
+    valor: integer().notNull(),
+    status: text().notNull().default("criado"),
+    mpPreferencia: text("mp_preferencia"),
+    mpPagamento: text("mp_pagamento"),
+    pagoEm: timestamp("pago_em", { withTimezone: true }),
+    criadoEm: criadoEm(),
+    atualizadoEm: atualizadoEm(),
+  },
+  (t) => [index("pagamentos_status_idx").on(t.status, t.presenteId)],
+);
+
 /** Para limitar senha errada e varredura de convites (specs/006 R6). */
 export const tentativas = pgTable(
   "tentativas",
   {
     id: bigserial({ mode: "number" }).primaryKey(),
     chave: text().notNull(),
-    tipo: text({ enum: ["senha", "busca", "resposta"] }).notNull(),
+    tipo: text({ enum: ["senha", "busca", "resposta", "pagamento"] }).notNull(),
     criadaEm: timestamp("criada_em", { withTimezone: true }).notNull().default(sql`now()`),
   },
   (t) => [index("tentativas_idx").on(t.tipo, t.chave, t.criadaEm)],

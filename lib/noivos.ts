@@ -43,6 +43,16 @@ export type Tarefa = {
 
 export type Nota = { id: string; titulo: string; texto: string };
 
+/** Presente pago no Mercado Pago (specs/008). Só leitura: quem grava é o webhook. */
+export type Recebido = {
+  id: string;
+  presente: string; // nome do item (ou "Cota lua de mel")
+  nome: string;
+  recado: string;
+  valor: number; // centavos
+  pagoEm: string; // ISO
+};
+
 export type DadosNoivos = {
   convidados: Convidado[];
   gastos: Gasto[];

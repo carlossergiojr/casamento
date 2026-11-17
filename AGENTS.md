@@ -28,9 +28,12 @@ vez). Ao concluir algo, marque o item e mova para "Feito" com a data, no mesmo c
   de `drizzle/` (o build da Vercel aplica). Gravação só por Server Action com zod (`app/*/acoes.ts`).
   Convites e convidados reais só no banco, nunca no repositório (é público).
 - `/noivos`: senha única (`NOIVOS_SENHA`) e cookie assinado (`SESSAO_SEGREDO`), `lib/sessao.ts`;
-  toda ação dos noivos passa por `comSessao`. Pagamento dos presentes ainda é só visual.
+  toda ação dos noivos passa por `comSessao`.
+- Presentes (specs/008): Mercado Pago Checkout Pro em `lib/mercado-pago.ts` (REST, `MP_ACCESS_TOKEN`),
+  ação em `app/presentes/acoes.ts`, webhook em `app/api/mercado-pago/route.ts`. Preço só do
+  servidor; "Presenteado" = pagamento `approved` na tabela `pagamentos`.
 - Publicação: a Vercel publica cada push (prévia por branch, produção na `main`), com
-  `DATABASE_URL`, `DATABASE_URL_UNPOOLED`, `NOIVOS_SENHA`, `SESSAO_SEGREDO`. O GitHub Pages
+  `DATABASE_URL`, `DATABASE_URL_UNPOOLED`, `NOIVOS_SENHA`, `SESSAO_SEGREDO`, `MP_ACCESS_TOKEN`. O GitHub Pages
   (`carlossergiojr.github.io/casamento/`, o endereço dos QR) publica só `redirecionamento/`
   (workflow `.github/workflows/pages.yml`); trocar o domínio = trocar `DESTINO` lá.
 

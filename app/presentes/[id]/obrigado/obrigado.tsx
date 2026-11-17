@@ -1,23 +1,42 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import { useReduzir } from "@/lib/use-reduzir";
 import { Revelar } from "@/components/site/revelar";
 import { casamento, publico } from "@/lib/conteudo";
-import { lerPresente, useValorEscolhido, type DadosPresente } from "@/lib/presente-escolhido";
 
-export function Obrigado({ id, nome, valorFixo }: { id: string; nome: string; valorFixo: number | null }) {
-  const valor = useValorEscolhido(id, valorFixo);
-  const [dados, setDados] = useState<DadosPresente | null>(null);
+export type Estado = "aprovado" | "pendente" | "recusado";
+
+const textos: Record<Estado, { titulo: string; texto: (recado: boolean) => string }> = {
+  aprovado: {
+    titulo: "Muito obrigado!",
+    texto: (recado) =>
+      `Seu presente chegou até a gente${recado ? " — e o recadinho também" : ""}.`,
+  },
+  pendente: {
+    titulo: "Quase lá",
+    texto: () =>
+      "O Mercado Pago ainda está confirmando o pagamento. No Pix costuma levar poucos segundos; assim que aprovar, o presente chega até a gente.",
+  },
+  recusado: {
+    titulo: "O pagamento não foi aprovado",
+    texto: () => "Nada foi cobrado. Dá para tentar de novo, com outro cartão ou por Pix.",
+  },
+};
+
+type Props = { estado: Estado; id: string; presente: string; valor: string; nome: string; recado: string };
+
+export function Obrigado({ estado, id, presente, valor, nome, recado }: Props) {
   const reduzir = useReduzir();
-  useEffect(() => setDados(lerPresente(id)), [id]);
+  const router = useRouter();
+  const t = textos[estado];
 
   return (
     <>
       {/* Borboleta leve voando sobre a estampa (DESIGN.md: animações das telas de sucesso). */}
-      {!reduzir && (
+      {estado === "aprovado" && !reduzir && (
         <motion.img
           src={publico("/estampa/spot-butterfly-2.png")}
           alt=""
@@ -29,33 +48,47 @@ export function Obrigado({ id, nome, valorFixo }: { id: string; nome: string; va
         />
       )}
       <Revelar className="flex flex-col items-center gap-5">
-        <h1 className="font-serif text-[40px] leading-[1.1] text-primary italic">Muito obrigado!</h1>
-        <p className="text-[15px] text-primary-deep">
-          Seu presente chegou até a gente{dados?.recado ? " — e o recadinho também" : ""}. Enviamos a
-          confirmação para o seu e-mail.
-        </p>
+        <h1 className="font-serif text-[40px] leading-[1.1] text-primary italic">{t.titulo}</h1>
+        <p className="text-[15px] text-primary-deep">{t.texto(!!recado)}</p>
       </Revelar>
 
       <Revelar atraso={0.1} className="flex w-full flex-col gap-2 rounded-[3px] bg-surface p-4 text-left">
         <div className="flex justify-between gap-3">
-          <span>{nome}</span>
+          <span>{presente}</span>
           <span className="font-semibold whitespace-nowrap text-primary">{valor}</span>
         </div>
-        {dados?.recado && (
+        {recado && (
           <>
             <div className="h-px bg-line/50" />
-            <p className="font-serif text-lg text-primary-deep italic">“{dados.recado}”</p>
-            {dados.nome && <p className="text-right text-[13px] text-primary-deep">— {dados.nome}</p>}
+            <p className="font-serif text-lg text-primary-deep italic">“{recado}”</p>
+            <p className="text-right text-[13px] text-primary-deep">— {nome}</p>
           </>
         )}
       </Revelar>
 
-      <p className="font-serif text-xl text-primary-deep italic">
-        Com carinho, {casamento.casalCurto}
-      </p>
+      {estado === "aprovado" && (
+        <p className="font-serif text-xl text-primary-deep italic">Com carinho, {casamento.casalCurto}</p>
+      )}
 
       <div className="mt-auto flex w-full flex-col gap-3">
-        <Link href="/presentes/" className="botao bg-primary text-card hover:bg-primary-deep">
+        {estado === "pendente" && (
+          <button type="button" onClick={() => router.refresh()} className="botao bg-primary text-card hover:bg-primary-deep">
+            Atualizar
+          </button>
+        )}
+        {estado === "recusado" && (
+          <Link href={`/presentes/${id}/`} className="botao bg-primary text-card hover:bg-primary-deep">
+            Tentar de novo
+          </Link>
+        )}
+        <Link
+          href="/presentes/"
+          className={
+            estado === "aprovado"
+              ? "botao bg-primary text-card hover:bg-primary-deep"
+              : "botao border border-primary text-primary hover:bg-surface"
+          }
+        >
           Voltar à lista
         </Link>
         <Link

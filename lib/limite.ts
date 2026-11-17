@@ -3,7 +3,7 @@ import { and, count, eq, gt, lt } from "drizzle-orm";
 import { headers } from "next/headers";
 import { db, schema } from "./db";
 
-type Tipo = "senha" | "busca" | "resposta";
+type Tipo = "senha" | "busca" | "resposta" | "pagamento";
 const { tentativas } = schema;
 
 /** IP de quem chamou (a Vercel preenche x-forwarded-for). */

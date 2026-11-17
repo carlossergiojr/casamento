@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { TelaInterna, tituloInterno } from "@/components/interno";
 import { CotaLivre, ListaCompletaPresentes } from "@/components/site/presentes";
+import { lerPresenteados } from "@/lib/mercado-pago";
 
 export const metadata: Metadata = { title: "Lista de presentes" };
 
 /** Lista completa (na página inicial ficam só os destaques). */
-export default function PaginaPresentes() {
+export default async function PaginaPresentes() {
+  const presenteados = [...(await lerPresenteados())];
   return (
     <TelaInterna voltar="/#presentes" rotuloVoltar="Início">
       <main className="flex flex-1 flex-col gap-5 px-5 pt-8 pb-12">
@@ -17,7 +19,7 @@ export default function PaginaPresentes() {
           </p>
         </div>
         <CotaLivre />
-        <ListaCompletaPresentes />
+        <ListaCompletaPresentes presenteados={presenteados} />
       </main>
     </TelaInterna>
   );

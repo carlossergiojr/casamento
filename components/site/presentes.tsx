@@ -20,15 +20,18 @@ import { Revelar } from "./revelar";
 import { useReduzir } from "@/lib/use-reduzir";
 import { balanco, ventoTransicao } from "@/lib/vento";
 
-const destaques = destaquesPresente
-  .map((id) => presentes.find((p) => p.id === id))
-  .filter((p): p is Presente => !!p && !p.presenteado);
+/** Marca como presenteado o que já foi pago (ids lidos do banco no servidor, specs/008). */
+const comPagos = (lista: Presente[], pagos: string[]) =>
+  lista.map((p) => (pagos.includes(p.id) ? { ...p, presenteado: true } : p));
 
 /** Grade de etiquetas: duas colunas no celular, três a partir do tablet. Espaço vertical para o fio. */
 const GRADE = "grid grid-cols-2 gap-x-3.5 gap-y-7 pt-3 md:grid-cols-3";
 
 /** Prévia da página inicial: só os presentes em destaque, como etiquetas. */
-export function DestaquesPresentes() {
+export function DestaquesPresentes({ presenteados }: { presenteados: string[] }) {
+  const destaques = destaquesPresente
+    .map((id) => presentes.find((p) => p.id === id))
+    .filter((p): p is Presente => !!p && !p.presenteado && !presenteados.includes(p.id));
   return (
     <Revelar>
       <ul className={GRADE}>
@@ -136,11 +139,12 @@ type Ordem = "sugerida" | "menor" | "maior";
 const filtros: Filtro[] = ["Todos", ...categoriasPresente];
 
 /** Página /presentes: filtro por categoria, ordem por preço e as etiquetas em grade. */
-export function ListaCompletaPresentes() {
+export function ListaCompletaPresentes({ presenteados }: { presenteados: string[] }) {
   const [filtro, setFiltro] = useState<Filtro>("Todos");
   const [ordem, setOrdem] = useState<Ordem>("sugerida");
 
-  const filtrados = filtro === "Todos" ? presentes : presentes.filter((p) => p.categoria === filtro);
+  const todos = comPagos(presentes, presenteados);
+  const filtrados = filtro === "Todos" ? todos : todos.filter((p) => p.categoria === filtro);
   // Já presenteados sempre no fim; o resto na ordem escolhida (sort é estável).
   const visiveis = [...filtrados].sort(
     (a, b) =>

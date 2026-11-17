@@ -1,6 +1,7 @@
 <!--
 SYNC IMPACT REPORT
-Versão: 1.0.4 → 1.0.5 — PATCH: horário do convite (boas-vindas 15h30, cerimônia 16h20); site na
+Versão: 1.0.5 → 1.0.6 — PATCH: Mercado Pago (Checkout Pro) integrado nos presentes (specs/008).
+Antes: 1.0.4 → 1.0.5 — PATCH: horário do convite (boas-vindas 15h30, cerimônia 16h20); site na
 Vercel com Neon, GitHub Pages só redireciona os QR Codes antigos (specs/006).
 Antes: 1.0.3 → 1.0.4 — PATCH: sem e-mail automático (os noivos avisam pelo WhatsApp); sai o Resend.
 Antes: 1.0.2 → 1.0.3 — PATCH: noivo só "Carlos" (sem "Sergio") em todo o site.
@@ -59,7 +60,8 @@ entra por migration versionada — nunca alteração manual em produção.
 
 Next.js (App Router) + TypeScript strict · Tailwind CSS + shadcn/ui · Motion para animações ·
 hospedagem na Vercel · Neon (Postgres) + Drizzle. O endereço antigo do GitHub Pages
-(o dos QR Codes impressos) só redireciona para a Vercel. Mais tarde: Mercado Pago.
+(o dos QR Codes impressos) só redireciona para a Vercel. Presentes pagos pelo Mercado Pago
+(Checkout Pro).
 
 ## Fluxo
 
@@ -74,4 +76,4 @@ Esta constituição prevalece sobre outras convenções. Mudança = editar este 
 justificativa e subir a versão (MAJOR remove/redefine princípio, MINOR acrescenta, PATCH
 esclarece).
 
-**Version**: 1.0.5 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-16
+**Version**: 1.0.6 | **Ratified**: 2026-11-01 | **Last Amended**: 2026-11-17

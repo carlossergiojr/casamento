@@ -13,13 +13,9 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
       tirar o que já têm em casa, e mandar as **fotos dos produtos** (salvas em
       `public/presentes/`, nome do arquivo como 4º valor do item). Sem foto, aparece o desenho de traço do item.
       Escolher também os **destaques da home** (`destaquesPresente` em `lib/conteudo.ts`).
-- [ ] **E-mail no formulário do presente**: o campo diz "para receber a confirmação", mas não vai
-      ter e-mail automático. Decidir junto com o pagamento (o Mercado Pago pode pedir e-mail).
 - [ ] **Lista de convidados**: os convites de verdade (titular + pessoas + o código que está no QR
       de cada um), digitados na área dos noivos (`/noivos`) depois que ela estiver no ar. Os 3 de
       exemplo (CAVI01–03) agora só existem no banco de teste.
-- [ ] **WhatsApp dos noivos**: o número em `contato.whatsapp` (só dígitos, com 55 e DDD). Ele
-      aparece na tela "Não encontramos esse nome" do RSVP.
 - [ ] **Croqui do local**: conferir o desenho em "O dia" (`components/site/croqui.tsx`): a Rua
       Zeus sai da R. Rubens Francisco Dias? Os condomínios ficam de cada lado? Tem lago com a ilha?
       Ajusto o traçado com o que vocês disserem (ou com um print do mapa).
@@ -35,21 +31,15 @@ Site em https://casamento-cavi.vercel.app (Vercel + Neon). O endereço dos QR
 - [x] **Noivos, pelo celular**: senha, importação, convite de teste respondido pelo link (16/11).
 - [ ] Cadastrar os convites reais em `/noivos` (com o código do QR, se o QR tiver código).
 
-## 3. Pagamento dos presentes
+## 3. Pagamento dos presentes (specs/008)
 
-Modelo decidido: **presente virtual** — o convidado escolhe o item, paga por Pix ou cartão e o
-dinheiro vai para os noivos, que compram o que quiserem.
+Mercado Pago (Checkout Pro) integrado: o convidado paga por Pix ou cartão na página do MP, o
+presente vira "Presenteado" e aparece na aba "Presentes" de `/noivos`.
 
-- [ ] Decidir o caminho: (a) site de lista pronto (iCasei, Lejour…; taxa ~3–4%) com link no
-      botão, ou (b) **Mercado Pago** integrado no próprio site (depende da Vercel + banco).
-- [ ] Marcar o presente como "Presenteado" depois do pagamento aprovado.
-
-## 4. Área dos noivos
-
-`/noivos` (sem link no site, fora dos buscadores) tem senha única e guarda tudo no banco
-(specs/006); entra no ar com a lista 2.
-
-- [ ] **Presentes recebidos**: quem deu, valor e recadinho; total arrecadado (depende da lista 3).
+- [ ] **Credenciais do Mercado Pago**: criar a aplicação no painel do MP e cadastrar
+      `MP_ACCESS_TOKEN` na Vercel (Production e Preview). Primeiro o token de uma conta de teste.
+- [ ] **Testar na prévia**: um presente pago por Pix e um por cartão com a conta de teste; conferir
+      "Presenteado" na lista e a aba "Presentes" de `/noivos`. Depois trocar pelo token de produção.
 
 ## Fora do escopo (decidido)
 
@@ -57,6 +47,12 @@ dinheiro vai para os noivos, que compram o que quiserem.
   pessoal. O site não envia nada automático.
 
 ## Feito
+
+- 17/11/2026 — Presentes pagos pelo Mercado Pago (specs/008): o formulário leva ao checkout do MP
+  (Pix ou cartão), o webhook grava o pagamento, a volta mostra aprovado/pendente/recusado, o
+  presente pago vira "Presenteado" e `/noivos` ganhou a aba "Presentes" (total, quem deu,
+  recadinho). Sem e-mail no formulário. WhatsApp dos noivos no ar
+  (75 99941-4200).
 
 - 17/11/2026 — Programação ganhou vida ao descer: o fio da linha do tempo se enche de azul, os
   pontos se acendem e os ícones são traçados à tinta por cima de um rascunho claro. As etiquetas

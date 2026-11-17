@@ -8,6 +8,7 @@
   DATABASE_URL=postgres://postgres@localhost:5432/cavi
   NOIVOS_SENHA=teste-local
   SESSAO_SEGREDO=<openssl rand -base64 32>
+  MP_ACCESS_TOKEN=<token de uma conta de teste do Mercado Pago> # specs/008
   ```
 
 ## Subir

@@ -1,9 +1,10 @@
 import "server-only";
-import { asc } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
+import { acharPresente } from "./conteudo";
 import { db, schema } from "./db";
-import type { DadosNoivos } from "./noivos";
+import type { DadosNoivos, Recebido } from "./noivos";
 
-const { convites, pessoas, gastos, tarefas, notas } = schema;
+const { convites, pessoas, gastos, tarefas, notas, pagamentos } = schema;
 
 /** Tudo da área dos noivos. Só chamar depois de conferir a sessão. */
 export async function lerDadosNoivos(): Promise<DadosNoivos> {
@@ -39,4 +40,21 @@ export async function lerDadosNoivos(): Promise<DadosNoivos> {
     tarefas: ts.map(({ ordem: _ordem, ...t }) => t),
     notas: ns.map(({ ordem: _ordem, ...n }) => n),
   };
+}
+
+/** Presentes já pagos, do mais recente ao mais antigo. Só chamar depois de conferir a sessão. */
+export async function lerRecebidos(): Promise<Recebido[]> {
+  const linhas = await db
+    .select()
+    .from(pagamentos)
+    .where(eq(pagamentos.status, "approved"))
+    .orderBy(desc(pagamentos.pagoEm));
+  return linhas.map((l) => ({
+    id: l.id,
+    presente: acharPresente(l.presenteId)?.nome ?? l.presenteId,
+    nome: l.nome,
+    recado: l.recado,
+    valor: l.valor,
+    pagoEm: (l.pagoEm ?? l.atualizadoEm).toISOString(),
+  }));
 }

@@ -83,7 +83,7 @@ export const guiaFecho = "E, acima de tudo, divirta-se muito!";
  */
 export const contato = {
   nome: "Victória e Carlos",
-  whatsapp: "",
+  whatsapp: "5575999414200",
 };
 export const linkWhatsapp = (texto = "Oi! Tenho uma dúvida sobre o casamento.") =>
   contato.whatsapp ? `https://wa.me/${contato.whatsapp}?text=${encodeURIComponent(texto)}` : null;

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { TelaInterna } from "@/components/interno";
 import { FotoPresente } from "@/components/site/foto-presente";
 import { formatarValor, idsPresentes, presenteLivre, presentes, publico } from "@/lib/conteudo";
+import { lerPresenteados } from "@/lib/mercado-pago";
 import { FormPresente } from "./form-presente";
 
 export function generateStaticParams() {
@@ -36,7 +37,8 @@ export default async function DetalhePresente({ params }: PageProps<"/presentes/
   }
 
   const presente = presentes.find((p) => p.id === id);
-  if (!presente || presente.presenteado) notFound();
+  // Já pago: a página vira 404 (o webhook revalida, specs/008).
+  if (!presente || presente.presenteado || (await lerPresenteados()).has(presente.id)) notFound();
 
   return (
     <TelaInterna voltar="/presentes/" rotuloVoltar="Presentes" semFaixa>

@@ -12,6 +12,7 @@ import {
   type Lado,
   type Nota,
   type Pessoa,
+  type Recebido,
   type Resposta,
   type Resultado,
   type Tarefa,
@@ -55,7 +56,7 @@ async function rodar<T>(acao: Promise<Resultado<T>>): Promise<T | true | false> 
 /** Marcar tarefa responde na hora (otimista) e grava em seguida. */
 const MarcarTarefa = createContext<(id: string, feita: boolean) => void>(() => {});
 
-const abas = ["Resumo", "Checklist", "Convidados", "Orçamento", "Notas"] as const;
+const abas = ["Resumo", "Checklist", "Convidados", "Presentes", "Orçamento", "Notas"] as const;
 type Aba = (typeof abas)[number];
 
 const rotuloResposta: Record<Resposta, string> = {
@@ -73,7 +74,7 @@ const chip = (ativo: boolean) =>
     ativo ? "border-primary bg-primary text-card" : "border-line bg-card text-primary-deep",
   );
 
-export function AreaNoivos({ dados: doServidor }: { dados: DadosNoivos }) {
+export function AreaNoivos({ dados: doServidor, recebidos }: { dados: DadosNoivos; recebidos: Recebido[] }) {
   const [aba, setAba] = useState<Aba>("Resumo");
   const [tarefas, marcarOtimista] = useOptimistic(doServidor.tarefas, (ts, m: { id: string; feita: boolean }) =>
     ts.map((t) => (t.id === m.id ? { ...t, feita: m.feita } : t)),
@@ -117,6 +118,7 @@ export function AreaNoivos({ dados: doServidor }: { dados: DadosNoivos }) {
       {aba === "Resumo" && <Resumo dados={dados} irPara={setAba} />}
       {aba === "Checklist" && <Checklist dados={dados} />}
       {aba === "Convidados" && <Convidados dados={dados} />}
+      {aba === "Presentes" && <Presentes recebidos={recebidos} />}
       {aba === "Orçamento" && <Orcamento dados={dados} />}
       {aba === "Notas" && <Notas dados={dados} />}
 
@@ -259,6 +261,40 @@ function Resumo({ dados, irPara }: { dados: DadosNoivos; irPara: (a: Aba) => voi
           Ver orçamento
         </button>
       </section>
+    </div>
+  );
+}
+
+/* ───────────────────────── Presentes ───────────────────────── */
+
+/** Presentes pagos no Mercado Pago (specs/008): quem deu, quanto e o recadinho. */
+function Presentes({ recebidos }: { recebidos: Recebido[] }) {
+  const total = recebidos.reduce((s, r) => s + r.valor, 0);
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-2 gap-2.5">
+        <Numero valor={formatarValor(total)} rotulo="arrecadado" destaque />
+        <Numero valor={recebidos.length} rotulo={recebidos.length === 1 ? "presente" : "presentes"} />
+      </div>
+      {recebidos.length === 0 && (
+        <p className="text-[15px] text-primary-deep">
+          Nenhum presente ainda. Quando um convidado pagar pelo Mercado Pago, ele aparece aqui com o recadinho.
+        </p>
+      )}
+      <ul className="flex flex-col gap-2.5">
+        {recebidos.map((r) => (
+          <li key={r.id} className="flex flex-col gap-1.5 rounded-[3px] border border-surface bg-card px-3.5 py-3">
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="font-serif text-xl text-primary">{r.presente}</span>
+              <span className="whitespace-nowrap text-gold">{formatarValor(r.valor)}</span>
+            </div>
+            <p className="text-[14px] text-primary-deep">
+              {r.nome} · {new Date(r.pagoEm).toLocaleDateString("pt-BR")}
+            </p>
+            {r.recado && <p className="font-serif text-lg whitespace-pre-line text-primary-deep italic">“{r.recado}”</p>}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

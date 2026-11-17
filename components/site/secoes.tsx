@@ -1,21 +1,23 @@
 import Link from "next/link";
 import { casamento, presentes } from "@/lib/conteudo";
+import { lerPresenteados } from "@/lib/mercado-pago";
 import { CotaLivre, DestaquesPresentes } from "./presentes";
 import { Revelar } from "./revelar";
 
 const TITULO = "font-serif text-[40px] leading-[1.1] text-primary italic";
 
-export function ListaPresentes() {
+export async function ListaPresentes() {
+  const presenteados = [...(await lerPresenteados())];
   return (
     <section id="presentes" className="flex flex-col gap-6 px-5 py-16">
       <Revelar className="flex flex-col items-center gap-2.5 px-2 text-center">
         <h2 className={TITULO}>Lista de presentes</h2>
         <p className="text-[15px] text-primary-deep">
-          Escolha um presente e pague aqui mesmo, por Pix ou cartão: a gente compra o item. Dá
+          Escolha um presente e pague por Pix ou cartão, pelo Mercado Pago: a gente compra o item. Dá
           para deixar um recadinho junto.
         </p>
       </Revelar>
-      <DestaquesPresentes />
+      <DestaquesPresentes presenteados={presenteados} />
       <Link href="/presentes/" className="botao border border-primary text-primary hover:bg-primary hover:text-card">
         Ver os {presentes.length} presentes
       </Link>

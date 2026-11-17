@@ -1,18 +1,35 @@
+import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { TelaSucesso } from "@/components/interno";
-import { acharPresente, idsPresentes } from "@/lib/conteudo";
-import { Obrigado } from "./obrigado";
+import { acharPresente, formatarValor } from "@/lib/conteudo";
+import { db, schema } from "@/lib/db";
+import { sincronizarPagamento } from "@/lib/mercado-pago";
+import { Obrigado, type Estado } from "./obrigado";
 
-export const metadata = { title: "Muito obrigado! · V & C" };
+export const metadata = { title: "Muito obrigado! · V & C", robots: { index: false } };
 
-export function generateStaticParams() {
-  return idsPresentes();
-}
+const PENDENTES = new Set(["criado", "pending", "in_process", "authorized", "in_mediation"]);
 
-export default async function PaginaObrigado({ params }: PageProps<"/presentes/[id]/obrigado">) {
+/**
+ * Volta do checkout do Mercado Pago (specs/008): `ref` é o nosso id do pagamento. Com
+ * `payment_id`, confere o status direto na API antes de mostrar (sem esperar o webhook).
+ */
+export default async function PaginaObrigado({ params, searchParams }: PageProps<"/presentes/[id]/obrigado">) {
   const { id } = await params;
+  const busca = await searchParams;
   const presente = acharPresente(id);
-  if (!presente) notFound();
+  const ref = typeof busca.ref === "string" ? busca.ref : "";
+  if (!presente || !/^[0-9a-f-]{36}$/.test(ref)) notFound();
+
+  const pagamentoMp = typeof busca.payment_id === "string" ? busca.payment_id : null;
+  if (pagamentoMp && pagamentoMp !== "null") {
+    await sincronizarPagamento(pagamentoMp).catch((e) => console.error("volta mp:", e));
+  }
+  const [linha] = await db.select().from(schema.pagamentos).where(eq(schema.pagamentos.id, ref));
+  if (!linha || linha.presenteId !== presente.id) notFound();
+
+  const estado: Estado =
+    linha.status === "approved" ? "aprovado" : PENDENTES.has(linha.status) ? "pendente" : "recusado";
 
   return (
     <TelaSucesso
@@ -22,7 +39,14 @@ export default async function PaginaObrigado({ params }: PageProps<"/presentes/[
         </svg>
       }
     >
-      <Obrigado id={presente.id} nome={presente.nome} valorFixo={presente.valor} />
+      <Obrigado
+        estado={estado}
+        id={presente.id}
+        presente={presente.nome}
+        valor={formatarValor(linha.valor)}
+        nome={linha.nome}
+        recado={linha.recado}
+      />
     </TelaSucesso>
   );
 }

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { TelaInterna } from "@/components/interno";
-import { lerDadosNoivos } from "@/lib/noivos-servidor";
+import { lerDadosNoivos, lerRecebidos } from "@/lib/noivos-servidor";
 import { sessaoValida } from "@/lib/sessao";
 import { AreaNoivos } from "./area";
 import { Entrar } from "./entrar";
@@ -16,7 +16,7 @@ export default async function Noivos() {
   const conectado = await sessaoValida();
   return (
     <TelaInterna voltar="/" rotuloVoltar="Site">
-      {conectado ? <AreaNoivos dados={await lerDadosNoivos()} /> : <Entrar />}
+      {conectado ? <AreaNoivos dados={await lerDadosNoivos()} recebidos={await lerRecebidos()} /> : <Entrar />}
     </TelaInterna>
   );
 }

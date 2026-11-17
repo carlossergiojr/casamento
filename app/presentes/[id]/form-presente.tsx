@@ -1,10 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { campo, rotuloCampo } from "@/components/interno";
 import { formatarValor } from "@/lib/conteudo";
-import { guardarPresente } from "@/lib/presente-escolhido";
+import { iniciarPagamento } from "../acoes";
 
 type Livre = { sugestoes: number[]; minimo: number };
 
@@ -15,11 +14,12 @@ function lerReais(texto: string) {
 }
 
 export function FormPresente({ id, livre }: { id: string; livre?: Livre }) {
-  const router = useRouter();
   const [nome, setNome] = useState("");
   const [recado, setRecado] = useState("");
   const [valorTexto, setValorTexto] = useState("");
   const [erroValor, setErroValor] = useState("");
+  const [erro, setErro] = useState("");
+  const [indo, comecar] = useTransition();
 
   const centavos = lerReais(valorTexto);
 
@@ -32,8 +32,15 @@ export function FormPresente({ id, livre }: { id: string; livre?: Livre }) {
         return;
       }
     }
-    guardarPresente(id, { nome: nome.trim(), recado: recado.trim(), valor: livre ? centavos : undefined });
-    router.push(`/presentes/${id}/pagamento`);
+    setErro("");
+    // O preço é decidido no servidor; daqui sai só a escolha. Pix ou cartão na página do MP.
+    comecar(async () => {
+      const r = await iniciarPagamento({ presenteId: id, nome, recado, valor: livre ? centavos : undefined }).catch(
+        () => ({ ok: false as const, erro: "Sem conexão. Tente de novo." }),
+      );
+      if (r.ok) window.location.assign(r.url);
+      else setErro(r.erro);
+    });
   }
 
   return (
@@ -99,12 +106,6 @@ export function FormPresente({ id, livre }: { id: string; livre?: Livre }) {
         <input id="g-nome" required autoComplete="name" value={nome} onChange={(e) => setNome(e.target.value)} className={campo} />
       </div>
       <div className="flex flex-col gap-2">
-        <label htmlFor="g-email" className={rotuloCampo}>
-          E-mail (para receber a confirmação)
-        </label>
-        <input id="g-email" type="email" required autoComplete="email" className={campo} />
-      </div>
-      <div className="flex flex-col gap-2">
         <label htmlFor="g-msg" className={rotuloCampo}>
           Recadinho para os noivos (opcional)
         </label>
@@ -116,9 +117,27 @@ export function FormPresente({ id, livre }: { id: string; livre?: Livre }) {
           className={`${campo} h-auto py-3 leading-normal`}
         />
       </div>
-      <button type="submit" className="botao mt-auto w-full bg-primary text-card hover:bg-primary-deep">
-        {livre && centavos >= livre.minimo * 100 ? `Mandar ${formatarValor(centavos)}` : "Ir para o pagamento"}
-      </button>
+      <div className="mt-auto flex flex-col gap-2.5">
+        {erro && (
+          <p role="alert" className="text-center text-[13px] text-destructive">
+            {erro}
+          </p>
+        )}
+        <button
+          type="submit"
+          disabled={indo}
+          className="botao w-full bg-primary text-card hover:bg-primary-deep disabled:opacity-70"
+        >
+          {indo
+            ? "Abrindo o pagamento…"
+            : livre && centavos >= livre.minimo * 100
+              ? `Mandar ${formatarValor(centavos)}`
+              : "Pagar com Pix ou cartão"}
+        </button>
+        <p className="text-center text-[13px] text-primary-deep">
+          Você paga no Mercado Pago, em ambiente seguro, e volta para cá.
+        </p>
+      </div>
     </form>
   );
 }
