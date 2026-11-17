@@ -92,12 +92,12 @@ export function Galeria() {
         </DialogTrigger>
         <DialogContent className="max-w-[calc(100%-1.5rem)] rounded-[3px] bg-background p-4 pt-12 sm:max-w-xl">
           <DialogTitle className="sr-only">Fotos do pré-wedding</DialogTitle>
-          <Carousel opts={{ loop: true }} className="mx-auto w-full">
+          <Carousel opts={{ loop: true }} className="mx-auto w-full min-w-0">
             <CarouselContent>
               {galeria.fotos.map((f, i) => (
                 <CarouselItem key={f.src}>
-                  <div className={`mx-auto max-w-[calc((100dvh-9.5rem)*9/11)] bg-card p-2.5 pb-8 ${SOMBRA}`}>
-                    <div className="relative aspect-[9/11]">
+                  <div className={`mx-auto max-w-[calc((100dvh-9.5rem)*2/3)] bg-card p-2.5 pb-8 ${SOMBRA}`}>
+                    <div className="relative aspect-[2/3]">
                       <Foto i={i} sizes="(max-width: 640px) 90vw, 560px" />
                     </div>
                   </div>

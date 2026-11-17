@@ -1,10 +1,7 @@
 /**
  * Todo o conteúdo editável do site num lugar só (specs/001 "Conteúdo do site").
- * Fotos com picsum.photos são de exemplo — troque pelo caminho em /public quando chegarem.
+ * Fotos ficam em /public (caminho por `publico`).
  */
-
-const foto = (semente: string, largura: number, altura: number) =>
-  `https://picsum.photos/seed/cavi-${semente}/${largura}/${altura}`;
 
 /** Caminho de arquivo de /public. Era onde entrava o prefixo /casamento do GitHub Pages; na Vercel não há prefixo. */
 export const publico = (caminho: string) => caminho;
@@ -139,10 +136,21 @@ export const historiaFecho = "Agora só falta você.";
 
 export const galeria = {
   legenda: "[legenda curta]",
-  fotos: Array.from({ length: 8 }, (_, i) => ({
-    src: foto(`pre-${i + 1}`, 900, 1100),
-    alt: `Foto ${i + 1} do pré-wedding (exemplo)`,
-  })),
+  /** As três primeiras viram as polaroids; todas aparecem em "Ver todas as fotos". */
+  fotos: [
+    "Victória e Carlos abraçados na sala, olhando um para o outro",
+    "Em preto e branco, os dois passando pela mesa redonda da sala",
+    "De mãos dadas na porta da casa, entre dois vasos de cróton",
+    "Caminhando de mãos dadas diante da casa, o vestido e o cabelo ao vento",
+    "Em preto e branco, sentados na mureta da varanda, rindo",
+    "No deck entre as folhas, Carlos beija a testa de Victória",
+    "Abraçados no deck, contra o sol do fim de tarde e o lago ao fundo",
+    "Caminhando na grama com a luz dourada, a palmeira e a casa atrás",
+    "Sentados no píer com o cachorro, sorrindo",
+    "No barco, Victória rindo com o dedo no queixo de Carlos",
+    "Em preto e branco, abraçados de pé no barco sobre o lago",
+    "Beijo no píer ao anoitecer, ao lado do poste aceso",
+  ].map((alt, i) => ({ src: publico(`/fotos/pre-${String(i + 1).padStart(2, "0")}.jpg`), alt })),
 };
 
 /** Igual ao cartão "Traje" impresso. */

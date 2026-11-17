@@ -20,7 +20,7 @@ vez). Ao concluir algo, marque o item e mova para "Feito" com a data, no mesmo c
 - Animação com `motion/react`; toda animação respeita `useReduzir()` (`lib/use-reduzir.ts`; não use o `useReducedMotion()` do Motion, que quebra a hidratação — specs/007). Entrada de bloco
   por `<Revelar>` (`components/site/revelar.tsx`).
 - Conteúdo editável (textos, datas, fotos, presentes, convites de exemplo) só em
-  `lib/conteudo.ts`. Fotos de exemplo vêm de picsum.photos até as reais chegarem.
+  `lib/conteudo.ts`. Fotos em `public/fotos/`, reduzidas para ~1200px de largura antes de versionar.
 - Cabeçalhos utilitários do tema em `app/globals.css`: `sobretitulo`, `botao`, `toile`.
   (Não use `overline`: é classe do Tailwind para text-decoration.)
 - Primitivas de UI pelo `npx shadcn@latest add` (estilo base-nova, Base UI).
