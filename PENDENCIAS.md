@@ -64,6 +64,11 @@ dinheiro vai para os noivos, que compram o que quiserem.
   tortas como as polaroids, com um desenho de traço de cada item no lugar da foto (o mesmo traço
   da Programação). A etiqueta inteira é o toque; a cota lua de mel é uma etiqueta deitada. Vale
   para a home, `/presentes` (agrupada por categoria) e a página de cada presente.
+- 17/11/2026 — "Traje" em versão "caderno da costureira": recadinhos com setinha à mão nas roupas
+  (em `dressCode.trajes[].notas`), cores a evitar como retalhos picotados presos com alfinete e
+  X à mão, dicas de verão com divisor ondulado e sublinhado dourado, borboleta no canto. Um vento
+  leve passa pelo cartão (cabides, saia e retalhos balançam; a borboleta bate as asas), só com o
+  cartão na tela e nunca com "Reduzir movimento".
 - 16/11/2026 — Contagem da capa com segundos (dias · horas · min · seg); o número desce de leve
   ao trocar (sem animação com "Reduzir movimento").
 - 16/11/2026 — Barra de atalhos do rodapé removida (cara de aplicativo). No lugar, a data no

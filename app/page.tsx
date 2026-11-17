@@ -7,7 +7,8 @@ import { Galeria } from "@/components/site/galeria";
 import { Guia } from "@/components/site/guia";
 import { Historia } from "@/components/site/historia";
 import { Local, Programacao } from "@/components/site/o-dia";
-import { ChamadaRsvp, DressCode, ListaPresentes, Rodape } from "@/components/site/secoes";
+import { ChamadaRsvp, ListaPresentes, Rodape } from "@/components/site/secoes";
+import { DressCode } from "@/components/site/traje";
 
 export default function Inicio() {
   return (
