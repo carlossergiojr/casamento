@@ -19,9 +19,7 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
       de cada um), digitados na área dos noivos (`/noivos`) depois que ela estiver no ar. Os 3 de
       exemplo (CAVI01–03) agora só existem no banco de teste.
 - [ ] **WhatsApp dos noivos**: o número em `contato.whatsapp` (só dígitos, com 55 e DDD). Ele
-      aparece em "Dúvidas" e na tela "Não encontramos esse nome" do RSVP.
-- [ ] **Dúvidas**: responder as que estão entre colchetes em `duvidas` (crianças, estacionamento,
-      hospedagem, cerimônia ao ar livre) e tirar/acrescentar perguntas.
+      aparece na tela "Não encontramos esse nome" do RSVP.
 - [ ] **Croqui do local**: conferir o desenho em "O dia" (`components/site/croqui.tsx`): a Rua
       Zeus sai da R. Rubens Francisco Dias? Os condomínios ficam de cada lado? Tem lago com a ilha?
       Ajusto o traçado com o que vocês disserem (ou com um print do mapa).
@@ -60,6 +58,8 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## Feito
 
+- 17/11/2026 — "Dúvidas" respondidas: cerimônia ao ar livre (sim) e estacionamento (sim). Saíram
+  crianças, hospedagem, lista de presentes e o "Fale direto com a gente" do fim da seção.
 - 17/11/2026 — Saiu o bloco "Você vem?" da home. Confirmar presença fica no botão "Eu vou!" da
   capa e no item "Confirmar presença" do menu, que agora abre direto `/confirmar`.
 - 17/11/2026 — Presentes viraram etiquetas de papel (versão B): furinho com fio dourado, levemente

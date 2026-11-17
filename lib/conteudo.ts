@@ -88,17 +88,13 @@ export const contato = {
 export const linkWhatsapp = (texto = "Oi! Tenho uma dúvida sobre o casamento.") =>
   contato.whatsapp ? `https://wa.me/${contato.whatsapp}?text=${encodeURIComponent(texto)}` : null;
 
-/**
- * Perguntas frequentes. O que está entre colchetes os noivos ainda precisam responder; o resto
- * vem do que já foi decidido (lista fechada, prazo do RSVP, presente virtual).
- */
+/** Perguntas frequentes (o que já foi decidido: lista fechada, prazo do RSVP, ao ar livre). */
 export const duvidas: { pergunta: string; resposta: string }[] = [
   {
     pergunta: "Posso levar acompanhante?",
     resposta:
       "O convite é pessoal: valem os nomes do envelope. Se alguém da sua casa não aparece na confirmação, fale com a gente antes de levar.",
   },
-  { pergunta: "Crianças são bem-vindas?", resposta: "[A definir pelos noivos.]" },
   {
     pergunta: "Até quando confirmo presença?",
     resposta: "Até 3 de janeiro de 2027, aqui mesmo no site, com o seu nome ou o código do convite. Dá para mudar a resposta até esse dia.",
@@ -106,18 +102,9 @@ export const duvidas: { pergunta: string; resposta: string }[] = [
   {
     pergunta: "A cerimônia é ao ar livre?",
     resposta:
-      "[Confirmar com os noivos.] Janeiro é verão: tecidos leves e saltos grossos ou tipo bloco deixam o dia mais confortável.",
+      "Sim! Janeiro é verão: tecidos leves e saltos grossos ou tipo bloco deixam o dia mais confortável.",
   },
-  { pergunta: "Tem estacionamento?", resposta: "[A definir pelos noivos.]" },
-  {
-    pergunta: "Vou de outra cidade. Onde fico?",
-    resposta: "[Sugestões de hotel em Feira de Santana — a definir pelos noivos.]",
-  },
-  {
-    pergunta: "Como funciona a lista de presentes?",
-    resposta:
-      "Você escolhe um item e paga por Pix ou cartão; o valor vem para nós e a gente compra. Se preferir, dá para mandar um valor livre para a lua de mel.",
-  },
+  { pergunta: "Tem estacionamento?", resposta: "Sim, o Campestre tem estacionamento." },
 ];
 
 /** "Nossa história" em trechos; alinhamento alterna esquerda/direita. */

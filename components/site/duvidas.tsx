@@ -1,10 +1,9 @@
 import { duvidas } from "@/lib/conteudo";
 import { Revelar } from "./revelar";
-import { FalarComNoivos } from "./whatsapp";
 
 /**
  * Perguntas frequentes (specs/007): `<details>` nativo, que abre e fecha sem JS e é lido certo
- * pelo leitor de tela. Fecha com o contato dos noivos.
+ * pelo leitor de tela.
  */
 export function Duvidas() {
   return (
@@ -35,10 +34,6 @@ export function Duvidas() {
             </details>
           ))}
         </div>
-      </Revelar>
-      <Revelar className="flex flex-col gap-3 pt-2">
-        <p className="text-center text-[15px] text-primary-deep">Ficou alguma dúvida? Fale direto com a gente.</p>
-        <FalarComNoivos />
       </Revelar>
     </section>
   );
