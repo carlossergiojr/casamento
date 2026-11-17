@@ -4,7 +4,8 @@ import { motion, useInView } from "motion/react";
 import { useRef } from "react";
 import { dressCode, publico } from "@/lib/conteudo";
 import { useReduzir } from "@/lib/use-reduzir";
-import { balanco, IconeDica, RoupaNoCabide, ventoTransicao } from "./desenhos-traje";
+import { balanco, ventoTransicao } from "@/lib/vento";
+import { IconeDica, RoupaNoCabide } from "./desenhos-traje";
 import { Moldura } from "./moldura";
 import { Revelar } from "./revelar";
 

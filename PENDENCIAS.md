@@ -58,6 +58,10 @@ dinheiro vai para os noivos, que compram o que quiserem.
 
 ## Feito
 
+- 17/11/2026 — Programação ganhou vida ao descer: o fio da linha do tempo se enche de azul, os
+  pontos se acendem e os ícones são traçados à tinta por cima de um rascunho claro. As etiquetas
+  dos presentes balançam no fio com o mesmo vento do Traje (`lib/vento.ts`) e endireitam no toque.
+  Nada se mexe com "Reduzir movimento".
 - 17/11/2026 — "Dúvidas" respondidas: cerimônia ao ar livre (sim) e estacionamento (sim). Saíram
   crianças, hospedagem, lista de presentes e o "Fale direto com a gente" do fim da seção.
 - 17/11/2026 — Saiu o bloco "Você vem?" da home. Confirmar presença fica no botão "Eu vou!" da

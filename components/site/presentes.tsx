@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { motion, useInView } from "motion/react";
+import { useRef, useState } from "react";
 import {
   categoriasPresente,
   destaquesPresente,
@@ -16,6 +17,8 @@ import {
 import { FormaEtiqueta } from "./etiqueta";
 import { IconePresente } from "./icones-presente";
 import { Revelar } from "./revelar";
+import { useReduzir } from "@/lib/use-reduzir";
+import { balanco, ventoTransicao } from "@/lib/vento";
 
 const destaques = destaquesPresente
   .map((id) => presentes.find((p) => p.id === id))
@@ -40,12 +43,20 @@ export function DestaquesPresentes() {
 }
 
 /**
- * Um presente como etiqueta de papel, levemente torta como as polaroids (endireita no toque).
- * Sem foto, entra o desenho de traço do item. A etiqueta inteira é o link.
+ * Um presente como etiqueta de papel, levemente torta como as polaroids, pendurada pelo fio:
+ * balança com o mesmo vento do Traje enquanto está na tela e endireita no toque. Sem foto, entra o
+ * desenho de traço do item. A etiqueta inteira é o link.
  */
 function EtiquetaPresente({ presente: p, indice }: { presente: Presente; indice: number }) {
+  const reduzir = useReduzir();
+  const ref = useRef<HTMLDivElement>(null);
+  const naTela = useInView(ref, { margin: "0px 0px -10% 0px" });
+  const vento = naTela && !reduzir;
   // Pares de colunas alternam o giro: −, +, +, − … (as vizinhas nunca pendem para o mesmo lado).
-  const giro = indice % 4 === 0 || indice % 4 === 3 ? "-rotate-[1.6deg]" : "rotate-[1.4deg]";
+  const giro = indice % 4 === 0 || indice % 4 === 3 ? -1.6 : 1.4;
+  // O vento passa da esquerda para a direita e de cima para baixo (duas colunas no celular).
+  const atraso = (indice % 2) * 0.25 + Math.floor(indice / 2) * 0.4;
+
   const conteudo = (
     <>
       <FormaEtiqueta />
@@ -66,18 +77,31 @@ function EtiquetaPresente({ presente: p, indice }: { presente: Presente; indice:
       </span>
     </>
   );
-  const classe = `relative isolate flex w-full flex-col items-center gap-1 px-2.5 pt-[34px] pb-4 text-center ${giro}`;
-  if (p.presenteado) {
-    return <div className={`${classe} opacity-70`}>{conteudo}</div>;
-  }
+  const classe = "relative isolate flex size-full flex-col items-center gap-1 px-2.5 pt-[34px] pb-4 text-center";
   return (
-    <Link
-      href={`/presentes/${p.id}/`}
-      aria-label={`${p.nome}, ${formatarValor(p.valor)}. Presentear`}
-      className={`${classe} focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary motion-safe:transition-transform motion-safe:duration-300 hover:rotate-0 active:rotate-0`}
+    // Gira a partir do furo, onde o fio segura a etiqueta.
+    <motion.div
+      ref={ref}
+      className="flex w-full"
+      style={{ originX: 0.5, originY: 0 }}
+      initial={{ rotate: giro }}
+      animate={{ rotate: vento ? balanco(giro, 2.2) : giro }}
+      transition={vento ? ventoTransicao(atraso) : { duration: 0.6 }}
+      whileHover={p.presenteado ? undefined : { rotate: 0, transition: { duration: 0.3 } }}
+      whileTap={p.presenteado ? undefined : { rotate: 0, transition: { duration: 0.2 } }}
     >
-      {conteudo}
-    </Link>
+      {p.presenteado ? (
+        <div className={`${classe} opacity-70`}>{conteudo}</div>
+      ) : (
+        <Link
+          href={`/presentes/${p.id}/`}
+          aria-label={`${p.nome}, ${formatarValor(p.valor)}. Presentear`}
+          className={`${classe} focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary`}
+        >
+          {conteudo}
+        </Link>
+      )}
+    </motion.div>
   );
 }
 
