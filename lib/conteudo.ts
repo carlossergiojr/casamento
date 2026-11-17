@@ -159,13 +159,33 @@ export const galeria = {
 export type DesenhoTraje = "vestido" | "terno";
 export type IconeDica = "tecido" | "salto" | "sol";
 
-/** Cartão "Traje" (versão B, specs/007): desenhos no cabide, cores a evitar por motivo e dicas. */
+/**
+ * Cartão "Traje" (caderno da costureira, specs/007): roupas no cabide com recadinhos à mão,
+ * cores a evitar como retalhos presos com alfinete, e as dicas de verão em ícones.
+ */
 export const dressCode = {
   traje: "Social",
-  /** Legenda de cada desenho (roupa no cabide, sem pessoas). */
+  /** Legenda de cada desenho (roupa no cabide, sem pessoas) e os dois recadinhos com setinha:
+   *  o de cima e o de baixo, cada um em duas linhas curtas (o desenho não quebra linha sozinho). */
   trajes: [
-    { desenho: "vestido" as DesenhoTraje, legenda: "vestido" },
-    { desenho: "terno" as DesenhoTraje, legenda: "terno opcional" },
+    {
+      desenho: "vestido" as DesenhoTraje,
+      legenda: "vestido",
+      detalhe: "",
+      notas: [
+        ["fluido,", "que balança"],
+        ["qualquer", "comprimento"],
+      ],
+    },
+    {
+      desenho: "terno" as DesenhoTraje,
+      legenda: "terno",
+      detalhe: "(opcional)",
+      notas: [
+        ["gravata?", "não precisa"],
+        ["camisa clara", "já resolve"],
+      ],
+    },
   ],
   pedido: "Com carinho, pedimos que evitem:",
   /** Cores a EVITAR, agrupadas pelo motivo, com o nome embaixo de cada bolinha (no celular não
