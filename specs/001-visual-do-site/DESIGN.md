@@ -40,7 +40,7 @@ Regra: azul domina; dourado ≤ 5% da página.
 - Padding lateral das seções: 20–28px; espaço vertical entre seções: 64px.
 
 ### Assets (`assets/`)
-- `toile.jpg` — estampa da papelaria (tile ~300px). Usar **só** em: faixa do rodapé (160px), topo das telas de sucesso (220px), faixa fina (56px) no topo das telas internas. Nunca atrás de texto.
+- `toile.jpg` — estampa da papelaria (tile ~300px). Usar **só** em: faixa do rodapé (160px), topo das telas de sucesso (220px), faixa fina (56px) no topo das telas internas e a cortina de abertura da home (tela cheia, com placa lisa no centro). Nunca atrás de texto.
 - `spot-bird.png`, `spot-butterfly-1.png`, `spot-butterfly-2.png` — recortes transparentes da estampa, usados soltos como ilustração (`aria-hidden`).
 
 ---

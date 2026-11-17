@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Allura, Cormorant_Garamond, Karla, Pinyon_Script } from "next/font/google";
 import { casamento } from "@/lib/conteudo";
 import { ENVELOPE_LIGADO, scriptConviteAberto } from "@/lib/convite-aberto";
+import { BotaoSom } from "@/components/botao-som";
 import { Movimento } from "@/components/movimento";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
@@ -87,7 +88,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         </noscript>
       </head>
       <body className="min-h-dvh">
-        <Movimento>{children}</Movimento>
+        <Movimento>
+          {children}
+          <BotaoSom />
+        </Movimento>
         <Toaster position="bottom-center" theme="light" />
       </body>
     </html>

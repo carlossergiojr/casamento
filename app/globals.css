@@ -87,7 +87,7 @@
   }
 }
 
-/* Convite já aberto nesta sessão: o envelope nem aparece (components/envelope.tsx). */
+/* Convite já aberto nesta sessão: a cortina nem aparece (components/cortina.tsx). */
 html[data-convite="aberto"] [data-envelope]:not([data-abrindo]) {
   display: none;
 }

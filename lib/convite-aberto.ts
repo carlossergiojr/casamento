@@ -1,8 +1,8 @@
 /**
- * Envelope de abertura desligado por enquanto: o site já entra na capa. Para religar, volte para
- * `true` (a página e o script abaixo leem esta chave).
+ * Cortina de abertura (components/cortina.tsx), que também dá a partida na música. Com `false`, o
+ * site entra direto na capa (a página e o script abaixo leem esta chave).
  */
-export const ENVELOPE_LIGADO = false;
+export const ENVELOPE_LIGADO = true;
 
 /** Marca na sessão que o convite já foi aberto (specs/001 US1, plan R1). */
 export const CHAVE_CONVITE_ABERTO = "cavi-convite-aberto";

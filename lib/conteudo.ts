@@ -43,6 +43,9 @@ export const casamento = {
   fotoCapa: publico("/fotos/capa.jpg"),
 };
 
+/** Música que começa ao abrir a cortina (components/cortina.tsx); toca em loop. */
+export const musica = publico("/musica/iris.mp3");
+
 export const enderecoCompleto = `${casamento.local.nome} — ${casamento.local.endereco}, ${casamento.local.cidadeCep}`;
 const buscaMapa = encodeURIComponent(
   "R. Rubens Francisco Dias, 2101, Papagaio, Feira de Santana - BA, 44059-370",

@@ -1,4 +1,4 @@
-import { Envelope } from "@/components/envelope";
+import { Cortina } from "@/components/cortina";
 import { ENVELOPE_LIGADO } from "@/lib/convite-aberto";
 import { Cabecalho } from "@/components/site/cabecalho";
 import { Capa } from "@/components/site/capa";
@@ -13,8 +13,8 @@ import { DressCode } from "@/components/site/traje";
 export default function Inicio() {
   return (
     <>
-      {/* Desligado por enquanto: entra direto na capa (lib/convite-aberto.ts). */}
-      {ENVELOPE_LIGADO && <Envelope />}
+      {/* Cortina de abertura, com a música (lib/convite-aberto.ts liga e desliga). */}
+      {ENVELOPE_LIGADO && <Cortina />}
       {/* Mobile-first: 390px é a referência; no desktop vira uma coluna centralizada. */}
       <div id="site" className="mx-auto max-w-[640px] bg-background md:border-x md:border-surface">
         <Cabecalho />

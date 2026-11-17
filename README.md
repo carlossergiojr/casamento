@@ -19,6 +19,6 @@ npm run build      # build de produção
 
 - **Textos, datas, endereço, fotos, presentes e convites de exemplo**: `lib/conteudo.ts`.
 - **Cores e fontes**: `app/globals.css` (tokens do DESIGN.md) e `app/layout.tsx`.
-- **Seções da página inicial**: `components/site/`; envelope: `components/envelope.tsx`.
+- **Seções da página inicial**: `components/site/`; abertura (cortina + música): `components/cortina.tsx`.
 - **O que falta**: `PENDENCIAS.md`.
 - **Especificações**: `specs/` (Spec Kit); constituição em `.specify/memory/constitution.md`.

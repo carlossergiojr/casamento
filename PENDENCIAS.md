@@ -48,6 +48,9 @@ presente vira "Presenteado" e aparece na aba "Presentes" de `/noivos`.
 
 ## Feito
 
+- 17/11/2026 — Abertura da home virou uma cortina de toile com placa "Abrir": ao tocar, a
+  cortina corre para os lados e começa a música (Iris, em loop, `public/musica/iris.mp3`), com
+  botão de som no canto. "Entrar sem música" abre em silêncio. Sai o envelope antigo.
 - 17/11/2026 — Revisão de UX (3 agentes), grupos 1 e 2. **Confirmação**: "voltar" depois de
   enviar não mostra mais o formulário antigo; sem internet, avisa na própria tela e mantém as
   escolhas; código de QR inexistente diz qual código não achou; quem chega pelo QR não vê "Passo 2
