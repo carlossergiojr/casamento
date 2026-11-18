@@ -7,7 +7,6 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
 
 ## 1. Conteúdo (só os noivos podem dar) — tudo em `lib/conteudo.ts`
 
-- [ ] **Legenda do pré-wedding**: escrever a legenda da polaroid grande (hoje "[legenda curta]").
 - [ ] **Lista de presentes real**: revisar os 62 objetos e valores (só objetos, por categoria),
       tirar o que já têm em casa, e mandar as **fotos dos produtos** (salvas em
       `public/presentes/`, nome do arquivo como 4º valor do item). Sem foto, aparece o desenho de traço do item.
@@ -47,6 +46,8 @@ presente vira "Presenteado" e aparece na aba "Presentes" de `/noivos`.
 
 ## Feito
 
+- 17/11/2026 — Galeria sem legenda; as três polaroids revezam as 12 fotos sozinhas (fade lento,
+  uma polaroid por vez a cada 2,5 s, só com a seção na tela; paradas com "reduzir movimento").
 - 17/11/2026 — Fotos reais do pré-wedding na galeria: 12 das 31 do ensaio (uma por cena, da
   sala ao píer à noite), reduzidas para 1200×1800 em `public/fotos/pre-01..12.jpg`. "Ver todas
   as fotos" mostra a foto inteira (2:3) e não passa mais da largura do celular.

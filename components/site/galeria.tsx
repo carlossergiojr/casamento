@@ -1,7 +1,8 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion } from "motion/react";
+import { motion, useInView } from "motion/react";
 import { useReduzir } from "@/lib/use-reduzir";
 import { galeria } from "@/lib/conteudo";
 import { Revelar } from "./revelar";
@@ -15,6 +16,9 @@ import {
 } from "@/components/ui/carousel";
 
 const SOMBRA = "shadow-[0_1px_3px_rgb(43_49_64/0.12)]";
+/** De quanto em quanto tempo uma das três polaroids troca de foto (uma por vez, em rodízio). */
+const TROCA_MS = 2500;
+const POLAROIDS = 3;
 
 /** Polaroid que "cai" girando até o ângulo final ao entrar na tela. */
 function Polaroid({
@@ -43,6 +47,32 @@ function Polaroid({
   );
 }
 
+/**
+ * Fotos de uma polaroid empilhadas; só a da vez aparece, as outras somem num fade lento.
+ * Todas ficam montadas para a troca não piscar enquanto a próxima carrega.
+ */
+function Revezando({ polaroid, vez, sizes }: { polaroid: number; vez: number; sizes: string }) {
+  const fotos = galeria.fotos.filter((_, i) => i % POLAROIDS === polaroid);
+  const atual = vez % fotos.length;
+  return (
+    <div className="relative h-full w-full bg-surface">
+      {fotos.map((f, i) => (
+        <Image
+          key={f.src}
+          src={f.src}
+          alt={i === atual ? f.alt : ""}
+          aria-hidden={i !== atual}
+          fill
+          sizes={sizes}
+          className={`object-cover transition-opacity duration-[1500ms] ease-in-out ${
+            i === atual ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
+
 function Foto({ i, sizes }: { i: number; sizes: string }) {
   const f = galeria.fotos[i];
   return (
@@ -53,25 +83,36 @@ function Foto({ i, sizes }: { i: number; sizes: string }) {
 }
 
 export function Galeria() {
+  const reduzir = useReduzir();
+  const secao = useRef<HTMLElement>(null);
+  const naTela = useInView(secao, { margin: "0px 0px -20% 0px" });
+  const [passo, setPasso] = useState(0);
+
+  useEffect(() => {
+    if (reduzir || !naTela) return;
+    const id = setInterval(() => setPasso((p) => p + 1), TROCA_MS);
+    return () => clearInterval(id);
+  }, [reduzir, naTela]);
+
+  /** Quantas vezes a polaroid `n` já trocou: a cada passo, troca a polaroid `passo % 3`. */
+  const vez = (n: number) => Math.floor((passo + POLAROIDS - 1 - n) / POLAROIDS);
+
   return (
-    <section id="galeria" className="flex flex-col gap-7 px-5 pt-16 pb-[72px]">
+    <section ref={secao} id="galeria" className="flex flex-col gap-7 px-5 pt-16 pb-[72px]">
       <Revelar>
         <h2 className="text-center font-serif text-[40px] text-primary italic">Pré-wedding</h2>
       </Revelar>
 
       <div className="flex flex-col items-center">
-        <Polaroid angulo={-3} atraso={0} className="flex w-[min(270px,80vw)] flex-col gap-2.5 p-3 pb-10">
+        <Polaroid angulo={-3} atraso={0} className="w-[min(270px,80vw)] p-3 pb-10">
           <div className="h-[300px]">
-            <Foto i={0} sizes="270px" />
+            <Revezando polaroid={0} vez={vez(0)} sizes="270px" />
           </div>
-          <span className="text-center font-serif text-lg text-primary-deep italic">
-            {galeria.legenda}
-          </span>
         </Polaroid>
         <div className="-mt-6 flex">
           <Polaroid angulo={4} atraso={0.15} className="w-[min(170px,44vw)] translate-x-3 p-2.5 pb-[30px]">
             <div className="aspect-[150/170]">
-              <Foto i={1} sizes="170px" />
+              <Revezando polaroid={1} vez={vez(1)} sizes="170px" />
             </div>
           </Polaroid>
           <Polaroid
@@ -80,7 +121,7 @@ export function Galeria() {
             className="w-[min(170px,44vw)] translate-x-[-8px] translate-y-[30px] p-2.5 pb-[30px]"
           >
             <div className="aspect-[150/170]">
-              <Foto i={2} sizes="170px" />
+              <Revezando polaroid={2} vez={vez(2)} sizes="170px" />
             </div>
           </Polaroid>
         </div>

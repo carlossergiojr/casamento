@@ -135,8 +135,10 @@ export const historia: { linhas: string[]; borboleta?: boolean }[] = [
 export const historiaFecho = "Agora só falta você.";
 
 export const galeria = {
-  legenda: "[legenda curta]",
-  /** As três primeiras viram as polaroids; todas aparecem em "Ver todas as fotos". */
+  /**
+   * Na tela, três polaroids revezam as fotos (a 1ª, 4ª, 7ª… na grande; as outras nas pequenas);
+   * todas aparecem em "Ver todas as fotos".
+   */
   fotos: [
     "Victória e Carlos abraçados na sala, olhando um para o outro",
     "Em preto e branco, os dois passando pela mesa redonda da sala",
