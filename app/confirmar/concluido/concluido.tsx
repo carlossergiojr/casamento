@@ -34,9 +34,6 @@ export function Concluido({ convite }: { convite: ConvitePublico }) {
             </div>
           </div>
         ))}
-        {alguemVai && convite.restricao && (
-          <p className="mt-1 border-t border-line/50 pt-2 text-[13px] text-primary-deep">Restrição: {convite.restricao}</p>
-        )}
       </Revelar>
 
       <p className="text-[13px] text-primary-deep">

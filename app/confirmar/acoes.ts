@@ -59,7 +59,6 @@ const Resposta = z.object({
     .array(z.object({ pessoaId: z.uuid(), resposta: z.enum(["vem", "nao-vem"]) }))
     .min(1)
     .max(30),
-  restricao: z.string().trim().max(300).optional().default(""),
 });
 
 export type ResultadoResposta = { ok: true } | { ok: false; erro: string };
@@ -98,7 +97,7 @@ export async function responderConvite(entrada: unknown): Promise<ResultadoRespo
       }
       await tx
         .update(convites)
-        .set({ restricao: dados.data.restricao, respondidoEm: new Date() })
+        .set({ respondidoEm: new Date() })
         .where(eq(convites.id, convite.id));
     });
     return { ok: true };

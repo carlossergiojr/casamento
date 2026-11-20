@@ -30,7 +30,7 @@ export const convites = pgTable("convites", {
   telefone: text().notNull().default(""),
   lado: text({ enum: ["Victória", "Carlos", "Os dois"] }).notNull().default("Os dois"),
   obs: text().notNull().default(""),
-  /** Do RSVP, até 300 caracteres. */
+  /** Anotada pelos noivos em /noivos (o RSVP não pergunta mais). */
   restricao: text().notNull().default(""),
   respondidoEm: timestamp("respondido_em", { withTimezone: true }),
   criadoEm: criadoEm(),

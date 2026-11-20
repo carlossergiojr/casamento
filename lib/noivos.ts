@@ -16,7 +16,7 @@ export type Convidado = {
   telefone: string;
   lado: Lado;
   obs: string;
-  restricao: string; // informada no RSVP
+  restricao: string; // anotada pelos noivos
   respondidoEm: string | null; // ISO
 };
 

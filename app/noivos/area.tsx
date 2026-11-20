@@ -514,8 +514,8 @@ function FormConvidado({
           ))}
         </fieldset>
       )}
-      <Campo id="restricao-noivos" rotulo="Restrição alimentar (do RSVP)">
-        <input id="restricao-noivos" className={campo} value={c.restricao} onChange={(e) => mudar({ restricao: e.target.value })} maxLength={300} />
+      <Campo id="restricao-noivos" rotulo="Restrição alimentar">
+        <input id="restricao-noivos" className={campo} value={c.restricao} onChange={(e) => mudar({ restricao: e.target.value })} />
       </Campo>
       <Campo id="codigo" rotulo="Código do convite (o do QR; vazio = gerar)">
         <input

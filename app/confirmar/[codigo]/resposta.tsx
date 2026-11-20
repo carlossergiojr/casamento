@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { campo, passo, rotuloCampo, tituloInterno } from "@/components/interno";
+import { passo, tituloInterno } from "@/components/interno";
 import { casamento } from "@/lib/conteudo";
 import type { ConvitePublico } from "@/lib/convites-servidor";
 import { responderConvite } from "../acoes";
@@ -26,7 +26,6 @@ export function RespostaConvite({
   const [respostas, setRespostas] = useState<(Resposta | null)[]>(
     convite.pessoas.map((p) => (p.resposta === "vem" ? "vou" : p.resposta === "nao-vem" ? "nao" : null)),
   );
-  const [restricao, setRestricao] = useState(convite.restricao);
   const [erro, setErro] = useState("");
   const completo = respostas.every((r) => r !== null);
   const primeiroNome = (convite.pessoas[0]?.nome ?? convite.titular).split(" ")[0];
@@ -40,7 +39,6 @@ export function RespostaConvite({
       const r = await responderConvite({
         codigo: convite.codigo,
         respostas: convite.pessoas.map((p, i) => ({ pessoaId: p.id, resposta: respostas[i] === "vou" ? "vem" : "nao-vem" })),
-        restricao: respostas.includes("vou") ? restricao : "",
       }).catch(() => ({ ok: false as const, erro: "Sem conexão. Confira a internet e tente de novo." }));
       if (r.ok) {
         // `replace` + `refresh`: o "voltar" do celular não cai na versão antiga do formulário.
@@ -127,23 +125,6 @@ export function RespostaConvite({
             </div>
           </fieldset>
         ))}
-
-        {respostas.includes("vou") && (
-          <div className="flex flex-col gap-1.5">
-            <label htmlFor="restricao" className={rotuloCampo}>
-              Alguma restrição alimentar ou alergia? (opcional)
-            </label>
-            <input
-              id="restricao"
-              name="restricao"
-              maxLength={300}
-              value={restricao}
-              onChange={(e) => setRestricao(e.target.value)}
-              className={campo}
-              placeholder="Ex.: alergia a camarão, vegetariano"
-            />
-          </div>
-        )}
 
         <p className="text-[13px] text-primary-deep">
           Os nomes vêm do convite e não podem ser alterados. Dúvidas? Fale direto com os noivos.

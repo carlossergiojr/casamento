@@ -66,7 +66,7 @@ const ConvidadoZ = z.object({
   telefone: texto(40),
   lado: z.enum(["Victória", "Carlos", "Os dois"]),
   obs: texto(1000),
-  restricao: texto(300),
+  restricao: texto(1000),
 });
 const GastoZ = z.object({
   id,

@@ -42,6 +42,9 @@ presente vira "Presenteado" e aparece na aba "Presentes" de `/noivos`.
 
 ## Feito
 
+- 20/11/2026 — Confirmação sem a pergunta de restrição alimentar/alergia (nem o limite de 300
+  letras). O campo continua em `/noivos` para anotar à mão, se alguém avisar.
+
 - 20/11/2026 — QR impresso (`…/casamento/?id=CÓDIGO`) abre direto a confirmação daquele convite
   (redirect em `next.config.ts`). Na área dos noivos, "Adicionar convites" soma os convites de um
   arquivo aos que já estão no banco, sem apagar nada (código que já existe é pulado).

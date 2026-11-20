@@ -9,7 +9,6 @@ const { convites, pessoas } = schema;
 export type ConvitePublico = {
   codigo: string;
   titular: string;
-  restricao: string;
   respondido: boolean;
   pessoas: { id: string; nome: string; resposta: "pendente" | "vem" | "nao-vem" }[];
 };
@@ -18,7 +17,7 @@ export async function lerConvitePublico(codigoBruto: string): Promise<ConvitePub
   const codigo = normalizarCodigo(codigoBruto);
   if (!codigo) return null;
   const [c] = await db
-    .select({ id: convites.id, codigo: convites.codigo, titular: convites.titular, restricao: convites.restricao, respondidoEm: convites.respondidoEm })
+    .select({ id: convites.id, codigo: convites.codigo, titular: convites.titular, respondidoEm: convites.respondidoEm })
     .from(convites)
     .where(eq(convites.codigo, codigo));
   if (!c) return null;
@@ -27,5 +26,5 @@ export async function lerConvitePublico(codigoBruto: string): Promise<ConvitePub
     .from(pessoas)
     .where(eq(pessoas.conviteId, c.id))
     .orderBy(asc(pessoas.ordem));
-  return { codigo: c.codigo, titular: c.titular, restricao: c.restricao, respondido: !!c.respondidoEm, pessoas: lista };
+  return { codigo: c.codigo, titular: c.titular, respondido: !!c.respondidoEm, pessoas: lista };
 }
