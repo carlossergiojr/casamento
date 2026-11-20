@@ -316,7 +316,52 @@ export async function importarCopia(conteudo: unknown): Promise<Resultado<{ conv
   });
 }
 
-export async function exportarCopia(): Promise<Resultado<DadosNoivos & { versao: 1 }>> {
+/**
+ * Soma convites ao que já está no banco (ex.: a planilha dos QR), sem apagar nada: o código que
+ * já existe é pulado. Aceita o mesmo formato da cópia (só `convidados` é lido).
+ */
+export async function adicionarConvites(
+  conteudo: unknown,
+): Promise<Resultado<{ adicionados: number; pulados: string[] }>> {
+  const v = Copia.pick({ convidados: true }).safeParse(conteudo);
+  if (!v.success) return { ok: false, erro: "Esse arquivo não tem convites." };
+  const lista = v.data.convidados.filter((c) => c.titular.trim() || c.pessoas.length);
+  if (!lista.length || lista.length > 500) return { ok: false, erro: "Esse arquivo não tem convites." };
+
+  return comSessao(async () => {
+    const existentes = new Set((await db.select({ codigo: convites.codigo }).from(convites)).map((x) => x.codigo));
+    const pulados: string[] = [];
+    let adicionados = 0;
+    await db.transaction(async (tx) => {
+      for (const c of lista) {
+        let codigo = normalizarCodigo(c.codigo);
+        if (codigo && existentes.has(codigo)) {
+          pulados.push(codigo);
+          continue;
+        }
+        if (!codigoValido(codigo)) do codigo = gerarCodigo(); while (existentes.has(codigo));
+        existentes.add(codigo);
+        const conviteId = crypto.randomUUID();
+        await tx.insert(convites).values({
+          id: conviteId,
+          codigo,
+          titular: (c.titular.trim() || c.pessoas[0]?.nome || "(sem nome)").slice(0, 120),
+          telefone: c.telefone.slice(0, 40),
+          lado: c.lado,
+          obs: c.obs.slice(0, 1000),
+        });
+        const nomes = c.pessoas.slice(0, 30).map((p) => p.nome.trim().slice(0, 120)).filter(Boolean);
+        if (nomes.length) {
+          await tx.insert(pessoas).values(nomes.map((nome, ordem) => ({ conviteId, nome, ordem })));
+        }
+        adicionados++;
+      }
+    });
+    return { ok: true, valor: { adicionados, pulados } };
+  });
+}
+
+export async function exportarCopia():Promise<Resultado<DadosNoivos & { versao: 1 }>> {
   if (!(await sessaoValida())) return SEM_SESSAO;
   return { ok: true, valor: { versao: 1, ...(await lerDadosNoivos()) } };
 }

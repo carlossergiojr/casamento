@@ -11,15 +11,12 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
       tirar o que já têm em casa, e mandar as **fotos dos produtos** (salvas em
       `public/presentes/`, nome do arquivo como 4º valor do item). Sem foto, aparece o desenho de traço do item.
       Escolher também os **destaques da home** (`destaquesPresente` em `lib/conteudo.ts`).
-- [ ] **Lista de convidados**: os convites de verdade (titular + pessoas + o código que está no QR
-      de cada um), digitados na área dos noivos (`/noivos`) depois que ela estiver no ar. Os 3 de
-      exemplo (CAVI01–03) agora só existem no banco de teste.
+- [ ] **Lista de convidados**: carregar em `/noivos` → "Adicionar convites" o arquivo gerado da
+      planilha dos QR (47 convites; fica fora do repositório). Falta: o convite `8SS8U6` (livre),
+      ver se Carine e Junior (`CUYYPM`, "talvez") vão mesmo, e preencher lado e telefone.
 - [ ] **Croqui do local**: conferir o desenho em "O dia" (`components/site/croqui.tsx`): a Rua
       Zeus sai da R. Rubens Francisco Dias? Os condomínios ficam de cada lado? Tem lago com a ilha?
       Ajusto o traçado com o que vocês disserem (ou com um print do mapa).
-- [ ] **Formato do QR impresso**: o cartão traz um código impresso embaixo do QR, então o QR deve
-      levar a `…/confirmar/CÓDIGO/`. Abrir um QR para confirmar e cadastrar em `/noivos` cada
-      convite com exatamente o código impresso.
 
 ## 2. Banco, senha e RSVP no ar (specs/006)
 
@@ -27,7 +24,6 @@ Site em https://casamento-cavi.vercel.app (Vercel + Neon). O endereço dos QR
 (`carlossergiojr.github.io/casamento/…`) redireciona para o mesmo caminho lá.
 
 - [x] **Noivos, pelo celular**: senha, importação, convite de teste respondido pelo link (16/11).
-- [ ] Cadastrar os convites reais em `/noivos` (com o código do QR, se o QR tiver código).
 
 ## 3. Pagamento dos presentes (specs/008)
 
@@ -45,6 +41,10 @@ presente vira "Presenteado" e aparece na aba "Presentes" de `/noivos`.
   pessoal. O site não envia nada automático.
 
 ## Feito
+
+- 20/11/2026 — QR impresso (`…/casamento/?id=CÓDIGO`) abre direto a confirmação daquele convite
+  (redirect em `next.config.ts`). Na área dos noivos, "Adicionar convites" soma os convites de um
+  arquivo aos que já estão no banco, sem apagar nada (código que já existe é pulado).
 
 - 17/11/2026 — Galeria sem legenda; as três polaroids revezam as 12 fotos sozinhas (fade lento,
   uma polaroid por vez a cada 2,5 s, só com a seção na tela; paradas com "reduzir movimento").

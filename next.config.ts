@@ -8,6 +8,18 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   trailingSlash: true,
   images: { unoptimized: true },
+  // Os QR impressos levam a "…/casamento/?id=CÓDIGO" (o GitHub Pages repassa a query): abre
+  // direto a confirmação daquele convite.
+  async redirects() {
+    return [
+      {
+        source: "/",
+        has: [{ type: "query", key: "id", value: "(?<id>[A-Za-z0-9-]{3,20})" }],
+        destination: "/confirmar/:id/",
+        permanent: false,
+      },
+    ];
+  },
   // Avisa no build quando esta versão do Next tiver falha de segurança conhecida.
   experimental: { agentUpgrade: "security" },
   turbopack: {

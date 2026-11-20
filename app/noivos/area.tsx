@@ -29,6 +29,7 @@ import { cn } from "@/lib/utils";
 import {
   apagar,
   apagarConvite,
+  adicionarConvites,
   exportarCopia,
   importarCopia,
   marcarTarefa as marcarNoServidor,
@@ -1092,6 +1093,27 @@ async function importar(texto: string) {
 
 function Copias() {
   const arquivo = useRef<HTMLInputElement>(null);
+  const novos = useRef<HTMLInputElement>(null);
+
+  const somar = async (f: File | undefined) => {
+    if (!f) return;
+    let dados: unknown = null;
+    try {
+      dados = JSON.parse(await f.text());
+    } catch {}
+    const n = Array.isArray((dados as { convidados?: unknown } | null)?.convidados)
+      ? (dados as { convidados: unknown[] }).convidados.length
+      : 0;
+    if (!n) toast.error("Esse arquivo não tem convites.");
+    else if (window.confirm(`Adicionar ${n} convites aos que já estão salvos? Nada é apagado.`)) {
+      const r = await rodar(adicionarConvites(dados));
+      if (r && r !== true) {
+        const pulados = r.pulados.length ? ` Já existiam (pulados): ${r.pulados.join(", ")}.` : "";
+        toast.success(`${r.adicionados} convites adicionados.${pulados}`);
+      }
+    }
+    if (novos.current) novos.current.value = "";
+  };
 
   const baixar = async () => {
     const r = await rodar(exportarCopia());
@@ -1111,7 +1133,8 @@ function Copias() {
     <section className="mt-4 flex flex-col gap-3 border-t border-gold-line pt-6">
       <p className="text-[13px] text-primary-deep">
         Tudo fica salvo no banco: vocês dois veem a mesma coisa, em qualquer aparelho. Nada disso aparece no site.
-        “Salvar cópia” baixa um backup; “Abrir cópia” troca tudo pelo conteúdo do arquivo.
+        “Salvar cópia” baixa um backup; “Abrir cópia” troca tudo pelo conteúdo do arquivo; “Adicionar
+        convites” só soma os convites do arquivo aos que já estão aqui.
       </p>
       <div className="grid grid-cols-2 gap-2.5">
         <button className={botaoSecundario} onClick={baixar}>
@@ -1121,7 +1144,11 @@ function Copias() {
           Abrir cópia
         </button>
       </div>
+      <button className={botaoSecundario} onClick={() => novos.current?.click()}>
+        Adicionar convites
+      </button>
       <input ref={arquivo} type="file" accept="application/json,.json" hidden onChange={(e) => carregar(e.target.files?.[0])} />
+      <input ref={novos} type="file" accept="application/json,.json" hidden onChange={(e) => somar(e.target.files?.[0])} />
     </section>
   );
 }
