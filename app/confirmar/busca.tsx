@@ -129,10 +129,10 @@ export function BuscaConvite() {
             </p>
             <p className="text-[15px] text-primary-deep">
               {codigoQr && ajuda
-                ? `O código ${codigoQr} não está na nossa lista. Busque pelo seu nome no campo acima; se não aparecer, fale direto com os noivos — eles resolvem pra você.`
-                : "Tente escrever como está no convite, ou use o código impresso nele. Se mesmo assim não aparecer, fale direto com os noivos — eles resolvem pra você."}
+                ? `O código ${codigoQr} não está na nossa lista. Busque pelo seu nome no campo acima; se não aparecer, chama a gente no WhatsApp que a gente resolve.`
+                : "Tente escrever como está no convite, ou use o código impresso nele. Se mesmo assim não aparecer, chama a gente no WhatsApp que a gente resolve."}
             </p>
-            <FalarComNoivos texto="Oi! Não achei meu nome na confirmação do casamento." className="mt-1 w-full" />
+            <FalarComNoivos className="mt-1 w-full" />
             <p className="pt-1 text-[13px] text-primary-deep">
               A confirmação é só para quem já está na lista de convidados.
             </p>

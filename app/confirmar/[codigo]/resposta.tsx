@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { passo, tituloInterno } from "@/components/interno";
+import { LinkWhatsapp } from "@/components/site/whatsapp";
 import { casamento } from "@/lib/conteudo";
 import { guardarMeuConvite } from "@/lib/meu-convite";
 import type { ConvitePublico } from "@/lib/convites-servidor";
@@ -57,8 +58,11 @@ export function RespostaConvite({
       <main className="flex flex-1 flex-col gap-[22px] px-6 py-9">
         <h1 className={tituloInterno}>Olá, {primeiroNome}!</h1>
         <p className="text-[15px] text-primary-deep">
-          O prazo para confirmar terminou em {casamento.prazoRsvp}. Para mudar alguma coisa, fale direto com os
-          noivos.
+          O prazo para confirmar terminou em {casamento.prazoRsvp}. Precisa mudar alguma coisa?{" "}
+          <LinkWhatsapp>
+            Chama a gente no WhatsApp
+          </LinkWhatsapp>
+          .
         </p>
         {convite.respondido && (
           <ul className="flex flex-col gap-2 rounded-[3px] bg-surface p-4">
@@ -131,7 +135,11 @@ export function RespostaConvite({
         ))}
 
         <p className="text-[13px] text-primary-deep">
-          Os nomes vêm do convite e não podem ser alterados. Dúvidas? Fale direto com os noivos.
+          Algum nome errado ou ficou alguma dúvida?{" "}
+          <LinkWhatsapp>
+            Chama a gente no WhatsApp
+          </LinkWhatsapp>
+          .
         </p>
 
         <div className="mt-auto flex flex-col items-center gap-2.5">
