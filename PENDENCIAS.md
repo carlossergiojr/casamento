@@ -42,6 +42,8 @@ presente vira "Presenteado" e aparece na aba "Presentes" de `/noivos`.
 
 ## Feito
 
+- 21/11/2026 — Mais uma foto do pré-wedding: no barco, com o cachorro (`pre-12.jpg`; a do beijo
+  no píer, que fecha a galeria, virou `pre-13.jpg`).
 - 21/11/2026 — QR abre o site, não só o RSVP: `/confirmar/CÓDIGO` (onde o `?id=` impresso cai) leva
   à home com a cortina e o aparelho guarda o convite; "Eu vou!" e "Confirmar presença" abrem
   direto o convite dele (`?de=site`), sem a busca por nome (`lib/meu-convite.ts`).

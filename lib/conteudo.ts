@@ -151,6 +151,7 @@ export const galeria = {
     "Sentados no píer com o cachorro, sorrindo",
     "No barco, Victória rindo com o dedo no queixo de Carlos",
     "Em preto e branco, abraçados de pé no barco sobre o lago",
+    "No barco ao entardecer, os dois sorrindo com o cachorro no colo",
     "Beijo no píer ao anoitecer, ao lado do poste aceso",
   ].map((alt, i) => ({ src: publico(`/fotos/pre-${String(i + 1).padStart(2, "0")}.jpg`), alt })),
 };
