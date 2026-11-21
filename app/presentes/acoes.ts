@@ -3,7 +3,7 @@
 import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { z } from "zod";
-import { formatarValor, presenteLivre, presentes } from "@/lib/conteudo";
+import { formatarValor, presenteLivre, presentes, presentesAbertos } from "@/lib/conteudo";
 import { db, schema } from "@/lib/db";
 import { dentroDoLimite, ipDaRequisicao, registrarTentativa } from "@/lib/limite";
 import { criarPreferencia, jaPresenteado } from "@/lib/mercado-pago";
@@ -34,6 +34,7 @@ async function urlBase() {
  * o valor escolhido, entre o mínimo e o máximo de `presenteLivre`), grava a intenção e devolve o checkout do MP.
  */
 export async function iniciarPagamento(entrada: unknown): Promise<ResultadoPagamento> {
+  if (!presentesAbertos) return { ok: false, erro: "A lista de presentes ainda não abriu." };
   const dados = Entrada.safeParse(entrada);
   if (!dados.success) return { ok: false, erro: "Confira seu nome." };
   const { presenteId, nome, recado } = dados.data;

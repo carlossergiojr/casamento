@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { TelaInterna } from "@/components/interno";
 import { FotoPresente } from "@/components/site/foto-presente";
-import { formatarValor, idsPresentes, presenteLivre, presentes, publico } from "@/lib/conteudo";
+import { formatarValor, idsPresentes, presenteLivre, presentes, presentesAbertos, publico } from "@/lib/conteudo";
 import { lerPresenteados } from "@/lib/mercado-pago";
 import { FormPresente } from "./form-presente";
 
@@ -17,6 +17,8 @@ export async function generateMetadata({ params }: PageProps<"/presentes/[id]">)
 
 export default async function DetalhePresente({ params }: PageProps<"/presentes/[id]">) {
   const { id } = await params;
+  // Lista fechada: quem chega por link cai no "em breve".
+  if (!presentesAbertos) redirect("/presentes/");
 
   // Cota livre: o convidado escolhe o valor (specs/007).
   if (id === presenteLivre.id) {

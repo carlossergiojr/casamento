@@ -46,11 +46,32 @@ export function DestaquesPresentes({ presenteados }: { presenteados: string[] })
 }
 
 /**
+ * Lista ainda fechada (`presentesAbertos`): o mesmo varal, com etiquetas em branco — só o desenho
+ * de traço e "em breve", sem nome, preço nem link. Quatro no celular, seis a partir do tablet.
+ */
+export function EtiquetasEmBreve() {
+  const itens = destaquesPresente
+    .map((id) => presentes.find((p) => p.id === id))
+    .filter((p): p is Presente => !!p);
+  return (
+    <Revelar>
+      <ul className={GRADE} aria-hidden="true">
+        {itens.map((p, i) => (
+          <li key={p.id} className={i < 4 ? "flex" : "hidden md:flex"}>
+            <EtiquetaPresente presente={p} indice={i} emBreve />
+          </li>
+        ))}
+      </ul>
+    </Revelar>
+  );
+}
+
+/**
  * Um presente como etiqueta de papel, levemente torta como as polaroids, pendurada pelo fio:
  * balança com o mesmo vento do Traje enquanto está na tela e endireita no toque. Sem foto, entra o
- * desenho de traço do item. A etiqueta inteira é o link.
+ * desenho de traço do item. A etiqueta inteira é o link (em branco, `emBreve`, não é link nem endireita).
  */
-function EtiquetaPresente({ presente: p, indice }: { presente: Presente; indice: number }) {
+function EtiquetaPresente({ presente: p, indice, emBreve = false }: { presente: Presente; indice: number; emBreve?: boolean }) {
   const reduzir = useReduzir();
   const ref = useRef<HTMLDivElement>(null);
   const naTela = useInView(ref, { margin: "0px 0px -10% 0px" });
@@ -60,7 +81,15 @@ function EtiquetaPresente({ presente: p, indice }: { presente: Presente; indice:
   // O vento passa da esquerda para a direita e de cima para baixo (duas colunas no celular).
   const atraso = (indice % 2) * 0.25 + Math.floor(indice / 2) * 0.4;
 
-  const conteudo = (
+  const parado = p.presenteado || emBreve;
+
+  const conteudo = emBreve ? (
+    <>
+      <FormaEtiqueta />
+      <IconePresente presente={p} className="mb-1.5 size-10 text-line" />
+      <span className="mt-auto pt-0.5 font-serif text-2xl leading-[1.1] text-gold italic">em breve</span>
+    </>
+  ) : (
     <>
       <FormaEtiqueta />
       {p.foto ? (
@@ -91,10 +120,12 @@ function EtiquetaPresente({ presente: p, indice }: { presente: Presente; indice:
       initial={{ rotate: giro }}
       animate={{ rotate: vento ? balanco(giro, 2.2) : giro }}
       transition={vento ? ventoTransicao(atraso) : { duration: 0.6 }}
-      whileHover={p.presenteado ? undefined : { rotate: 0, transition: { duration: 0.3 } }}
-      whileTap={p.presenteado ? undefined : { rotate: 0, transition: { duration: 0.2 } }}
+      whileHover={parado ? undefined : { rotate: 0, transition: { duration: 0.3 } }}
+      whileTap={parado ? undefined : { rotate: 0, transition: { duration: 0.2 } }}
     >
-      {p.presenteado ? (
+      {emBreve ? (
+        <div className={classe}>{conteudo}</div>
+      ) : p.presenteado ? (
         <div className={`${classe} opacity-70`}>{conteudo}</div>
       ) : (
         <Link

@@ -1,12 +1,23 @@
 import Link from "next/link";
-import { casamento, presentes } from "@/lib/conteudo";
+import { avisoPresentesEmBreve, casamento, presentes, presentesAbertos } from "@/lib/conteudo";
 import { lerPresenteados } from "@/lib/mercado-pago";
-import { CotaLivre, DestaquesPresentes } from "./presentes";
+import { CotaLivre, DestaquesPresentes, EtiquetasEmBreve } from "./presentes";
 import { Revelar } from "./revelar";
 
 const TITULO = "font-serif text-[40px] leading-[1.1] text-primary italic";
 
 export async function ListaPresentes() {
+  if (!presentesAbertos) {
+    return (
+      <section id="presentes" className="flex flex-col gap-6 px-5 py-16">
+        <Revelar className="flex flex-col items-center gap-2.5 px-2 text-center">
+          <h2 className={TITULO}>Lista de presentes</h2>
+          <p className="text-[15px] text-primary-deep">{avisoPresentesEmBreve}</p>
+        </Revelar>
+        <EtiquetasEmBreve />
+      </section>
+    );
+  }
   const presenteados = [...(await lerPresenteados())];
   return (
     <section id="presentes" className="flex flex-col gap-6 px-5 py-16">

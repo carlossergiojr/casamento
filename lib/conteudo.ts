@@ -85,8 +85,8 @@ export const contato = {
   nome: "Victória e Carlos",
   whatsapp: "5575999414200",
 };
-export const linkWhatsapp = (texto = "Oi! Tenho uma dúvida sobre o casamento.") =>
-  contato.whatsapp ? `https://wa.me/${contato.whatsapp}?text=${encodeURIComponent(texto)}` : null;
+/** Só abre a conversa, sem mensagem pronta: quem escreve é o convidado. */
+export const linkWhatsapp = () => (contato.whatsapp ? `https://wa.me/${contato.whatsapp}` : null);
 
 /** Perguntas frequentes (o que já foi decidido: lista fechada, prazo do RSVP, ao ar livre). */
 export const duvidas: { pergunta: string; resposta: string }[] = [
@@ -333,6 +333,14 @@ export const presentes: Presente[] = [
     ["kit-ferramentas", "Kit de ferramentas", 250],
   ]),
 ];
+
+/**
+ * Lista de presentes aberta? Enquanto `false`, a seção e /presentes mostram etiquetas em branco com
+ * "em breve" (sem nome, preço nem link) e o pagamento fica recusado no servidor. Para liberar: `true`.
+ */
+export const presentesAbertos = false;
+/** O texto da seção enquanto a lista está fechada. */
+export const avisoPresentesEmBreve = "Estamos escolhendo cada presente com carinho. A lista abre em breve.";
 
 /**
  * Presentes em destaque na página inicial (ids da lista acima, nesta ordem; o ideal são 4 ou 6).

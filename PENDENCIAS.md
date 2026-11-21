@@ -11,6 +11,8 @@ Casamento: 23/01/2027 · prazo do RSVP: 03/01/2027 · convites com QR saem antes
       tirar o que já têm em casa, e mandar as **fotos dos produtos** (salvas em
       `public/presentes/`, nome do arquivo como 4º valor do item). Sem foto, aparece o desenho de traço do item.
       Escolher também os **destaques da home** (`destaquesPresente` em `lib/conteudo.ts`).
+      Enquanto isso a lista fica fechada (`presentesAbertos = false`: etiquetas "em breve", sem
+      pagamento). Com a lista e o Mercado Pago prontos, trocar para `true`.
 - [ ] **Lista de convidados**: carregar em `/noivos` → "Adicionar convites" o arquivo gerado da
       planilha dos QR (47 convites; fica fora do repositório). Falta: o convite `8SS8U6` (livre),
       ver se Carine e Junior (`CUYYPM`, "talvez") vão mesmo, e preencher lado e telefone.
