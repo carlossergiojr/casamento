@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { passo, tituloInterno } from "@/components/interno";
 import { casamento } from "@/lib/conteudo";
+import { guardarMeuConvite } from "@/lib/meu-convite";
 import type { ConvitePublico } from "@/lib/convites-servidor";
 import { responderConvite } from "../acoes";
 
@@ -18,7 +19,7 @@ export function RespostaConvite({
 }: {
   convite: ConvitePublico;
   prazoEncerrado: boolean;
-  /** Chegou pela busca (passo 2 de 2); pelo QR, cai direto aqui. */
+  /** Chegou pela busca (passo 2 de 2); pelo site (QR ou convite lembrado), sem passos. */
   daBusca: boolean;
 }) {
   const router = useRouter();
@@ -29,6 +30,9 @@ export function RespostaConvite({
   const [erro, setErro] = useState("");
   const completo = respostas.every((r) => r !== null);
   const primeiroNome = (convite.pessoas[0]?.nome ?? convite.titular).split(" ")[0];
+
+  // Achou o convite pela busca: o aparelho passa a lembrar dele, como se tivesse vindo pelo QR.
+  useEffect(() => guardarMeuConvite(convite.codigo), [convite.codigo]);
 
   function enviar(e: React.FormEvent) {
     e.preventDefault();

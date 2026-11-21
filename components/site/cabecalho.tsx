@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import { motion } from "motion/react";
 import { casamento } from "@/lib/conteudo";
+import { useHrefConfirmar } from "@/lib/meu-convite";
 import { useReduzir } from "@/lib/use-reduzir";
 
 // Na ordem da página (specs/007). Com `href`, o item abre outra tela em vez de rolar até a seção.
@@ -51,6 +52,7 @@ export function Cabecalho() {
   const [escondido, setEscondido] = useState(false);
   const [rolou, setRolou] = useState(false);
   const destino = useRef<string | null>(null);
+  const hrefConfirmar = useHrefConfirmar();
 
   useEffect(() => {
     let ultimo = window.scrollY;
@@ -123,7 +125,7 @@ export function Cabecalho() {
                 {SECOES.map(({ id, rotulo, href }) => (
                   <li key={id}>
                     {href ? (
-                      <Link href={href} className={ITEM}>
+                      <Link href={id === "rsvp" ? hrefConfirmar : href} className={ITEM}>
                         {rotulo}
                       </Link>
                     ) : (

@@ -39,7 +39,7 @@ export function Concluido({ convite }: { convite: ConvitePublico }) {
       <p className="text-[13px] text-primary-deep">
         Mudou de ideia?{" "}
         <Link
-          href={`/confirmar/${convite.codigo}`}
+          href={`/confirmar/${convite.codigo}?de=site`}
           className="inline-flex min-h-11 items-center text-primary underline decoration-gold-line underline-offset-4"
         >
           Alterar resposta

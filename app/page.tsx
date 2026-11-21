@@ -1,5 +1,6 @@
 import { Cortina } from "@/components/cortina";
 import { ENVELOPE_LIGADO } from "@/lib/convite-aberto";
+import { LembrarConvite } from "@/lib/meu-convite";
 import { Cabecalho } from "@/components/site/cabecalho";
 import { Capa } from "@/components/site/capa";
 import { Duvidas } from "@/components/site/duvidas";
@@ -15,6 +16,8 @@ export default function Inicio() {
     <>
       {/* Cortina de abertura, com a música (lib/convite-aberto.ts liga e desliga). */}
       {ENVELOPE_LIGADO && <Cortina />}
+      {/* Quem chega pelo QR traz ?convite=CÓDIGO: o "Eu vou!" passa a abrir o convite dele. */}
+      <LembrarConvite />
       {/* Mobile-first: 390px é a referência; no desktop vira uma coluna centralizada. */}
       <div id="site" className="mx-auto max-w-[640px] bg-background md:border-x md:border-surface">
         <Cabecalho />

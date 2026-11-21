@@ -14,7 +14,10 @@ export default async function ConfirmarConvite({ params, searchParams }: PagePro
   const convite = await lerConvitePublico(lido);
   // Código do QR que não existe: a busca diz qual código não achou (não "esse nome").
   if (!convite) redirect(`/confirmar/?codigo=${encodeURIComponent(lido)}`);
-  // Quem chega pela busca está no passo 2 e volta para ela; quem chega pelo QR volta para o site.
+  // O QR impresso (`/?id=`, via next.config.ts) e o link copiado em /noivos chegam aqui sem `de`: o convidado vai
+  // primeiro para o site, e o "Eu vou!" de lá volta aqui com `?de=site` (lib/meu-convite.ts).
+  if (de !== "busca" && de !== "site") redirect(`/?convite=${encodeURIComponent(convite.codigo)}`);
+  // Quem chega pela busca está no passo 2 e volta para ela; quem chega pelo site volta para ele.
   const daBusca = de === "busca";
 
   return (

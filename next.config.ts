@@ -8,8 +8,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   trailingSlash: true,
   images: { unoptimized: true },
-  // Os QR impressos levam a "…/casamento/?id=CÓDIGO" (o GitHub Pages repassa a query): abre
-  // direto a confirmação daquele convite.
+  // Os QR impressos levam a "…/casamento/?id=CÓDIGO" (o GitHub Pages repassa a query): a
+  // confirmação confere o código e devolve para a home lembrando o convite (lib/meu-convite.ts).
   async redirects() {
     return [
       {

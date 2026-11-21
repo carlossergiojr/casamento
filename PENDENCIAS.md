@@ -42,6 +42,10 @@ presente vira "Presenteado" e aparece na aba "Presentes" de `/noivos`.
 
 ## Feito
 
+- 21/11/2026 — QR abre o site, não só o RSVP: `/confirmar/CÓDIGO` (onde o `?id=` impresso cai) leva
+  à home com a cortina e o aparelho guarda o convite; "Eu vou!" e "Confirmar presença" abrem
+  direto o convite dele (`?de=site`), sem a busca por nome (`lib/meu-convite.ts`).
+
 - 20/11/2026 — Confirmação sem a pergunta de restrição alimentar/alergia (nem o limite de 300
   letras). O campo continua em `/noivos` para anotar à mão, se alguém avisar.
 

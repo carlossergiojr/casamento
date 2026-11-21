@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { useReduzir } from "@/lib/use-reduzir";
 import { Revelar } from "@/components/site/revelar";
 import { casamento, publico } from "@/lib/conteudo";
+import { useHrefConfirmar } from "@/lib/meu-convite";
 
 export type Estado = "aprovado" | "pendente" | "recusado" | "desistiu";
 
@@ -33,6 +34,7 @@ const textos: Record<Estado, { titulo: string; texto: (recado: boolean) => strin
 type Props = { estado: Estado; id: string; presente: string; valor: string; nome: string; recado: string };
 
 export function Obrigado({ estado, id, presente, valor, nome, recado }: Props) {
+  const hrefConfirmar = useHrefConfirmar();
   const reduzir = useReduzir();
   const router = useRouter();
   const t = textos[estado];
@@ -96,7 +98,7 @@ export function Obrigado({ estado, id, presente, valor, nome, recado }: Props) {
           Voltar à lista
         </Link>
         <Link
-          href="/confirmar"
+          href={hrefConfirmar}
           className="flex min-h-11 items-center justify-center text-sm text-primary-deep underline decoration-gold-line underline-offset-4"
         >
           Já confirmou sua presença?
