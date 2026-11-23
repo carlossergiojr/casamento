@@ -1,5 +1,6 @@
 import { duvidas } from "@/lib/conteudo";
 import { Revelar } from "./revelar";
+import { LinkWhatsapp } from "./whatsapp";
 
 /**
  * Perguntas frequentes (specs/007): `<details>` nativo, que abre e fecha sem JS e é lido certo
@@ -30,7 +31,14 @@ export function Duvidas() {
                   <path d="M8 2 V14 M2 8 H14" />
                 </svg>
               </summary>
-              <p className="pr-8 pb-4 text-[15px] text-primary-deep">{d.resposta}</p>
+              <p className="pr-8 pb-4 text-[15px] text-primary-deep">
+                {d.resposta}
+                {d.whatsapp && (
+                  <>
+                    <LinkWhatsapp>{d.whatsapp}</LinkWhatsapp>.
+                  </>
+                )}
+              </p>
             </details>
           ))}
         </div>

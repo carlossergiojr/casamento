@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, useTransition } from "react";
 import { passo, tituloInterno } from "@/components/interno";
 import { LinkWhatsapp } from "@/components/site/whatsapp";
-import { casamento } from "@/lib/conteudo";
+import { avisoConvite, casamento } from "@/lib/conteudo";
 import { guardarMeuConvite } from "@/lib/meu-convite";
 import type { ConvitePublico } from "@/lib/convites-servidor";
 import { responderConvite } from "../acoes";
@@ -100,6 +100,12 @@ export function RespostaConvite({
             </Link>
           </p>
         </div>
+
+        <p className="flex flex-col gap-1 rounded-[3px] bg-surface p-4 text-[14px] text-primary-deep">
+          {avisoConvite.map((linha) => (
+            <span key={linha}>{linha}</span>
+          ))}
+        </p>
 
         {convite.pessoas.map(({ id, nome: pessoa }, i) => (
           <fieldset key={id} className="flex flex-col gap-3 rounded-[3px] border border-line px-4 pt-2 pb-[18px]">

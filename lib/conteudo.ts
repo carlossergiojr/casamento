@@ -88,12 +88,25 @@ export const contato = {
 /** Só abre a conversa, sem mensagem pronta: quem escreve é o convidado. */
 export const linkWhatsapp = () => (contato.whatsapp ? `https://wa.me/${contato.whatsapp}` : null);
 
-/** Perguntas frequentes (o que já foi decidido: lista fechada, prazo do RSVP, ao ar livre). */
-export const duvidas: { pergunta: string; resposta: string }[] = [
+/**
+ * Aviso no topo da confirmação, acima dos nomes: convidado não convida, e a entrada é pela
+ * lista de confirmados.
+ */
+export const avisoConvite = [
+  "Este convite é pessoal e vale só para os nomes abaixo.",
+  `A entrada é feita pela lista de presença, por isso a confirmação é necessária. Confirme até ${casamento.prazoRsvp}.`,
+];
+
+/**
+ * Perguntas frequentes (o que já foi decidido: lista fechada, prazo do RSVP, ao ar livre).
+ * `whatsapp`: texto de um link para o WhatsApp dos noivos, no fim da resposta.
+ */
+export const duvidas: { pergunta: string; resposta: string; whatsapp?: string }[] = [
   {
     pergunta: "Posso levar acompanhante?",
     resposta:
-      "O convite é pessoal: valem os nomes do envelope. Se alguém da sua casa não aparece na confirmação, fale com a gente antes de levar.",
+      "O convite é pessoal e vale só para os nomes que aparecem na confirmação. Pedimos, com carinho, que não estenda o convite a outras pessoas. Se tiver alguma dúvida sobre o seu convite, ",
+    whatsapp: "fale com a gente",
   },
   {
     pergunta: "Até quando confirmo presença?",
