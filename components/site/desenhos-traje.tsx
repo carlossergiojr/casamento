@@ -37,24 +37,23 @@ const SAIA = (
   </>
 );
 
-// Paletó por cima do cabide (preenchido de branco para esconder a barra), camisa sem gravata.
-const TERNO = (
+// Camisa social de manga longa por cima do cabide (preenchida de branco para esconder a barra):
+// colarinho, carcela de botões e bolso.
+const CAMISA = (
   <>
     <path
       fill="var(--card)"
-      d="M33 29 Q21 30 12 36 C10 60 9 92 8 120 H16 L18 64 V117 Q29 120 40 118 Q51 120 62 117 V64 L64 120 H72 C71 92 70 60 68 36 Q59 30 47 29 Z"
+      d="M33 29 Q22 31 15 36 C10 56 8 84 7 110 H15 L18 62 L17 124 Q40 130 63 124 L62 62 L65 110 H73 C72 84 70 56 65 36 Q58 31 47 29 Z"
     />
-    <path d="M33 29 L40 40 L47 29" />
-    <path d="M36.5 34 L40 40 L43.5 34" stroke="var(--line)" strokeWidth={1} />
-    <path d="M33 29 L29 44 L34 47 L40 80" />
-    <path d="M47 29 L51 44 L46 47 L40 80" />
-    <path d="M40 80 V118" />
-    <path d="M22 100 H33" />
-    <path d="M47 100 H58" />
-    <path d="M50 58 H57" />
+    <path d="M7.5 104 H15.3" />
+    <path d="M64.7 104 H72.5" />
+    <path d="M33 29 L35 41 L40 35 L45 41 L47 29" />
+    <path d="M40 35 V126" />
+    <path d="M45 52 H54 V60 Q49.5 62 45 60 Z" />
     <g fill="currentColor" stroke="none">
-      <circle cx="40" cy="89" r="1.4" />
-      <circle cx="40" cy="101" r="1.4" />
+      {[50, 66, 82, 98, 114].map((cy) => (
+        <circle key={cy} cx="42" cy={cy} r="1.2" />
+      ))}
     </g>
   </>
 );
@@ -79,7 +78,7 @@ export function RoupaNoCabide({
   vento: boolean;
   atraso?: number;
 }) {
-  // O terno é mais pesado: balança menos.
+  // A camisa é mais pesada que a saia: balança menos.
   const forca = nome === "vestido" ? 2.4 : 1.4;
   return (
     <g transform={`translate(${x} ${y}) scale(${escala})`}>
@@ -101,7 +100,7 @@ export function RoupaNoCabide({
             </motion.g>
           </>
         ) : (
-          TERNO
+          CAMISA
         )}
       </motion.g>
     </g>

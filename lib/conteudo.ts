@@ -170,7 +170,7 @@ export const galeria = {
 };
 
 /** Igual ao cartão "Traje" impresso. */
-export type DesenhoTraje = "vestido" | "terno";
+export type DesenhoTraje = "vestido" | "camisa";
 export type IconeDica = "tecido" | "salto" | "sol";
 
 /**
@@ -192,12 +192,12 @@ export const dressCode = {
       ],
     },
     {
-      desenho: "terno" as DesenhoTraje,
-      legenda: "terno",
-      detalhe: "(opcional)",
+      desenho: "camisa" as DesenhoTraje,
+      legenda: "camisa social",
+      detalhe: "",
       notas: [
-        ["gravata?", "não precisa"],
-        ["camisa clara", "já resolve"],
+        ["tecido leve,", "é verão!"],
+        ["manga longa", "ou dobrada"],
       ],
     },
   ],
