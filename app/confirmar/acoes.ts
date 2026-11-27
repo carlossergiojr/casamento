@@ -1,11 +1,12 @@
 "use server";
 
-import { and, eq, inArray } from "drizzle-orm";
+import { and, eq, inArray, sql } from "drizzle-orm";
 import { z } from "zod";
 import { normalizarCodigo, normalizarTexto } from "@/lib/codigo";
 import { prazoEncerrado } from "@/lib/conteudo";
 import { db, schema } from "@/lib/db";
 import { dentroDoLimite, ipDaRequisicao, registrarTentativa } from "@/lib/limite";
+import { sessaoValida } from "@/lib/sessao";
 
 const { convites, pessoas } = schema;
 
@@ -103,5 +104,31 @@ export async function responderConvite(entrada: unknown): Promise<ResultadoRespo
     return { ok: true };
   } catch {
     return { ok: false, erro: "Não deu para salvar agora. Tente de novo em alguns minutos." };
+  }
+}
+
+/**
+ * O convidado abriu o site com o convite dele (QR, link do WhatsApp ou achado na busca): os noivos
+ * veem em /noivos quem já viu. Chamada pelo navegador (`marcarVisita` em lib/meu-convite.ts), então
+ * a prévia do link no WhatsApp, que não roda JavaScript, não conta. Os noivos logados também não.
+ */
+export async function registrarVisita(codigoBruto: unknown): Promise<void> {
+  const v = z.string().max(40).safeParse(codigoBruto);
+  if (!v.success) return;
+  const codigo = normalizarCodigo(v.data);
+  if (!codigo) return;
+  try {
+    if (await sessaoValida()) return;
+    const agora = new Date();
+    await db
+      .update(convites)
+      .set({
+        visitas: sql`${convites.visitas} + 1`,
+        vistoEm: sql`coalesce(${convites.vistoEm}, now())`,
+        ultimaVisitaEm: agora,
+      })
+      .where(eq(convites.codigo, codigo));
+  } catch {
+    // Contar a visita nunca atrapalha o convidado.
   }
 }

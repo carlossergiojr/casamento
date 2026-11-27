@@ -25,6 +25,9 @@ export async function lerDadosNoivos(): Promise<DadosNoivos> {
       obs: c.obs,
       restricao: c.restricao,
       respondidoEm: c.respondidoEm?.toISOString() ?? null,
+      vistoEm: c.vistoEm?.toISOString() ?? null,
+      ultimaVisitaEm: c.ultimaVisitaEm?.toISOString() ?? null,
+      visitas: c.visitas,
       pessoas: ps.filter((p) => p.conviteId === c.id).map((p) => ({ id: p.id, nome: p.nome, resposta: p.resposta })),
     })),
     gastos: gs.map((g) => ({

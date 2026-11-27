@@ -18,6 +18,9 @@ export type Convidado = {
   obs: string;
   restricao: string; // anotada pelos noivos
   respondidoEm: string | null; // ISO
+  vistoEm?: string | null; // ISO, primeira vez que abriu o site (só leitura)
+  ultimaVisitaEm?: string | null; // ISO
+  visitas?: number;
 };
 
 export type Gasto = {

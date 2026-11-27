@@ -6,7 +6,7 @@ import { useEffect, useState, useTransition } from "react";
 import { passo, tituloInterno } from "@/components/interno";
 import { LinkWhatsapp } from "@/components/site/whatsapp";
 import { avisoConvite, casamento } from "@/lib/conteudo";
-import { guardarMeuConvite } from "@/lib/meu-convite";
+import { guardarMeuConvite, marcarVisita } from "@/lib/meu-convite";
 import type { ConvitePublico } from "@/lib/convites-servidor";
 import { responderConvite } from "../acoes";
 
@@ -33,7 +33,10 @@ export function RespostaConvite({
   const primeiroNome = (convite.pessoas[0]?.nome ?? convite.titular).split(" ")[0];
 
   // Achou o convite pela busca: o aparelho passa a lembrar dele, como se tivesse vindo pelo QR.
-  useEffect(() => guardarMeuConvite(convite.codigo), [convite.codigo]);
+  useEffect(() => {
+    guardarMeuConvite(convite.codigo);
+    marcarVisita(convite.codigo);
+  }, [convite.codigo]);
 
   function enviar(e: React.FormEvent) {
     e.preventDefault();

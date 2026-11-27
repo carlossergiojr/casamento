@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useSyncExternalStore } from "react";
+import { registrarVisita } from "@/app/confirmar/acoes";
 import { codigoValido, normalizarCodigo } from "./codigo";
 
 /**
@@ -31,6 +32,20 @@ export function guardarMeuConvite(codigoBruto: string) {
   window.dispatchEvent(new Event(EVENTO));
 }
 
+/** Conta uma visita deste convite, no máximo uma por aba (o `sessionStorage` lembra). */
+export function marcarVisita(codigoBruto: string) {
+  const codigo = normalizarCodigo(codigoBruto);
+  if (!codigoValido(codigo)) return;
+  const chave = `cavi-visita-${codigo}`;
+  try {
+    if (sessionStorage.getItem(chave)) return;
+    sessionStorage.setItem(chave, "1");
+  } catch {
+    // Sem sessionStorage (aba anônima restrita): conta mesmo assim.
+  }
+  registrarVisita(codigo).catch(() => {});
+}
+
 function assinar(avisar: () => void) {
   window.addEventListener(EVENTO, avisar);
   window.addEventListener("storage", avisar);
@@ -46,13 +61,21 @@ export function useHrefConfirmar() {
   return codigo ? `/confirmar/${codigo}?de=site` : "/confirmar";
 }
 
-/** Na home: guarda o `?convite=` vindo do QR e tira o parâmetro do endereço. */
+/**
+ * Na home: guarda o `?convite=` vindo do QR, tira o parâmetro do endereço e conta a visita (também
+ * de quem volta outro dia pelo endereço comum, com o convite já lembrado no aparelho).
+ */
 export function LembrarConvite() {
   useEffect(() => {
     const url = new URL(location.href);
     const codigo = url.searchParams.get("convite");
-    if (!codigo) return;
+    if (!codigo) {
+      const lembrado = ler();
+      if (lembrado) marcarVisita(lembrado);
+      return;
+    }
     guardarMeuConvite(codigo);
+    marcarVisita(codigo);
     url.searchParams.delete("convite");
     history.replaceState(history.state, "", url.pathname + url.search + url.hash);
   }, []);

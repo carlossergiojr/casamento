@@ -33,6 +33,11 @@ export const convites = pgTable("convites", {
   /** Anotada pelos noivos em /noivos (o RSVP não pergunta mais). */
   restricao: text().notNull().default(""),
   respondidoEm: timestamp("respondido_em", { withTimezone: true }),
+  /** Primeira e última vez que o convidado abriu o site com este convite (QR, link ou busca). */
+  vistoEm: timestamp("visto_em", { withTimezone: true }),
+  ultimaVisitaEm: timestamp("ultima_visita_em", { withTimezone: true }),
+  /** Quantas vezes abriu (no máximo uma por aba do navegador; os noivos logados não contam). */
+  visitas: integer().notNull().default(0),
   criadoEm: criadoEm(),
   atualizadoEm: atualizadoEm(),
 });

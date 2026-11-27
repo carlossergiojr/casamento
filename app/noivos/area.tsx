@@ -221,6 +221,10 @@ function Resumo({ dados, irPara }: { dados: DadosNoivos; irPara: (a: Aba) => voi
           <Numero valor={p.vem} rotulo="confirmadas" destaque />
           <Numero valor={p.semResposta} rotulo="sem resposta" />
           <Numero valor={p.naoVem} rotulo="não vêm" />
+          <Numero
+            valor={`${dados.convidados.filter((c) => c.vistoEm).length}/${dados.convidados.length}`}
+            rotulo="convites já abriram o site"
+          />
         </div>
         <div className="flex flex-col gap-1 text-[15px] text-primary-deep">
           {lados.map((l) => {
@@ -304,13 +308,24 @@ function Presentes({ recebidos }: { recebidos: Recebido[] }) {
 
 const normalizar = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
+const diaHora = (iso: string) =>
+  new Date(iso).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+
+/** "Abriu o site em 27/11, 14:05 · 3 vezes (última 29/11, 09:12)" ou "Ainda não abriu o site". */
+function rotuloVisita(c: Convidado) {
+  if (!c.vistoEm) return "Ainda não abriu o site";
+  const n = c.visitas ?? 1;
+  const ultima = n > 1 && c.ultimaVisitaEm ? ` (última ${diaHora(c.ultimaVisitaEm)})` : "";
+  return `Abriu o site em ${diaHora(c.vistoEm)}${n > 1 ? ` · ${n} vezes${ultima}` : ""}`;
+}
+
 function Convidados({ dados }: { dados: DadosNoivos }) {
   const [busca, setBusca] = useState("");
-  const [filtro, setFiltro] = useState<Resposta | "todos">("todos");
+  const [filtro, setFiltro] = useState<Resposta | "todos" | "nao-viu">("todos");
   const [editando, setEditando] = useState<Convidado | null>(null);
 
   const lista = dados.convidados
-    .filter((c) => filtro === "todos" || estadoConvite(c) === filtro)
+    .filter((c) => filtro === "todos" || (filtro === "nao-viu" ? !c.vistoEm : estadoConvite(c) === filtro))
     .filter(
       (c) =>
         !busca ||
@@ -359,9 +374,9 @@ function Convidados({ dados }: { dados: DadosNoivos }) {
             className={campo}
           />
           <div className="-mx-5 flex gap-2 overflow-x-auto px-5">
-            {(["todos", "pendente", "vem", "nao-vem"] as const).map((f) => (
+            {(["todos", "pendente", "vem", "nao-vem", "nao-viu"] as const).map((f) => (
               <button key={f} aria-pressed={filtro === f} onClick={() => setFiltro(f)} className={chip(filtro === f)}>
-                {f === "todos" ? "Todos" : rotuloResposta[f]}
+                {f === "todos" ? "Todos" : f === "nao-viu" ? "Não abriram" : rotuloResposta[f]}
               </button>
             ))}
           </div>
@@ -395,6 +410,7 @@ function Convidados({ dados }: { dados: DadosNoivos }) {
                   {c.codigo}
                   {c.respondidoEm ? ` · respondeu em ${new Date(c.respondidoEm).toLocaleDateString("pt-BR")}` : ""}
                 </span>
+                <span className="text-[12px] text-primary-deep">{rotuloVisita(c)}</span>
               </button>
               {zap && (
                 <a

@@ -44,6 +44,10 @@ presente vira "Presenteado" e aparece na aba "Presentes" de `/noivos`.
 
 ## Feito
 
+- 27/11/2026 — Quem já viu o convite: o site conta quando o convidado abre com o convite dele (QR,
+  link ou achado na busca, e quem volta outro dia no mesmo aparelho). Em `/noivos`, o resumo mostra
+  quantos convites já abriram e cada convite diz "Abriu o site em…" (quantas vezes, a última) ou
+  "Ainda não abriu"; filtro "Não abriram". A prévia do link no WhatsApp e os noivos logados não contam.
 - 21/11/2026 — "Fale direto com os noivos" virou "Chama a gente no WhatsApp", com link para o
   número dos noivos, sem mensagem pronta (confirmação, prazo encerrado e busca).
 - 21/11/2026 — Mais uma foto do pré-wedding: no barco, com o cachorro (`pre-12.jpg`; a do beijo
