@@ -44,6 +44,9 @@ presente vira "Presenteado" e aparece na aba "Presentes" de `/noivos`.
 
 ## Feito
 
+- 28/11/2026 — Bug: o "Eu vou!" abria o convite de outra pessoa (o aparelho lembrava o último convite
+  aberto). Agora há "Não é o seu convite? Buscar outro", que esquece o convite, e o aparelho dos
+  noivos (logados em /noivos) não guarda convite ao abrir o link de um convidado.
 - 21/11/2026 — "Fale direto com os noivos" virou "Chama a gente no WhatsApp", com link para o
   número dos noivos, sem mensagem pronta (confirmação, prazo encerrado e busca).
 - 21/11/2026 — Mais uma foto do pré-wedding: no barco, com o cachorro (`pre-12.jpg`; a do beijo

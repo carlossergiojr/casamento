@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { TelaInterna } from "@/components/interno";
 import { prazoEncerrado } from "@/lib/conteudo";
 import { lerConvitePublico } from "@/lib/convites-servidor";
+import { sessaoValida } from "@/lib/sessao";
 import { RespostaConvite } from "./resposta";
 
 export const metadata = { title: "Confirme sua presença · V & C", robots: { index: false } };
@@ -16,13 +17,16 @@ export default async function ConfirmarConvite({ params, searchParams }: PagePro
   if (!convite) redirect(`/confirmar/?codigo=${encodeURIComponent(lido)}`);
   // O QR impresso (`/?id=`, via next.config.ts) e o link copiado em /noivos chegam aqui sem `de`: o convidado vai
   // primeiro para o site, e o "Eu vou!" de lá volta aqui com `?de=site` (lib/meu-convite.ts).
-  if (de !== "busca" && de !== "site") redirect(`/?convite=${encodeURIComponent(convite.codigo)}`);
+  // Os noivos (logados em /noivos) abrem o convite direto, sem passar pela home: o aparelho deles
+  // não fica lembrando de um convidado.
+  const noivos = await sessaoValida();
+  if (!noivos && de !== "busca" && de !== "site") redirect(`/?convite=${encodeURIComponent(convite.codigo)}`);
   // Quem chega pela busca está no passo 2 e volta para ela; quem chega pelo site volta para ele.
   const daBusca = de === "busca";
 
   return (
     <TelaInterna voltar={daBusca ? "/confirmar" : "/"}>
-      <RespostaConvite convite={convite} prazoEncerrado={prazoEncerrado()} daBusca={daBusca} />
+      <RespostaConvite convite={convite} prazoEncerrado={prazoEncerrado()} daBusca={daBusca} lembrar={!noivos} />
     </TelaInterna>
   );
 }

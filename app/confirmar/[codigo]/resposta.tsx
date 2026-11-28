@@ -6,7 +6,7 @@ import { useEffect, useState, useTransition } from "react";
 import { passo, tituloInterno } from "@/components/interno";
 import { LinkWhatsapp } from "@/components/site/whatsapp";
 import { avisoConvite, casamento } from "@/lib/conteudo";
-import { guardarMeuConvite } from "@/lib/meu-convite";
+import { esquecerMeuConvite, guardarMeuConvite } from "@/lib/meu-convite";
 import type { ConvitePublico } from "@/lib/convites-servidor";
 import { responderConvite } from "../acoes";
 
@@ -17,11 +17,14 @@ export function RespostaConvite({
   convite,
   prazoEncerrado,
   daBusca,
+  lembrar,
 }: {
   convite: ConvitePublico;
   prazoEncerrado: boolean;
   /** Chegou pela busca (passo 2 de 2); pelo site (QR ou convite lembrado), sem passos. */
   daBusca: boolean;
+  /** Falso quando quem abre são os noivos (sessão de /noivos): o aparelho deles não "vira" o convidado. */
+  lembrar: boolean;
 }) {
   const router = useRouter();
   const [enviando, iniciar] = useTransition();
@@ -33,7 +36,23 @@ export function RespostaConvite({
   const primeiroNome = (convite.pessoas[0]?.nome ?? convite.titular).split(" ")[0];
 
   // Achou o convite pela busca: o aparelho passa a lembrar dele, como se tivesse vindo pelo QR.
-  useEffect(() => guardarMeuConvite(convite.codigo), [convite.codigo]);
+  useEffect(() => {
+    if (lembrar) guardarMeuConvite(convite.codigo);
+  }, [convite.codigo, lembrar]);
+
+  // Celular emprestado, link de outra pessoa: sai deste convite e volta para a busca por nome.
+  const outroConvite = (
+    <button
+      type="button"
+      onClick={() => {
+        esquecerMeuConvite();
+        router.push("/confirmar");
+      }}
+      className="flex min-h-11 items-center justify-center self-center text-sm text-primary-deep underline decoration-gold-line underline-offset-4"
+    >
+      Não é o seu convite? Buscar outro
+    </button>
+  );
 
   function enviar(e: React.FormEvent) {
     e.preventDefault();
@@ -76,6 +95,7 @@ export function RespostaConvite({
             ))}
           </ul>
         )}
+        {outroConvite}
       </main>
     );
   }
@@ -167,6 +187,7 @@ export function RespostaConvite({
             {enviando ? "Enviando…" : "Enviar resposta"}
           </button>
           <p className="text-[13px] text-primary-deep">Prazo: {casamento.prazoRsvp}</p>
+          {outroConvite}
         </div>
       </form>
     </main>

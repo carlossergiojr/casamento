@@ -31,6 +31,16 @@ export function guardarMeuConvite(codigoBruto: string) {
   window.dispatchEvent(new Event(EVENTO));
 }
 
+/** "Não é o meu convite": o aparelho esquece o convite e o "Eu vou!" volta para a busca. */
+export function esquecerMeuConvite() {
+  try {
+    localStorage.removeItem(CHAVE);
+  } catch {
+    return;
+  }
+  window.dispatchEvent(new Event(EVENTO));
+}
+
 function assinar(avisar: () => void) {
   window.addEventListener(EVENTO, avisar);
   window.addEventListener("storage", avisar);
